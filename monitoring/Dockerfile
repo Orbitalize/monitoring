@@ -12,7 +12,11 @@
 FROM python:3.8-slim
 # Not -alpine because: https://stackoverflow.com/a/58028091/651139
 
-RUN apt-get update && apt-get install -y openssl curl && apt-get install ca-certificates
+RUN apt-get update && apt-get install -y \
+    openssl \
+    curl \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /app/monitoring
 COPY ./requirements.txt /app/monitoring/requirements.txt
@@ -32,4 +36,9 @@ HEALTHCHECK CMD sh /app/health_check.sh
 ENV PYTHONPATH /app
 ARG version
 ENV MONITORING_VERSION=$version
-ENTRYPOINT []
+
+
+RUN pip install --no-cache-dir newrelic
+ADD ./monitoring/newrelic.ini /app/newrelic.ini
+ENV NEW_RELIC_CONFIG_FILE "/app/newrelic.ini"
+ENTRYPOINT ["newrelic-admin", "run-program"]

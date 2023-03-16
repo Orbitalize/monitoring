@@ -12,6 +12,21 @@ else
 fi
 cd "${BASEDIR}/../.." || exit 1
 
+if [ -n "${NRIA_LICENSE_KEY}" ]; then
+#  curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY="${NEW_RELIC_API_KEY}" NEW_RELIC_ACCOUNT_ID="${NEW_RELIC_ACCOUNT_ID}" NEW_RELIC_REGION=EU /usr/local/bin/newrelic install -y
+  docker run \
+  -d \
+  --name newrelic-infra \
+  --network=host \
+  --cap-add=SYS_PTRACE \
+  --privileged \
+  --pid=host \
+  -v "/:/host:ro" \
+  -v "/var/run/docker.sock:/var/run/docker.sock" \
+  -e NRIA_LICENSE_KEY="${NRIA_LICENSE_KEY}" \
+  newrelic/infrastructure:latest
+fi
+
 monitoring/mock_uss/run_locally_scdsc.sh -d
 export DO_NOT_BUILD_MONITORING=true
 monitoring/mock_uss/run_locally_ridsp.sh -d

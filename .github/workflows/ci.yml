@@ -57,6 +57,12 @@ jobs:
         cd monitoring/mock_uss
         make test
     - name: uss_qualifier tests
+      env:
+        NEW_RELIC_ACCOUNT_ID: ${{ secrets.NEW_RELIC_ACCOUNT_ID }}
+        NRIA_LICENSE_KEY: ${{ secrets.NRIA_LICENSE_KEY }}
+        NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
+#        NEW_RELIC_LICENSE_KEY: ${{ secrets.NRIA_LICENSE_KEY }}
+        NEW_RELIC_APP_NAME: ci-monitoring-uss_qualifier
       run: |
         cd monitoring/uss_qualifier
         sudo tcpdump -nn -i any -w sntp.cap &
