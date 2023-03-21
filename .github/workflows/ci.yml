@@ -57,6 +57,8 @@ jobs:
     - name: uss_qualifier tests
       run: |
         cd monitoring/uss_qualifier
+        sudo tcpdump -nn -i any -w sntp.cap &
+        sleep 1
         make test
     - name: prober tests
       run: |
@@ -80,3 +82,4 @@ jobs:
           monitoring/uss_qualifier/report.json
           monitoring/uss_qualifier/tested_requirements.html
           monitoring/prober/prober_test_results.xml
+          monitoring/uss_qualifier/sntp.cap
