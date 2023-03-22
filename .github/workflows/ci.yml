@@ -4,6 +4,8 @@ on:
   push:
     branches:
     - main
+  schedule:
+    - cron: '23 * * * *'
 jobs:
   hygiene-tests:
     name: Repository hygiene
@@ -57,6 +59,12 @@ jobs:
     - name: uss_qualifier tests
       run: |
         cd monitoring/uss_qualifier
+        sudo tcpdump -nn -i any -w sntp.cap &
+        sleep 1
+        make test
+    - name: prober tests
+      run: |
+        cd monitoring/prober
         make test
     - name: Save containers and tracer logs as artifact
       if: always()
@@ -70,8 +78,16 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v3
       with:
-        name: monitoring-tests-report
+        name: monitoring-tests-reports
         path: |
           monitoring/uss_qualifier/report.gv
           monitoring/uss_qualifier/report.json
           monitoring/uss_qualifier/tested_requirements.html
+          monitoring/prober/prober_test_results.xml
+    - name: Save tcpdump output on failure
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: monitoring-tests-tcpdump
+        path: |
+          monitoring/uss_qualifier/sntp.cap
