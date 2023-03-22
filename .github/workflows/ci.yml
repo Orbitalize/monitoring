@@ -82,4 +82,10 @@ jobs:
           monitoring/uss_qualifier/report.json
           monitoring/uss_qualifier/tested_requirements.html
           monitoring/prober/prober_test_results.xml
+    - name: Save tcpdump output on failure
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: monitoring-tests-tcpdump
+        path: |
           monitoring/uss_qualifier/sntp.cap
