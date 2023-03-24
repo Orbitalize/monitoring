@@ -239,11 +239,11 @@
                 }
               },
               "time_start": {
-                "value": "2023-02-12T10:37:14.483425+00:00",
+                "value": "2023-02-12T13:00:00.000000+00:00",
                 "format": "RFC3339"
               },
               "time_end": {
-                "value": "2023-02-12T10:42:14.483425+00:00",
+                "value": "2023-02-12T13:59:59.000000+00:00",
                 "format": "RFC3339"
               }
             }
@@ -273,6 +273,32 @@
       "mutations": {
         "activated": {
           "state": "Activated"
+        },
+        "time_range_A_extended": {
+          "volumes": [{
+            "volume": {},
+            "time_start": {
+              "value": "2023-02-12T12:00:00.000000+00:00",
+              "format": "RFC3339"
+            },
+            "time_end": {
+              "value": "2023-02-12T13:59:59.000000+00:00",
+              "format": "RFC3339"
+            }
+          }]
+        },
+        "time_range_B": {
+          "volumes": [{
+            "volume": {},
+            "time_start": {
+              "value": "2023-02-12T16:00:00.000000+00:00",
+              "format": "RFC3339"
+            },
+            "time_end": {
+              "value": "2023-02-12T16:59:59.000000+00:00",
+              "format": "RFC3339"
+            }
+          }]
         }
       }
     },
@@ -563,11 +589,11 @@
                 }
               },
               "time_start": {
-                "value": "2023-02-12T10:37:14.483425+00:00",
+                "value": "2023-02-12T13:00:00.000000+00:00",
                 "format": "RFC3339"
               },
               "time_end": {
-                "value": "2023-02-12T10:42:14.483425+00:00",
+                "value": "2023-02-12T13:59:59.000000+00:00",
                 "format": "RFC3339"
               }
             }
@@ -597,6 +623,19 @@
       "mutations": {
         "activated": {
           "state": "Activated"
+        },
+        "time_range_B": {
+          "volumes": [{
+            "volume": {},
+            "time_start": {
+              "value": "2023-02-12T16:00:00.000000+00:00",
+              "format": "RFC3339"
+            },
+            "time_end": {
+              "value": "2023-02-12T16:59:59.000000+00:00",
+              "format": "RFC3339"
+            }
+          }]
         }
       }
     }

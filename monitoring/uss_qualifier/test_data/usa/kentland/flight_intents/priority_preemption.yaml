@@ -61,6 +61,24 @@ intents:
   mutations:
     activated:
       state: Activated
+    time_range_A_extended:
+      volumes:
+      - volume:
+        time_start:
+          value: '2023-01-01T00:02:00+00:00'
+          format: RFC3339
+        time_end:
+          value: '2023-01-01T00:08:00+00:00'
+          format: RFC3339
+    time_range_B:
+      volumes:
+        - volume:
+          time_start:
+            value: '2023-01-01T00:09:00+00:00'
+            format: RFC3339
+          time_end:
+            value: '2023-01-01T00:10:00+00:00'
+            format: RFC3339
 - reference_time: '2023-01-01T00:00:00+00:00'
   request:
     operational_intent:
@@ -113,3 +131,12 @@ intents:
   mutations:
     activated:
       state: Activated
+    time_range_B:
+      volumes:
+        - volume:
+          time_start:
+            value: '2023-01-01T00:09:00+00:00'
+            format: RFC3339
+          time_end:
+            value: '2023-01-01T00:10:00+00:00'
+            format: RFC3339
