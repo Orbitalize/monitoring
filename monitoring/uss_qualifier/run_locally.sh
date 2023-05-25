@@ -39,7 +39,7 @@ else
 fi
 
 # shellcheck disable=SC2086
-docker run ${docker_args} --name uss_qualifier \
+docker run ${docker_args} --net dss_sandbox_default --name uss_qualifier \
   --rm \
   -u "$(id -u):$(id -g)" \
   -e PYTHONBUFFERED=1 \
