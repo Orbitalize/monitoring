@@ -30,6 +30,11 @@ for container_name in "${localhost_containers[@]}"; do
 	fi
 done
 
+echo "Re/Create prober_test_results.xml file"
+RESULTFILE="$(pwd)/monitoring/prober/prober_test_results.xml"
+touch "${RESULTFILE}"
+cat /dev/null > "${RESULTFILE}"
+
 OUTPUT_DIR="monitoring/prober/output"
 mkdir -p "$OUTPUT_DIR"
 

@@ -48,6 +48,7 @@ while true; do
       if [ $n_delays -gt $max_delays ]; then
         echo ""
         echo "Mock USS container ${MOCK_USS_CONTAINER} did not become healthy in a reasonable amount of time"
+        docker container inspect -f '{{.State.Health}}' "${MOCK_USS_CONTAINER}"
         exit 1
       fi
     fi

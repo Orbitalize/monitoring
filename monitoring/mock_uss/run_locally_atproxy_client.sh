@@ -19,7 +19,7 @@ ATPROXY_BASIC_AUTH="local_client:local_client"
 ATPROXY_BASE_URL="http://${MOCK_USS_TOKEN_AUDIENCE:-host.docker.internal}:${ATPROXY_PORT}"
 
 if [ "$CI" == "true" ]; then
-  docker_args="--add-host host.docker.internal:host-gateway" # Required to reach other containers in Ubuntu (used for Github Actions)
+  docker_args="--add-host host.docker.internal:host-gateway --network dss_sandbox_default" # Required to reach other containers in Ubuntu (used for Github Actions)
 else
   docker_args="-it"
 fi

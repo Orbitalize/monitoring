@@ -4,6 +4,8 @@ on:
   push:
     branches:
     - main
+  schedule:
+    - cron: '23 * * * *'
 jobs:
   hygiene-tests:
     name: Repository hygiene
@@ -55,8 +57,20 @@ jobs:
         cd monitoring/mock_uss
         make test
     - name: uss_qualifier tests
+      env:
+        NEW_RELIC_ACCOUNT_ID: ${{ secrets.NEW_RELIC_ACCOUNT_ID }}
+        NRIA_LICENSE_KEY: ${{ secrets.NRIA_LICENSE_KEY }}
+        NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
+#        NEW_RELIC_LICENSE_KEY: ${{ secrets.NRIA_LICENSE_KEY }}
+        NEW_RELIC_APP_NAME: ci-monitoring-uss_qualifier
       run: |
         cd monitoring/uss_qualifier
+        sudo tcpdump -nn -i any -w sntp.cap &
+        sleep 1
+        make test
+    - name: prober tests
+      run: |
+        cd monitoring/prober
         make test
     - name: prober tests
       run: |
@@ -76,5 +90,16 @@ jobs:
       with:
         name: monitoring-tests-reports
         path: |
+          monitoring/uss_qualifier/report.gv
+          monitoring/uss_qualifier/report.json
+          monitoring/uss_qualifier/tested_requirements.html
+          monitoring/prober/prober_test_results.xml
+    - name: Save tcpdump output on failure
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: monitoring-tests-tcpdump
+        path: |
+          monitoring/uss_qualifier/sntp.cap
           monitoring/uss_qualifier/output
           monitoring/prober/output
