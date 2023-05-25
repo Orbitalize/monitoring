@@ -13,6 +13,7 @@ v1:
           flight_planners: flight_planners
           conflicting_flights: conflicting_flights
           priority_preemption_flights: priority_preemption_flights
+          invalid_flight_intents: invalid_flight_intents
           dss: dss
 
     # This block defines all the resources available in the resource pool.
@@ -57,6 +58,13 @@ v1:
             planning_time: '0:05:00'
             file_source: test_data.che.flight_intents.priority_preemption
 
+        # Details of flights with invalid operational intents (used in flight intent validation scenario)
+        invalid_flight_intents:
+          resource_type: resources.flight_planning.FlightIntentsResource
+          specification:
+            planning_time: '0:05:00'
+            file_source: test_data.che.flight_intents.invalid_flight_intents
+
         # Location of DSS instance that can be used to verify flight planning outcomes
         dss:
           resource_type: resources.astm.f3548.v21.DSSInstanceResource
@@ -73,12 +81,12 @@ v1:
   artifacts:
     report:
       # Path to main report output
-      report_path: report.json
+      report_path: output/report.json
       redact_access_tokens: true
 
     # Information about a report including a list of roles tested and which participants are attempting to fill them
     tested_roles:
-      report_path: tested_requirements.html
+      report_path: output/tested_requirements.html
       roles:
         - name: Strategic Coordination role
           requirement_set: astm.f3548.v21.scd
@@ -88,4 +96,4 @@ v1:
 
     graph:
       # Path to output GraphViz test file summarizing test run
-      gv_path: report.gv
+      gv_path: output/report.gv

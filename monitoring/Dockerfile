@@ -18,12 +18,14 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && apt-get install -y openssl curl libgeos-dev gcc && apt-get install ca-certificates
 RUN mkdir -p /app/monitoring
 COPY ./requirements.txt /app/monitoring/requirements.txt
 RUN pip install -r /app/monitoring/requirements.txt
 
 RUN rm -rf __pycache__
 
+ADD ./interfaces /app/interfaces
 ADD ./monitoring /app/monitoring
 COPY ./monitoring/health_check.sh /app/health_check.sh
 WORKDIR /app/monitoring
@@ -35,8 +37,9 @@ HEALTHCHECK CMD sh /app/health_check.sh
 
 ENV PYTHONPATH /app
 ARG version
+ARG commit_hash
 ENV MONITORING_VERSION=$version
-
+ENV GIT_COMMIT_HASH=$commit_hash
 
 RUN pip install --no-cache-dir newrelic
 ADD ./monitoring/newrelic.ini /app/newrelic.ini

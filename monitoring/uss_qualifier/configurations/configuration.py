@@ -2,7 +2,7 @@ from typing import Optional, List
 
 from implicitdict import ImplicitDict
 
-from monitoring.uss_qualifier.fileio import load_dict_with_references
+from monitoring.uss_qualifier.fileio import load_dict_with_references, FileReference
 from monitoring.uss_qualifier.requirements.documentation import RequirementSetID
 from monitoring.uss_qualifier.resources.definitions import ResourceCollection
 from monitoring.uss_qualifier.suites.definitions import (
@@ -16,6 +16,9 @@ ParticipantID = str
 class TestConfiguration(ImplicitDict):
     action: TestSuiteActionDeclaration
     """The action this test configuration wants to run (usually a test suite)"""
+
+    non_baseline_inputs: Optional[List[FileReference]] = None
+    """List of file inputs that should not be considered when computing the test baseline signature (e.g., environmental definitions)."""
 
     resources: ResourceCollection
     """Declarations for resources used by the test suite"""
@@ -40,6 +43,11 @@ class TestedRolesConfiguration(ImplicitDict):
     """Roles (and participants filling those roles) tested by the test run"""
 
 
+class ReportHTMLConfiguration(ImplicitDict):
+    html_path: str
+    """Path of HTML file to contain an HTML rendering of the test report"""
+
+
 class GraphConfiguration(ImplicitDict):
     gv_path: str
     """Path of GraphViz (.gv) text file to contain a visualization of the test run"""
@@ -56,6 +64,9 @@ class ReportConfiguration(ImplicitDict):
 class ArtifactsConfiguration(ImplicitDict):
     report: Optional[ReportConfiguration] = None
     """Configuration for report generation"""
+
+    report_html: Optional[ReportHTMLConfiguration] = None
+    """If specified, configuration describing how an HTML version of the report should be generated"""
 
     graph: Optional[GraphConfiguration] = None
     """If specified, configuration describing a desired graph visualization summarizing the test run"""
