@@ -16,6 +16,7 @@ jobs:
         echo "Host: ${{ runner.os }}"
         echo "Repository: ${{ github.repository }}"
         echo "Branch: ${{ github.ref }}"
+        docker-compose --version
         docker images
     - name: Checkout
       uses: actions/checkout@v2
@@ -41,6 +42,7 @@ jobs:
         echo "Host: ${{ runner.os }}"
         echo "Repository: ${{ github.repository }}"
         echo "Branch: ${{ github.ref }}"
+        docker-compose --version
         docker images
     - name: Checkout
       uses: actions/checkout@v2

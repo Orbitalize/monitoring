@@ -1,12 +1,15 @@
 #!/bin/bash
 
 compose_version=$(docker compose version --short | awk '{print 2}')
+echo "compose_version: ${compose_version}"
 if [[ $compose_version == 1 ]]; then
   # Docker Compose V1
+  echo "Docker Compose V1 detected."
   OAUTH_CONTAINER="dss_sandbox_local-dss-dummy-oauth_1"
   CORE_SERVICE_CONTAINER="dss_sandbox_local-dss-core-service_1"
 elif [[ $compose_version == 2 ]]; then
   # Docker Compose V2
+  echo "Docker Compose V2 detected."
   OAUTH_CONTAINER="dss_sandbox-local-dss-dummy-oauth-1"
   CORE_SERVICE_CONTAINER="dss_sandbox-local-dss-core-service-1"
 else
@@ -14,6 +17,8 @@ else
   echo "Unsupported Docker Compose version: $compose_version"
   exit 1
 fi
+
+exit 1
 
 declare -a localhost_containers=("$OAUTH_CONTAINER" "$CORE_SERVICE_CONTAINER")
 
