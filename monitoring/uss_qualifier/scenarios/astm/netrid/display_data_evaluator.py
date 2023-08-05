@@ -235,7 +235,10 @@ class RIDObservationEvaluator(object):
             for q in sp_observation.queries:
                 self._test_scenario.record_query(q)
 
-            self._evaluate_sp_observation(sp_observation, rect)
+            # TODO discuss whether `rect` (a LatLngRect) can be added to FetchedFlights or one of the objects therein
+            #  alternative is to recover that information from the url parameters in the queries or to pass
+            #  the rectangle as a separate parameter as currently done
+            self._evaluate_sp_observation(rect, sp_observation, rect)
 
             step_report = self._test_scenario.end_test_step()
             perform_observation = step_report.successful()
@@ -710,6 +713,7 @@ class RIDObservationEvaluator(object):
 
     def _evaluate_sp_observation(
         self,
+        requested_area: s2sphere.LatLngRect,
         sp_observation: FetchedFlights,
         rect: s2sphere.LatLngRect,
     ) -> None:
@@ -749,11 +753,12 @@ class RIDObservationEvaluator(object):
             )
         else:
             self._evaluate_normal_sp_observation(
-                sp_observation, mapping_by_injection_id
+                requested_area, sp_observation, mapping_by_injection_id
             )
 
     def _evaluate_normal_sp_observation(
         self,
+        requested_area: s2sphere.LatLngRect,
         sp_observation: FetchedFlights,
         mappings: Dict[str, TelemetryMapping],
     ) -> None:
@@ -798,6 +803,7 @@ class RIDObservationEvaluator(object):
                         query_timestamps=[flights_query.query.request.timestamp],
                     )
             self._common_dictionary_evaluator.evaluate_sp_flights(
+                requested_area,
                 sp_observation,
                 participants=[mapping.injected_flight.uss_participant_id],
             )
