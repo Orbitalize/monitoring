@@ -21,6 +21,8 @@ from monitoring.monitorlib.mutate.rid import ChangedSubscription
 
 from typing import Dict
 
+MAX_ALLOWED_SUBSCRIPTIONS_FOR_AREA = 10
+
 
 _24H_MIN_TOLERANCE_S = 23 * 3600 + 59 * 60  # 23 hours and 59 minutes
 _24H_MAX_TOLERANCE_S = 24 * 3600 + 1000  # 24 hours sharp, plus a second
@@ -85,8 +87,49 @@ class SubscriptionValidation(GenericTestScenario):
 
         self._create_too_long_subscription()
 
+        self._create_too_many_subscriptions()
+
         self.end_test_step()
         self.end_test_case()
+
+    def _create_too_many_subscriptions(self):
+        with self.check(
+            "Enforce maximum number of subscriptions for an area",
+            [self._dss.participant_id],
+        ) as check:
+            # Create 10 subscriptions with different ID's
+            for i in range(MAX_ALLOWED_SUBSCRIPTIONS_FOR_AREA):
+                sub_id = f"{self._sub_id[:-2]}{i:02d}"
+                created = self._dss_wrapper.put_sub(
+                    check,
+                    sub_id=sub_id,
+                    **self._default_subscription_params(datetime.timedelta(minutes=30)),
+                )
+                self.record_query(created)
+                if not created.success:
+                    check.record_failed(
+                        summary="Creation of a subscription failed",
+                        severity=Severity.High,
+                        details=f"Creation of subscription {sub_id} failed when it was expected to succeed",
+                        query_timestamps=[created.query.request.timestamp],
+                    )
+                    return
+
+            # Create one more subscription, which should fail
+            failed = mutate.upsert_subscription(
+                subscription_id=f"{self._sub_id[:-2]}-{MAX_ALLOWED_SUBSCRIPTIONS_FOR_AREA:01d}",
+                rid_version=self._dss.rid_version,
+                utm_client=self._dss.client,
+                **self._default_subscription_params(datetime.timedelta(minutes=30)),
+            )
+            self.record_query(failed)
+            if failed.success:
+                check.record_failed(
+                    summary="Creation of a subscription succeeded when it should have failed",
+                    severity=Severity.Medium,
+                    details="Subscription creation should fail if the maximum number of subscriptions for an area is reached",
+                    query_timestamps=[failed.query.request.timestamp],
+                )
 
     def _create_too_long_subscription(self):
         with self.check(

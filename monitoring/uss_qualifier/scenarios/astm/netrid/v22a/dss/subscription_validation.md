@@ -36,7 +36,7 @@ We expect to be allowed ro query for existing subscriptions in order to clean th
 
 **[astm.f3411.v22a.DSS0050](../../../../../requirements/astm/f3411/v22a.md)** for a given area for which the DSS is responsible, there may be at most NetDSSMaxSubscriptionPerArea (10) subscriptions per USS.
 
-The test will attempt to create 10 subscriptions for the same area and expect this to succeed, then create an 11th one and expect it to fail.
+The test will attempt to create 10 identical subscriptions for the same area and expect this to succeed, then create an 11th one and expect it to fail.
 
 #### Enforce maximum duration of subscriptions for an area check
 
