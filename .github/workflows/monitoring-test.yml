@@ -71,7 +71,7 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v3
       with:
-        name: capture-${{ inputs.name }}
+        name: capture-${{ inputs.name }}-dockerlogs
         path: |
           /tmp/sntp.cap
           /tmp/dockerlogs
