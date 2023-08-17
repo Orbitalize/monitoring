@@ -55,6 +55,7 @@ jobs:
       name: uss_qualifier_F3411-22a
       script: |
         sudo cat /proc/sys/net/netfilter/nf_conntrack_max
+        sudo cat /proc/sys/net/core/somaxconn
         sudo sysctl net.ipv4.ip_local_port_range
         sudo sysctl net.ipv4.tcp_fin_timeout
         sudo tcpdump -nn -i any -w /tmp/sntp.cap &
