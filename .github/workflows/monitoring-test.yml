@@ -55,7 +55,6 @@ jobs:
           sleep 1
           sudo kill -2 $(pgrep tcpdump)
           sleep 1
-          tar -czvf /tmp/sntp.cap.tar.gz /tmp/sntp.cap
         fi
     # todo: remove me
     - name: Upload capture
@@ -64,4 +63,4 @@ jobs:
       with:
         name: capture-${{ inputs.name }}
         path: |
-          /tmp/sntp.cap.tar.gz
+          /tmp/sntp.cap
