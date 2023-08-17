@@ -55,10 +55,10 @@ jobs:
         if [ -f /tmp/sntp.cap ]; then
           sleep 1
           sudo kill -2 $(pgrep tcpdump)
-          journalctl -xu docker.service > /tmp/dockerlogs
+          journalctl -x > /tmp/alllogs
           sleep 1
         fi
-    # todo: remove me
+    # todo: docker logs
     - name: Upload capture
       if: always()
       uses: actions/upload-artifact@v3
@@ -66,12 +66,4 @@ jobs:
         name: capture-${{ inputs.name }}
         path: |
           /tmp/sntp.cap
-    # todo: docker logs
-    - name: Upload capture
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: capture-${{ inputs.name }}-dockerlogs
-        path: |
-          /tmp/sntp.cap
-          /tmp/dockerlogs
+          /tmp/alllogs
