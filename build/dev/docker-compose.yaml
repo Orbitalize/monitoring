@@ -17,6 +17,10 @@ services:
     restart: always
     networks:
       - dss_internal_network
+    ulimits:
+      nofile:
+        soft: 10000
+        hard: 10000
 
   rid_bootstrapper:
     image: interuss/dss:v0.8.0-rc2
@@ -57,6 +61,10 @@ services:
     networks:
       - dss_internal_network
       - interop_ecosystem_network
+    ulimits:
+      nofile:
+        soft: 10000
+        hard: 10000
 
   oauth:
     hostname: oauth

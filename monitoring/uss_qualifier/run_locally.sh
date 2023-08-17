@@ -56,6 +56,7 @@ else
   echo "========== Running uss_qualifier for configuration ${CONFIG_NAME} =========="
   # shellcheck disable=SC2086
   docker run ${docker_args} --name uss_qualifier \
+    --ulimit nofile=10000 \
     --rm \
     -u "$(id -u):$(id -g)" \
     -e PYTHONBUFFERED=1 \

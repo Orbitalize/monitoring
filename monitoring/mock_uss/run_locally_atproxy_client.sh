@@ -28,6 +28,7 @@ docker container rm -f ${container_name} || echo "No pre-existing ${container_na
 
 # shellcheck disable=SC2086
 docker run ${docker_args} --name ${container_name} \
+  --ulimit nofile=10000 \
   -e MOCK_USS_AUTH_SPEC="${AUTH}" \
   -e MOCK_USS_DSS_URL="${DSS}" \
   -e MOCK_USS_PUBLIC_KEY="${PUBLIC_KEY}" \
