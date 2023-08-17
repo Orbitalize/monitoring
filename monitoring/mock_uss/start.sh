@@ -19,10 +19,5 @@ cp health_check.sh /app
 
 # Start mock_uss server on port 5000
 export PYTHONUNBUFFERED=TRUE
-gunicorn \
-    --preload \
-    --config ./gunicorn.conf.py \
-    --workers=4 \
-    --threads=2 \
-    --bind=0.0.0.0:5000 \
-    monitoring.mock_uss:webapp
+waitress-serve --listen=*:5000 \
+      monitoring.mock_uss:webapp
