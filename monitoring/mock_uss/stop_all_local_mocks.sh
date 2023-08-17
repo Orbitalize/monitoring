@@ -16,6 +16,11 @@ if [ "$RID_VERSION" = "F3411-19" ]; then
 	RID_EXT="_v19"
 fi
 
+echo "LOGS\n========== A"
+docker logs mock_uss_scdsc_a
+echo "========== B"
+docker logs mock_uss_scdsc_b
+
 docker container rm -f \
 mock_uss_scdsc_a \
 mock_uss_scdsc_b \
