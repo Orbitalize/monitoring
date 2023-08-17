@@ -54,6 +54,10 @@ jobs:
     with:
       name: uss_qualifier_F3411-22a
       script: |
+        sudo tcpdump -nn -i any -w /tmp/sntp.cap &
+        sudo sh -c 'while true; do ss -s ; date ; sleep 10; done' &
+        sleep 1
+
         export RID_VERSION=F3411-22a \
           CONFIG_NAME="" \
           USS_QUALIFIER_STOP_FAST=true

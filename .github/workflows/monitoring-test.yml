@@ -17,11 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     name: ${{ inputs.name }} test
     steps:
-    # todo: remove me
-    - run: |
-        sudo tcpdump -nn -i any -w sntp.cap &
-        sudo sh -c 'while true; do ss -s ; date ; sleep 10; done' &
-        sleep 1
     - name: Job information
       run: |
         echo "Job information"
@@ -56,11 +51,12 @@ jobs:
     - name: Prepare capture
       if: always()
       run: |
-        sleep 1
-        sudo kill -2 $(pgrep tcpdump)
-        sudo kill -2 $(pgrep ss)
-        sleep 1
-        tar -czvf sntp.cap.tar.gz sntp.cap
+        if [ -f /tmp/sntp.cap ]; then
+          sleep 1
+          sudo kill -2 $(pgrep tcpdump)
+          sleep 1
+          tar -czvf /tmp/sntp.cap.tar.gz /tmp/sntp.cap
+        fi
     # todo: remove me
     - name: Upload capture
       if: always()
@@ -68,4 +64,4 @@ jobs:
       with:
         name: capture-${{ inputs.name }}
         path: |
-          sntp.cap.tar.gz
+          /tmp/sntp.cap.tar.gz
