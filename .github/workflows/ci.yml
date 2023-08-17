@@ -66,6 +66,7 @@ jobs:
         sudo prlimit --pid $$ --nofile=1048576:1048576
         sudo sysctl fs.inotify.max_user_instances=1280
         sudo sysctl fs.inotify.max_user_watches=655360
+        sudo sysctl net.core.netdev_max_backlog=65536
         sudo tcpdump -nn -i any -w /tmp/sntp.cap &
         sudo sh -c 'while true; do ss -s ; ss -ti ; sysctl fs.file-nr ; netstat -s ; date ; sleep 10; done' &
         sudo sh -c 'while true; do lsof -n | wc -l ; date ; sleep 30; done' &
