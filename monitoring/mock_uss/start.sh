@@ -20,4 +20,6 @@ cp health_check.sh /app
 # Start mock_uss server on port 5000
 export PYTHONUNBUFFERED=TRUE
 waitress-serve --listen=*:5000 \
+      --log-socket-errors \
+      --expose-tracebacks \
       monitoring.mock_uss:webapp
