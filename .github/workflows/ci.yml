@@ -58,8 +58,8 @@ jobs:
         sudo sysctl net.ipv4.ip_local_port_range
         sudo sysctl net.ipv4.tcp_fin_timeout
         sudo tcpdump -nn -i any -w /tmp/sntp.cap &
-        sudo sh -c 'while true; do ss -s ; sysctl fs.file-nr ; date ; sleep 10; done' &
-        sudo sh -c 'while true; lsof -n | wc -l ; date ; sleep 30; done' &
+        sudo sh -c 'while true; do ss -s ; sysctl fs.file-nr ; netstat -s ; date ; sleep 10; done' &
+        sudo sh -c 'while true; do lsof -n | wc -l ; date ; sleep 30; done' &
         sleep 1
 
         export RID_VERSION=F3411-22a \
