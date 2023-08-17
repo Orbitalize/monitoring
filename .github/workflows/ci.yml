@@ -56,8 +56,11 @@ jobs:
       script: |
         sudo cat /proc/sys/net/netfilter/nf_conntrack_max
         sudo cat /proc/sys/net/core/somaxconn
+        sudo cat /proc/sys/net/ipv4/tcp_max_syn_backlog
         sudo sysctl net.ipv4.ip_local_port_range
         sudo sysctl net.ipv4.tcp_fin_timeout
+        sudo sysctl net.ipv4.tcp_max_syn_backlog=16384
+        sudo cat /proc/sys/net/ipv4/tcp_max_syn_backlog
         sudo tcpdump -nn -i any -w /tmp/sntp.cap &
         sudo sh -c 'while true; do ss -s ; ss -ti ; sysctl fs.file-nr ; netstat -s ; date ; sleep 10; done' &
         sudo sh -c 'while true; do lsof -n | wc -l ; date ; sleep 30; done' &
