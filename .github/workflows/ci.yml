@@ -61,6 +61,10 @@ jobs:
         sudo sysctl net.ipv4.tcp_fin_timeout
         sudo sysctl net.ipv4.tcp_max_syn_backlog=16384
         sudo cat /proc/sys/net/ipv4/tcp_max_syn_backlog
+        sudo ulimit -n 1048576
+        sudo ulimit -u 1048576
+        sudo sysctl -w net.ipv4.neigh.default.gc_thresh3=4096
+        sudo sysctl fs.inotify.max_user_instances=1048576
         sudo tcpdump -nn -i any -w /tmp/sntp.cap &
         sudo sh -c 'while true; do ss -s ; ss -ti ; sysctl fs.file-nr ; netstat -s ; date ; sleep 10; done' &
         sudo sh -c 'while true; do lsof -n | wc -l ; date ; sleep 30; done' &
