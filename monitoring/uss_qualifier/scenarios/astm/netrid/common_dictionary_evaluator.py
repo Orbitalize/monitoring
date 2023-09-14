@@ -3,6 +3,12 @@ from arrow import ParserError
 from implicitdict import StringBasedDateTime
 from typing import List, Optional
 import s2sphere
+from uas_standards.interuss.automated_testing.rid.v1.injection import (
+    TestFlightDetails,
+    RIDFlightDetails,
+    TestFlight,
+    RIDAircraftState,
+)
 
 from uas_standards.interuss.automated_testing.rid.v1.observation import (
     GetDetailsResponse,
@@ -84,12 +90,14 @@ class RIDCommonDictionaryEvaluator(object):
             # Evaluate on all flights regardless of where they came from
             self._evaluate_operational_status(
                 f.operational_status,
+                None,
                 participants,
             )
 
     def evaluate_dp_flight(
         self,
         observed_flight: Flight,
+        injected_telemetry: RIDAircraftState,
         participants: List[str],
     ):
         current_state = observed_flight.current_state
@@ -97,7 +105,9 @@ class RIDCommonDictionaryEvaluator(object):
         self._evaluate_track(current_state.track, participants)
         self._evaluate_timestamp(current_state.timestamp, participants)
         self._evaluate_operational_status(
-            current_state.operational_status, participants
+            current_state.operational_status,
+            injected_telemetry.operational_status,
+            participants,
         )
         self._evaluate_position(observed_flight.most_recent_position, participants)
         self._evaluate_height(
@@ -195,7 +205,7 @@ class RIDCommonDictionaryEvaluator(object):
 
     def evaluate_sp_details(self, details: FlightDetails, participants: List[str]):
         self._evaluate_uas_id(details.raw.get("uas_id"), participants)
-        self._evaluate_operator_id(details.operator_id, participants)
+        self._evaluate_operator_id(details.operator_id, None, participants)
         self._evaluate_operator_location(
             details.operator_location.position,
             details.operator_location.get("altitude"),
@@ -204,7 +214,10 @@ class RIDCommonDictionaryEvaluator(object):
         )
 
     def evaluate_dp_details(
-        self, observed_details: Optional[GetDetailsResponse], participants: List[str]
+        self,
+        observed_details: Optional[GetDetailsResponse],
+        injected_details: Optional[RIDFlightDetails],
+        participants: List[str],
     ):
         if not observed_details:
             return
@@ -214,7 +227,9 @@ class RIDCommonDictionaryEvaluator(object):
         )
 
         operator = observed_details.get("operator", {})
-        self._evaluate_operator_id(operator.get("id"), participants)
+        self._evaluate_operator_id(
+            operator.get("id"), injected_details.get("operator_id"), participants
+        )
 
         operator_location = operator.get("location", {})
         operator_altitude = operator.get("altitude", {})
@@ -334,8 +349,23 @@ class RIDCommonDictionaryEvaluator(object):
                 message=f"Unsupported version {self._rid_version}: skipping timestamp evaluation",
             )
 
-    def _evaluate_operator_id(self, value: Optional[str], participants: List[str]):
+    def _evaluate_operator_id(
+        self,
+        value: Optional[str],
+        injected_value: Optional[str],
+        participants: List[str],
+    ):
         if self._rid_version == RIDVersion.f3411_22a:
+            if injected_value:
+                with self._test_scenario.check(
+                    "Correct up-to-date Operator ID", participants
+                ) as check:
+                    if value != injected_value:
+                        check.record_failed(
+                            "Observed Operator ID do not match injected value",
+                            details=f"{injected_value} (injected) != {value} (observed)",
+                            severity=Severity.Medium,
+                        )
             if value:
                 with self._test_scenario.check(
                     "Operator ID consistency with Common Dictionary", participants
@@ -346,6 +376,7 @@ class RIDCommonDictionaryEvaluator(object):
                             "Operator ID contains non-ascii characters",
                             severity=Severity.Medium,
                         )
+
         else:
             self._test_scenario.record_note(
                 key="skip_reason",
@@ -551,9 +582,22 @@ class RIDCommonDictionaryEvaluator(object):
             )
 
     def _evaluate_operational_status(
-        self, value: Optional[str], participants: List[str]
+        self,
+        value: Optional[str],
+        injected_value: Optional[str],
+        participants: List[str],
     ):
         if self._rid_version == RIDVersion.f3411_22a:
+            if injected_value:
+                with self._test_scenario.check(
+                    "Correct up-to-date Operational Status", participants
+                ) as check:
+                    if value != injected_value:
+                        check.record_failed(
+                            "Observed Operational Status do not match injected value",
+                            details=f"{injected_value} (injected) != {value} (observed)",
+                            severity=Severity.Medium,
+                        )
             if value:
                 with self._test_scenario.check(
                     "Operational Status consistency with Common Dictionary",

@@ -190,7 +190,7 @@ def _assert_operational_status(value: str, outcome: bool):
             rid_version=RIDVersion.f3411_22a,
         )
 
-        evaluator._evaluate_operational_status(value, [])
+        evaluator._evaluate_operational_status(value, None, [])
 
     unit_test_scenario = UnitTestScenario(step_under_test).execute_unit_test()
     assert unit_test_scenario.get_report().successful == outcome

@@ -18,7 +18,10 @@ from monitoring.monitorlib.fetch.rid import (
     Position,
 )
 from monitoring.uss_qualifier.resources.astm.f3411.dss import DSSInstance
-from uas_standards.interuss.automated_testing.rid.v1.injection import RIDAircraftState
+from uas_standards.interuss.automated_testing.rid.v1.injection import (
+    RIDAircraftState,
+    TestFlightDetails,
+)
 from uas_standards.interuss.automated_testing.rid.v1.observation import (
     Flight,
     GetDisplayDataResponse,
@@ -179,6 +182,14 @@ def _make_flight_mapping(
             )
             mapping[best_match.injected_flight.flight.injection_id] = best_match
     return mapping
+
+
+def get_effective_details(
+    injected_details: List[TestFlightDetails], reference_time: str
+):
+    for i in injected_details:
+        if arrow.get(i.effective_after) < arrow.get(reference_time):
+            return i
 
 
 class RIDObservationEvaluator(object):
@@ -384,7 +395,12 @@ class RIDObservationEvaluator(object):
                         )
 
             self._common_dictionary_evaluator.evaluate_dp_flight(
-                mapping.observed_flight, [observer.participant_id]
+                observed_flight=mapping.observed_flight,
+                injected_telemetry=injected_telemetry,
+                participants=[
+                    observer.participant_id,
+                    mapping.injected_flight.uss_participant_id,
+                ],
             )
         # Check that flights using telemetry are not using extrapolated position data
         for mapping in mapping_by_injection_id.values():
@@ -428,11 +444,22 @@ class RIDObservationEvaluator(object):
                 mapping.observed_flight.id, self._rid_version
             )
             self._test_scenario.record_query(query)
+            if not details:
+                self._test_scenario.record_note(
+                    f"Unable to retrieve details from {observer.participant_id}"
+                )
+                return
 
+            ref = query.request.initiated_at
+            injected_details = get_effective_details(
+                mapping.injected_flight.flight.details_responses, ref
+            )
             self._common_dictionary_evaluator.evaluate_dp_details(
                 details,
+                injected_details.details,
                 participants=[
                     observer.participant_id,
+                    mapping.injected_flight.uss_participant_id,
                 ],
             )
 

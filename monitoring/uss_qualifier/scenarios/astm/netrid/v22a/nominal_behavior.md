@@ -204,9 +204,17 @@ This check validates that the display area of a cluster, measured and provided i
 
 **[astm.f3411.v22a.NET0470](../../../../requirements/astm/f3411/v22a.md)** requires that Net-RID Display Provider shall provide access to required and optional fields to Remote ID Display Applications according to the Common Dictionary. This check validates that timestamps are expressed with a minimum resolution of one tenth of a second and relative to UTC. (**[astm.f3411.v22a.NET0470,Table1,5](../../../../requirements/astm/f3411/v22a.md)**)
 
+#### Correct up-to-date Operational Status check
+
+**[astm.f3411.v22a.NET0450](../../../../requirements/astm/f3411/v22a.md)** requires that Net-RID Display Provider shall provide the most recent data available to Remote ID Display Applications. If the observed Operational Status do not match the injected value, this check will fail. (**[astm.f3411.v22a.NET0450,Table1,7](../../../../requirements/astm/f3411/v22a.md)**)
+
 #### Operational Status consistency with Common Dictionary check
 
 **[astm.f3411.v22a.NET0470](../../../../requirements/astm/f3411/v22a.md)** requires that Net-RID Display Provider shall provide access to required and optional fields to Remote ID Display Applications according to the Common Dictionary. This check validates that the Operational Status, if present, is valid. (**[astm.f3411.v22a.NET0470,Table1,7](../../../../requirements/astm/f3411/v22a.md)**)
+
+#### Correct up-to-date Operator ID check
+
+**[astm.f3411.v22a.NET0450](../../../../requirements/astm/f3411/v22a.md)** requires that Net-RID Display Provider shall provide the most recent data available to Remote ID Display Applications. If the observed Operator ID do not match the injected value, this check will fail. (**[astm.f3411.v22a.NET0450,Table1,9](../../../../requirements/astm/f3411/v22a.md)**)
 
 #### Operator ID consistency with Common Dictionary check
 
