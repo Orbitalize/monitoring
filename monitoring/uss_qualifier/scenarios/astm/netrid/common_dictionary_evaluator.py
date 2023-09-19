@@ -204,6 +204,17 @@ class RIDCommonDictionaryEvaluator(object):
                 fail_check()
 
     def evaluate_sp_details(self, details: FlightDetails, participants: List[str]):
+        # branch NET0450-match-injected-data
+        # > fields from uspace / DP dans network_identification: only from DP, not from SP
+        #   - display_provider_operator_id_transmitter # Operator Registration -> OK
+        #   - display_provider_uas_id_serial_number_transmitter # Serial Number -> TODO just like operator ID (flight details)
+        #   - display_provider_current_position_transmitter # UA Position -> TODO implementation may already exists
+        #   - display_provider_height_transmitter # Height -> TODO: not injected, depend on https://github.com/interuss/uas_standards/pull/12, and on https://github.com/interuss/monitoring/pull/150
+        #   - display_provider_timestamp_transmitter # Timestamp -> TODO: just like operator status, get it from current state
+        #   - display_provider_track_direction_transmitter # Track -> TODO: just like operator status (current state)
+        #   - display_provider_speed_transmitter # Speed -> TODO: just like operator status (current state)
+        #   - display_provider_operator_position_transmitter # Operator Location -> TODO just like operator ID (flight details)
+        #   - display_provider_operational_status_transmitter # Operational Status -> OK
         self._evaluate_uas_id(details.raw.get("uas_id"), participants)
         self._evaluate_operator_id(details.operator_id, None, participants)
         self._evaluate_operator_location(
