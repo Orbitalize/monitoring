@@ -215,6 +215,7 @@ class RIDCommonDictionaryEvaluator(object):
         #   - display_provider_speed_transmitter # Speed -> TODO: just like operator status (current state)
         #   - display_provider_operator_position_transmitter # Operator Location -> TODO just like operator ID (flight details)
         #   - display_provider_operational_status_transmitter # Operational Status -> OK
+        # TODO: check for freshness of data (if not implemented)
         self._evaluate_uas_id(details.raw.get("uas_id"), participants)
         self._evaluate_operator_id(details.operator_id, None, participants)
         self._evaluate_operator_location(
