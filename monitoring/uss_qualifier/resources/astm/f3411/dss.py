@@ -25,7 +25,6 @@ class DSSInstanceSpecification(ImplicitDict):
     has_private_address: Optional[bool]
     """Whether this DSS instance is expected to have a private address that is not publicly addressable."""
 
-
     local_debug: Optional[bool]
     """Whether this DSS instance is running locally for debugging or development purposes. Mostly used for relaxing
     constraints around encryption.
