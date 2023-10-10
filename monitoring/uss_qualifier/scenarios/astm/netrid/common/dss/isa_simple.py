@@ -1,8 +1,9 @@
-from datetime import timedelta
+from typing import Optional, List
 
 import arrow
+import s2sphere
+import datetime
 
-from monitoring.monitorlib import schema_validation
 from monitoring.monitorlib.fetch import rid as fetch
 from monitoring.monitorlib.mutate import rid as mutate
 from monitoring.prober.infrastructure import register_resource_type
@@ -10,10 +11,15 @@ from monitoring.uss_qualifier.common_data_definitions import Severity
 from monitoring.uss_qualifier.resources.astm.f3411.dss import DSSInstanceResource
 from monitoring.uss_qualifier.resources.interuss.id_generator import IDGeneratorResource
 from monitoring.uss_qualifier.resources.netrid.service_area import ServiceAreaResource
+from monitoring.uss_qualifier.scenarios.astm.netrid.dss_wrapper import DSSWrapper
 from monitoring.uss_qualifier.scenarios.scenario import GenericTestScenario
 
-
-MAX_SKEW = 1e-6  # seconds maximum difference between expected and actual timestamps
+HUGE_VERTICES: List[s2sphere.LatLng] = [
+    s2sphere.LatLng.from_degrees(lng=130, lat=-23),
+    s2sphere.LatLng.from_degrees(lng=130, lat=-24),
+    s2sphere.LatLng.from_degrees(lng=132, lat=-24),
+    s2sphere.LatLng.from_degrees(lng=132, lat=-23),
+]
 
 
 class ISASimple(GenericTestScenario):
@@ -28,9 +34,18 @@ class ISASimple(GenericTestScenario):
         isa: ServiceAreaResource,
     ):
         super().__init__()
-        self._dss = dss.dss_instance
+        self._dss = (
+            dss.dss_instance
+        )  # TODO: delete once _delete_isa_if_exists updated to use dss_wrapper
+        self._dss_wrapper = DSSWrapper(self, dss.dss_instance)
         self._isa_id = id_generator.id_factory.make_id(ISASimple.ISA_TYPE)
+        self._isa_version: Optional[str] = None
         self._isa = isa.specification
+
+        now = arrow.utcnow().datetime
+        self._isa_start_time = self._isa.shifted_time_start(now)
+        self._isa_end_time = self._isa.shifted_time_end(now)
+        self._isa_area = [vertex.as_s2sphere() for vertex in self._isa.footprint]
 
     def run(self):
         self.begin_test_scenario()
@@ -45,15 +60,23 @@ class ISASimple(GenericTestScenario):
     def _setup_case(self):
         self.begin_test_case("Setup")
 
-        self._ensure_clean_workspace_step()
+        def _ensure_clean_workspace_step():
+            self.begin_test_step("Ensure clean workspace")
+
+            self._delete_isa_if_exists()
+
+            self.end_test_step()
+
+        _ensure_clean_workspace_step()
 
         self.end_test_case()
 
-    def _ensure_clean_workspace_step(self):
-        self.begin_test_step("Ensure clean workspace")
-
+    def _delete_isa_if_exists(self):
         fetched = fetch.isa(
-            self._isa_id, rid_version=self._dss.rid_version, session=self._dss.client
+            self._isa_id,
+            rid_version=self._dss.rid_version,
+            session=self._dss.client,
+            server_id=self._dss.participant_id,
         )
         self.record_query(fetched.query)
         with self.check("Successful ISA query", [self._dss.participant_id]) as check:
@@ -71,6 +94,7 @@ class ISASimple(GenericTestScenario):
                 fetched.isa.version,
                 self._dss.rid_version,
                 self._dss.client,
+                server_id=self._dss.participant_id,
             )
             self.record_query(deleted.dss_query.query)
             for subscriber_id, notification in deleted.notifications.items():
@@ -96,161 +120,371 @@ class ISASimple(GenericTestScenario):
                             query_timestamps=[notification.query.request.timestamp],
                         )
 
+    def _get_isa_by_id_step(self):
+        self.begin_test_step("Get ISA by ID")
+
+        with self.check(
+            "Successful ISA query", [self._dss_wrapper.participant_id]
+        ) as check:
+            fetched = self._dss_wrapper.get_isa(check, self._isa_id)
+
+        with self.check(
+            "ISA version match", [self._dss_wrapper.participant_id]
+        ) as check:
+            if (
+                self._isa_version is not None
+                and fetched.isa.version != self._isa_version
+            ):
+                check.record_failed(
+                    "DSS returned ISA with incorrect version",
+                    Severity.High,
+                    f"DSS should have returned an ISA with the version {self._isa_version}, but instead the ISA returned had the version {fetched.isa.version}",
+                    query_timestamps=[fetched.query.request.timestamp],
+                )
+
         self.end_test_step()
 
     def _create_and_check_isa_case(self):
         self.begin_test_case("Create and check ISA")
 
-        self._create_isa_step()
+        def _create_isa_step():
+            self.begin_test_step("Create ISA")
 
-        # TODO: Get ISA by ID
+            with self.check("ISA created", [self._dss_wrapper.participant_id]) as check:
+                isa_change = self._dss_wrapper.put_isa(
+                    main_check=check,
+                    area_vertices=self._isa_area,
+                    start_time=self._isa_start_time,
+                    end_time=self._isa_end_time,
+                    uss_base_url=self._isa.base_url,
+                    isa_id=self._isa_id,
+                    isa_version=self._isa_version,
+                    alt_lo=self._isa.altitude_min,
+                    alt_hi=self._isa.altitude_max,
+                )
+                self._isa_version = isa_change.dss_query.isa.version
+
+            self.end_test_step()
+
+        _create_isa_step()
+
+        self._get_isa_by_id_step()
 
         self.end_test_case()
-
-    def _create_isa_step(self):
-        self.begin_test_step("Create ISA")
-
-        start_time = arrow.utcnow().datetime + timedelta(seconds=1)
-        end_time = start_time + timedelta(minutes=60)
-        area = self._isa.footprint.to_vertices()
-        isa_change = mutate.put_isa(
-            area_vertices=area,
-            start_time=start_time,
-            end_time=end_time,
-            uss_base_url=self._isa.base_url,
-            isa_id=self._isa_id,
-            rid_version=self._dss.rid_version,
-            utm_client=self._dss.client,
-            isa_version=None,
-            alt_lo=self._isa.altitude_min,
-            alt_hi=self._isa.altitude_max,
-        )
-        self.record_query(isa_change.dss_query.query)
-        for notification_query in isa_change.notifications.values():
-            self.record_query(notification_query.query)
-        t_dss = isa_change.dss_query.query.request.timestamp
-
-        with self.check("ISA created", [self._dss.participant_id]) as check:
-            if isa_change.dss_query.status_code == 200:
-                check.record_passed()
-            elif isa_change.dss_query.status_code == 201:
-                check.record_failed(
-                    f"PUT ISA returned technically-incorrect 201",
-                    Severity.Low,
-                    "DSS should return 200 from PUT ISA, but instead returned the reasonable-but-technically-incorrect code 201",
-                    query_timestamps=[t_dss],
-                )
-            else:
-                check.record_failed(
-                    f"PUT ISA returned {isa_change.dss_query.status_code}",
-                    Severity.High,
-                    f"DSS should return 200 from PUT ISA, but instead returned {isa_change.dss_query.status_code}",
-                    query_timestamps=[t_dss],
-                )
-
-        with self.check("ISA ID matches", [self._dss.participant_id]) as check:
-            if isa_change.dss_query.isa.id != self._isa_id:
-                check.record_failed(
-                    f"PUT ISA returned ISA with incorrect ID",
-                    Severity.High,
-                    f"DSS should have recorded and returned the ISA ID {self._isa_id} as requested in the path, but response body instead specified {isa_change.dss_query.isa.id}",
-                    query_timestamps=[t_dss],
-                )
-        with self.check("ISA URL matches", [self._dss.participant_id]) as check:
-            expected_flights_url = self._dss.rid_version.flights_url_of(
-                self._isa.base_url
-            )
-            actual_flights_url = isa_change.dss_query.isa.flights_url
-            if actual_flights_url != expected_flights_url:
-                check.record_failed(
-                    f"PUT ISA returned ISA with incorrect URL",
-                    Severity.High,
-                    f"DSS should have returned an ISA with a flights URL of {expected_flights_url}, but instead the ISA returned had a flights URL of {actual_flights_url}",
-                    query_timestamps=[t_dss],
-                )
-        with self.check("ISA start time matches", [self._dss.participant_id]) as check:
-            if (
-                abs((isa_change.dss_query.isa.time_start - start_time).total_seconds())
-                > MAX_SKEW
-            ):
-                check.record_failed(
-                    "PUT ISA returned ISA with incorrect start time",
-                    Severity.High,
-                    f"DSS should have returned an ISA with a start time of {start_time}, but instead the ISA returned had a start time of {isa_change.dss_query.isa.time_start}",
-                    query_timestamps=[t_dss],
-                )
-        with self.check("ISA end time matches", [self._dss.participant_id]) as check:
-            if (
-                abs((isa_change.dss_query.isa.time_end - end_time).total_seconds())
-                > MAX_SKEW
-            ):
-                check.record_failed(
-                    "PUT ISA returned ISA with incorrect end time",
-                    Severity.High,
-                    f"DSS should have returned an ISA with an end time of {end_time}, but instead the ISA returned had an end time of {isa_change.dss_query.isa.time_end}",
-                    query_timestamps=[t_dss],
-                )
-        with self.check("ISA version format", [self._dss.participant_id]) as check:
-            if not all(
-                c not in "\0\t\r\n#%/:?@[\]" for c in isa_change.dss_query.isa.version
-            ):
-                check.record_failed(
-                    "PUT ISA returned ISA with invalid version format",
-                    Severity.High,
-                    f"DSS returned an ISA with a version that is not URL-safe: {isa_change.dss_query.isa.version}",
-                    query_timestamps=[t_dss],
-                )
-
-        with self.check("ISA response format", [self._dss.participant_id]) as check:
-            errors = schema_validation.validate(
-                self._dss.rid_version.openapi_path,
-                self._dss.rid_version.openapi_put_isa_response_path,
-                isa_change.dss_query.query.response.json,
-            )
-            if errors:
-                details = "\n".join(f"[{e.json_path}] {e.message}" for e in errors)
-                check.record_failed(
-                    "PUT ISA response format was invalid",
-                    Severity.Medium,
-                    "Found the following schema validation errors in the DSS response:\n"
-                    + details,
-                    query_timestamps=[t_dss],
-                )
-
-        # TODO: Validate subscriber notifications
-
-        self.end_test_step()
 
     def _update_and_search_isa_case(self):
         self.begin_test_case("Update and search ISA")
 
-        # TODO: Update ISA
-        # TODO: Get ISA by ID
-        # TODO: Search with invalid params
-        # TODO: Search by earliest time (included)
-        # TODO: Search by earliest time (excluded)
-        # TODO: Search by latest time (included)
-        # TODO: Search by latest time (excluded)
-        # TODO: Search by area only
-        # TODO: Search by huge area
+        def _update_isa_step():
+            self.begin_test_step("Update ISA")
+
+            self._isa_end_time = self._isa_end_time + datetime.timedelta(seconds=1)
+            with self.check("ISA updated", [self._dss_wrapper.participant_id]) as check:
+                mutated_isa = self._dss_wrapper.put_isa(
+                    check,
+                    area_vertices=self._isa_area,
+                    start_time=self._isa_start_time,
+                    end_time=self._isa_end_time,
+                    uss_base_url=self._isa.base_url,
+                    isa_id=self._isa_id,
+                    isa_version=self._isa_version,
+                    alt_lo=self._isa.altitude_min,
+                    alt_hi=self._isa.altitude_max,
+                )
+                self._isa_version = mutated_isa.dss_query.isa.version
+
+            self.end_test_step()
+
+        _update_isa_step()
+
+        self._get_isa_by_id_step()
+
+        def _search_earliest_incl_step():
+            self.begin_test_step("Search by earliest time (included)")
+
+            with self.check(
+                "Successful ISAs search", [self._dss_wrapper.participant_id]
+            ) as check:
+                earliest = self._isa_end_time - datetime.timedelta(minutes=1)
+                isas = self._dss_wrapper.search_isas(
+                    check,
+                    area=self._isa_area,
+                    start_time=earliest,
+                )
+
+            with self.check(
+                "ISA returned by search", [self._dss_wrapper.participant_id]
+            ) as check:
+                if self._isa_id not in isas.isas.keys():
+                    check.record_failed(
+                        f"ISAs search did not return expected ISA {self._isa_id}",
+                        severity=Severity.High,
+                        details=f"Search in area {self._isa_area} from time {earliest} returned ISAs {isas.isas.keys()}",
+                        query_timestamps=[isas.dss_query.query.request.timestamp],
+                    )
+
+            self.end_test_step()
+
+        _search_earliest_incl_step()
+
+        def _search_earliest_excl_step():
+            self.begin_test_step("Search by earliest time (excluded)")
+
+            with self.check(
+                "Successful ISAs search", [self._dss_wrapper.participant_id]
+            ) as check:
+                earliest = self._isa_end_time + datetime.timedelta(minutes=1)
+                isas = self._dss_wrapper.search_isas(
+                    check,
+                    area=self._isa_area,
+                    start_time=earliest,
+                )
+
+            with self.check(
+                "ISA not returned by search", [self._dss_wrapper.participant_id]
+            ) as check:
+                if self._isa_id in isas.isas.keys():
+                    check.record_failed(
+                        f"ISAs search returned unexpected ISA {self._isa_id}",
+                        severity=Severity.High,
+                        details=f"Search in area {self._isa_area} from time {earliest} returned ISAs {isas.isas.keys()}",
+                        query_timestamps=[isas.dss_query.query.request.timestamp],
+                    )
+
+            self.end_test_step()
+
+        _search_earliest_excl_step()
+
+        def _search_latest_incl_step():
+            self.begin_test_step("Search by latest time (included)")
+
+            with self.check(
+                "Successful ISAs search", [self._dss_wrapper.participant_id]
+            ) as check:
+                latest = self._isa_start_time + datetime.timedelta(minutes=1)
+                isas = self._dss_wrapper.search_isas(
+                    check,
+                    area=self._isa_area,
+                    end_time=latest,
+                )
+
+            with self.check(
+                "ISA returned by search", [self._dss_wrapper.participant_id]
+            ) as check:
+                if self._isa_id not in isas.isas.keys():
+                    check.record_failed(
+                        f"ISAs search did not return expected ISA {self._isa_id}",
+                        severity=Severity.High,
+                        details=f"Search in area {self._isa_area} to time {latest} returned ISAs {isas.isas.keys()}",
+                        query_timestamps=[isas.dss_query.query.request.timestamp],
+                    )
+
+            self.end_test_step()
+
+        _search_latest_incl_step()
+
+        def _search_latest_excl_step():
+            self.begin_test_step("Search by latest time (excluded)")
+
+            with self.check(
+                "Successful ISAs search", [self._dss_wrapper.participant_id]
+            ) as check:
+                latest = self._isa_start_time - datetime.timedelta(minutes=1)
+                isas = self._dss_wrapper.search_isas(
+                    check,
+                    area=self._isa_area,
+                    end_time=latest,
+                )
+
+            with self.check(
+                "ISA not returned by search", [self._dss_wrapper.participant_id]
+            ) as check:
+                if self._isa_id in isas.isas.keys():
+                    check.record_failed(
+                        f"ISAs search returned unexpected ISA {self._isa_id}",
+                        severity=Severity.High,
+                        details=f"Search in area {self._isa_area} to time {latest} returned ISAs {isas.isas.keys()}",
+                        query_timestamps=[isas.dss_query.query.request.timestamp],
+                    )
+
+            self.end_test_step()
+
+        _search_latest_excl_step()
+
+        def _search_area_only_step():
+            self.begin_test_step("Search by area only")
+
+            with self.check(
+                "Successful ISAs search", [self._dss_wrapper.participant_id]
+            ) as check:
+                isas = self._dss_wrapper.search_isas(
+                    check,
+                    area=self._isa_area,
+                )
+
+            with self.check(
+                "ISA returned by search", [self._dss_wrapper.participant_id]
+            ) as check:
+                if self._isa_id not in isas.isas.keys():
+                    check.record_failed(
+                        f"ISAs search did not return expected ISA {self._isa_id}",
+                        severity=Severity.High,
+                        details=f"Search in area {self._isa_area} returned ISAs {isas.isas.keys()}",
+                        query_timestamps=[isas.dss_query.query.request.timestamp],
+                    )
+
+            self.end_test_step()
+
+        _search_area_only_step()
+
+        def _search_invalid_params_step():
+            self.begin_test_step("Search with invalid params")
+
+            with self.check(
+                "Search request rejected", [self._dss_wrapper.participant_id]
+            ) as check:
+                _ = self._dss_wrapper.search_isas_expect_response_code(
+                    check,
+                    expected_error_codes={400},
+                    area=[],
+                )
+
+            self.end_test_step()
+
+        _search_invalid_params_step()
+
+        def _search_huge_area_step():
+            self.begin_test_step("Search by huge area")
+
+            with self.check(
+                "Search request rejected", [self._dss_wrapper.participant_id]
+            ) as check:
+                _ = self._dss_wrapper.search_isas_expect_response_code(
+                    check,
+                    expected_error_codes={413},
+                    area=HUGE_VERTICES,
+                )
+
+            self.end_test_step()
+
+        _search_huge_area_step()
+
+        def _search_isa_loop_step():
+            self.begin_test_step("Search ISA with loop")
+
+            with self.check(
+                "Search request rejected", [self._dss_wrapper.participant_id]
+            ) as check:
+                search_area_loop = self._isa_area.copy()
+                search_area_loop.append(search_area_loop[0])
+                _ = self._dss_wrapper.search_isas_expect_response_code(
+                    check,
+                    expected_error_codes={400},
+                    area=search_area_loop,
+                )
+
+            self.end_test_step()
+
+        _search_isa_loop_step()
 
         self.end_test_case()
 
     def _delete_isa_case(self):
         self.begin_test_case("Delete ISA")
 
-        # TODO: Delete with wrong version
-        # TODO: Delete with empty version
-        # TODO: Delete ISA
-        # TODO: Get ISA by ID
-        # TODO: Search ISA
-        # TODO: Search ISA with loop
+        def _delete_wrong_version_step():
+            self.begin_test_step("Delete with wrong version")
+
+            with self.check(
+                "Delete request rejected", [self._dss_wrapper.participant_id]
+            ) as check:
+                _ = self._dss_wrapper.del_isa_expect_response_code(
+                    check,
+                    expected_error_codes={409},
+                    isa_id=self._isa_id,
+                    isa_version=self._isa_version[1:-1],
+                )
+
+            self.end_test_step()
+
+        _delete_wrong_version_step()
+
+        def _delete_empty_version_step():
+            self.begin_test_step("Delete with empty version")
+
+            with self.check(
+                "Delete request rejected", [self._dss_wrapper.participant_id]
+            ) as check:
+                _ = self._dss_wrapper.del_isa_expect_response_code(
+                    check,
+                    expected_error_codes={400},
+                    isa_id=self._isa_id,
+                    isa_version="",
+                )
+
+            self.end_test_step()
+
+        _delete_empty_version_step()
+
+        def _delete_step():
+            self.begin_test_step("Delete ISA")
+
+            with self.check("ISA deleted", [self._dss_wrapper.participant_id]) as check:
+                _ = self._dss_wrapper.del_isa(
+                    check, isa_id=self._isa_id, isa_version=self._isa_version
+                )
+
+            self.end_test_step()
+
+        _delete_step()
+
+        def _get_deleted_isa_by_id_step():
+            self.begin_test_step("Get deleted ISA by ID")
+
+            with self.check(
+                "ISA not found", [self._dss_wrapper.participant_id]
+            ) as check:
+                _ = self._dss_wrapper.get_isa_expect_response_code(
+                    check,
+                    expected_error_codes={404},
+                    isa_id=self._isa_id,
+                )
+
+            self.end_test_step()
+
+        _get_deleted_isa_by_id_step()
+
+        def _search_isa_step():
+            self.begin_test_step("Search ISA")
+
+            with self.check(
+                "Successful ISAs search", [self._dss_wrapper.participant_id]
+            ) as check:
+                isas = self._dss_wrapper.search_isas(
+                    check,
+                    area=self._isa_area,
+                )
+
+            with self.check(
+                "ISA not returned by search", [self._dss_wrapper.participant_id]
+            ) as check:
+                if self._isa_id in isas.isas.keys():
+                    check.record_failed(
+                        f"ISAs search returned deleted ISA {self._isa_id}",
+                        severity=Severity.High,
+                        details=f"Search in area {self._isa_area} returned ISAs {isas.isas.keys()}",
+                        query_timestamps=[isas.dss_query.query.request.timestamp],
+                    )
+
+            self.end_test_step()
+
+        _search_isa_step()
 
         self.end_test_case()
 
     def cleanup(self):
         self.begin_cleanup()
 
-        # TODO: Remove ISA if still present
+        self._delete_isa_if_exists()
 
         self.end_cleanup()

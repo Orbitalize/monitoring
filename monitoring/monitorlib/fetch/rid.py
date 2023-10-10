@@ -2,7 +2,7 @@ from __future__ import annotations
 import datetime
 from typing import Dict, List, Optional, Any, Union
 
-from implicitdict import ImplicitDict
+from implicitdict import ImplicitDict, StringBasedDateTime
 import s2sphere
 from uas_standards.astm.f3411 import v19, v22a
 import uas_standards.astm.f3411.v19.api
@@ -10,10 +10,11 @@ import uas_standards.astm.f3411.v19.constants
 import uas_standards.astm.f3411.v22a.api
 import uas_standards.astm.f3411.v22a.constants
 import yaml
+from uas_standards.astm.f3411.v22a.api import RIDHeight
 from yaml.representer import Representer
 
 from monitoring.monitorlib import fetch, rid_v1, rid_v2, geo
-from monitoring.monitorlib.fetch import Query
+from monitoring.monitorlib.fetch import Query, QueryType
 from monitoring.monitorlib.infrastructure import UTMClientSession
 from monitoring.monitorlib.rid import RIDVersion
 
@@ -122,9 +123,15 @@ class ISA(ImplicitDict):
         session: UTMClientSession,
         area: s2sphere.LatLngRect,
         include_recent_positions: bool = True,
+        server_id: Optional[str] = None,
     ) -> FetchedUSSFlights:
         return uss_flights(
-            self.flights_url, area, include_recent_positions, self.rid_version, session
+            self.flights_url,
+            area,
+            include_recent_positions,
+            self.rid_version,
+            session,
+            server_id=server_id,
         )
 
 
@@ -143,17 +150,21 @@ class Position(ImplicitDict):
     time: datetime.datetime
     """Timestamp for the position."""
 
+    height: Optional[RIDHeight]
+
     @staticmethod
     def from_v19_rid_aircraft_position(
         p: v19.api.RIDAircraftPosition, t: v19.api.StringBasedDateTime
     ) -> Position:
-        return Position(lat=p.lat, lng=p.lng, alt=p.alt, time=t.datetime)
+        return Position(lat=p.lat, lng=p.lng, alt=p.alt, time=t.datetime, height=None)
 
     @staticmethod
     def from_v22a_rid_aircraft_position(
         p: v22a.api.RIDAircraftPosition, t: v22a.api.StringBasedDateTime
     ) -> Position:
-        return Position(lat=p.lat, lng=p.lng, alt=p.alt, time=t.datetime)
+        return Position(
+            lat=p.lat, lng=p.lng, alt=p.alt, time=t.datetime, height=p.get("height")
+        )
 
 
 class Flight(ImplicitDict):
@@ -205,7 +216,7 @@ class Flight(ImplicitDict):
                 )
             else:
                 raise NotImplementedError(
-                    f"Cannot retrieve most recent position using RID version {self.rid_version}"
+                    f"Cannot retrieve most_recent_position using RID version {self.rid_version}"
                 )
         else:
             return None
@@ -224,7 +235,83 @@ class Flight(ImplicitDict):
             ]
         else:
             raise NotImplementedError(
-                f"Cannot retrieve recent positions using RID version {self.rid_version}"
+                f"Cannot retrieve recent_positions using RID version {self.rid_version}"
+            )
+
+    @property
+    def operational_status(self) -> Optional[str]:
+        if self.rid_version == RIDVersion.f3411_19:
+            if not self.v19_value.has_field_with_value(
+                "current_state"
+            ) or not self.v19_value.current_state.has_field_with_value(
+                "operational_status"
+            ):
+                return None
+            return self.v19_value.current_state.operational_status
+        elif self.rid_version == RIDVersion.f3411_22a:
+            if not self.v22a_value.has_field_with_value(
+                "current_state"
+            ) or not self.v22a_value.current_state.has_field_with_value(
+                "operational_status"
+            ):
+                return None
+            return self.v22a_value.current_state.operational_status
+        else:
+            raise NotImplementedError(
+                f"Cannot retrieve operational_status using RID version {self.rid_version}"
+            )
+
+    @property
+    def track(self) -> Optional[float]:
+        if self.rid_version == RIDVersion.f3411_19:
+            if not self.v19_value.has_field_with_value(
+                "current_state"
+            ) or not self.v19_value.current_state.has_field_with_value("track"):
+                return None
+            return self.v19_value.current_state.track
+        elif self.rid_version == RIDVersion.f3411_22a:
+            if not self.v22a_value.has_field_with_value(
+                "current_state"
+            ) or not self.v22a_value.current_state.has_field_with_value("track"):
+                return None
+            return self.v22a_value.current_state.track
+        else:
+            raise NotImplementedError(
+                f"Cannot retrieve track using RID version {self.rid_version}"
+            )
+
+    @property
+    def speed(self) -> Optional[float]:
+        if self.rid_version == RIDVersion.f3411_19:
+            if not self.v19_value.has_field_with_value(
+                "current_state"
+            ) or not self.v19_value.current_state.has_field_with_value("speed"):
+                return None
+            return self.v19_value.current_state.speed
+        elif self.rid_version == RIDVersion.f3411_22a:
+            if not self.v22a_value.has_field_with_value(
+                "current_state"
+            ) or not self.v22a_value.current_state.has_field_with_value("speed"):
+                return None
+            return self.v22a_value.current_state.speed
+        else:
+            raise NotImplementedError(
+                f"Cannot retrieve speed using RID version {self.rid_version}"
+            )
+
+    @property
+    def timestamp(self) -> Optional[StringBasedDateTime]:
+        if self.rid_version == RIDVersion.f3411_19:
+            if not self.v19_value.has_field_with_value("current_state"):
+                return None
+            return self.v19_value.current_state.timestamp
+        elif self.rid_version == RIDVersion.f3411_22a:
+            if not self.v22a_value.has_field_with_value("current_state"):
+                return None
+            return self.v22a_value.current_state.timestamp.value
+        else:
+            raise NotImplementedError(
+                f"Cannot retrieve speed using RID version {self.rid_version}"
             )
 
     def errors(self) -> List[str]:
@@ -315,12 +402,139 @@ class FlightDetails(ImplicitDict):
     def id(self) -> str:
         return self.raw.id
 
+    @property
+    def operator_id(self) -> str:
+        if self.rid_version == RIDVersion.f3411_19:
+            return self.v19_value.operator_id
+        elif self.rid_version == RIDVersion.f3411_22a:
+            return self.v22a_value.operator_id
+        else:
+            raise NotImplementedError(
+                f"Cannot retrieve operator_id using RID version {self.rid_version}"
+            )
+
+    @property
+    def arbitrary_uas_id(self) -> Optional[str]:
+        """Returns a UAS id as a plain string without type hint.
+        If multiple are provided:
+        For v19, registration_number is returned if set, else it falls back to the serial_number.
+        For v22a, the order of ASTM F3411-v22a Table 1 is used.
+        If no match, it returns None.
+        """
+        if self.rid_version == RIDVersion.f3411_19:
+            registration_number = self.v19_value.registration_number
+            if registration_number:
+                return registration_number
+            else:
+                return self.v19_value.serial_number
+        elif self.rid_version == RIDVersion.f3411_22a:
+            uas_id = self.v22a_value.uas_id
+            if uas_id.serial_number:
+                return uas_id.serial_number
+            elif uas_id.registration_id:
+                return uas_id.registration_id
+            elif uas_id.utm_id:
+                return uas_id.utm_id
+            elif uas_id.specific_session_id:
+                return uas_id.specific_session_id
+        else:
+            raise NotImplementedError(
+                f"Cannot retrieve plain_uas_id using RID version {self.rid_version}"
+            )
+
+    @property
+    def operator_location(
+        self,
+    ) -> Optional[geo.LatLngPoint]:
+        if self.rid_version == RIDVersion.f3411_19:
+            if not self.v19_value.has_field_with_value("operator_location"):
+                return None
+            return geo.LatLngPoint(
+                lat=self.v19_value.operator_location.lat,
+                lng=self.v19_value.operator_location.lng,
+            )
+        elif self.rid_version == RIDVersion.f3411_22a:
+            if not self.v22a_value.has_field_with_value("operator_location"):
+                return None
+            pos = self.v22a_value.operator_location.position
+            return geo.LatLngPoint(lat=pos.lat, lng=pos.lng)
+        else:
+            raise NotImplementedError(
+                f"Cannot retrieve operator_position using RID version {self.rid_version}"
+            )
+
+    @property
+    def operator_altitude(
+        self,
+    ) -> Optional[geo.Altitude]:
+        if self.rid_version == RIDVersion.f3411_19:
+            return None
+        elif self.rid_version == RIDVersion.f3411_22a:
+            if not self.v22a_value.has_field_with_value(
+                "operator_location"
+            ) or not self.v22a_value.operator_location.has_field_with_value("altitude"):
+                return None
+            alt = self.v22a_value.operator_location.altitude
+            return geo.Altitude(
+                value=alt.value, reference=alt.reference, units=alt.units
+            )
+        else:
+            raise NotImplementedError(
+                f"Cannot retrieve operator_altitude using RID version {self.rid_version}"
+            )
+
+    @property
+    def operator_altitude_type(
+        self,
+    ) -> Optional[str]:
+        if self.rid_version == RIDVersion.f3411_19:
+            return None
+        elif self.rid_version == RIDVersion.f3411_22a:
+            if not self.v22a_value.has_field_with_value(
+                "operator_location"
+            ) or not self.v22a_value.operator_location.has_field_with_value(
+                "altitude_type"
+            ):
+                return None
+            return self.v22a_value.operator_location.altitude_type
+        else:
+            raise NotImplementedError(
+                f"Cannot retrieve operator_altitude_type using RID version {self.rid_version}"
+            )
+
 
 class Subscription(ImplicitDict):
     """Version-independent representation of a F3411 subscription."""
 
     v19_value: Optional[v19.api.Subscription] = None
     v22a_value: Optional[v22a.api.Subscription] = None
+
+    @property
+    def duration(self) -> Optional[datetime.timedelta]:
+        if self.v19_value is not None:
+            if (
+                self.v19_value.time_end is not None
+                and self.v19_value.time_start is not None
+            ):
+                return (
+                    self.v19_value.time_end.datetime
+                    - self.v19_value.time_start.datetime
+                )
+            else:
+                return None
+        elif self.v22a_value is not None:
+            if (
+                self.v22a_value.time_end is not None
+                and self.v22a_value.time_start is not None
+            ):
+                return (
+                    self.v22a_value.time_end.value.datetime
+                    - self.v22a_value.time_start.value.datetime
+                )
+            else:
+                return None
+        else:
+            raise ValueError("No valid representation was specified for subscription")
 
     @property
     def rid_version(self) -> RIDVersion:
@@ -374,6 +588,20 @@ class Subscription(ImplicitDict):
                 f"Cannot retrieve time_end using RID version {self.rid_version}"
             )
 
+    @property
+    def isa_url(self) -> str:
+        if self.rid_version == RIDVersion.f3411_19:
+            return self.v19_value.callbacks.identification_service_area_url
+        elif self.rid_version == RIDVersion.f3411_22a:
+            isa_path = v22a.api.OPERATIONS[
+                v22a.api.OperationID.PostIdentificationServiceArea
+            ].path.replace("{id}", self.id)
+            return self.v22a_value.uss_base_url + isa_path
+        else:
+            raise NotImplementedError(
+                f"Cannot retrieve isa_url using RID version {self.rid_version}"
+            )
+
 
 class RIDQuery(ImplicitDict):
     v19_query: Optional[Query] = None
@@ -410,6 +638,14 @@ class RIDQuery(ImplicitDict):
     @property
     def errors(self) -> List[str]:
         raise NotImplementedError("RIDQuery.errors must be overriden")
+
+    def set_server_id(self, server_id: str):
+        if self.v19_query is not None:
+            self.v19_query.server_id = server_id
+        elif self.v22a_query is not None:
+            self.v22a_query.server_id = server_id
+        else:
+            raise NotImplementedError(f"Cannot set server_id")
 
 
 class FetchedISA(RIDQuery):
@@ -485,13 +721,18 @@ def isa(
     rid_version: RIDVersion,
     session: UTMClientSession,
     dss_base_url: str = "",
+    server_id: Optional[str] = None,
 ) -> FetchedISA:
     if rid_version == RIDVersion.f3411_19:
         op = v19.api.OPERATIONS[v19.api.OperationID.GetIdentificationServiceArea]
         url = f"{dss_base_url}{op.path}".replace("{id}", isa_id)
         return FetchedISA(
             v19_query=fetch.query_and_describe(
-                session, op.verb, url, scope=v19.constants.Scope.Read
+                session,
+                op.verb,
+                url,
+                scope=v19.constants.Scope.Read,
+                server_id=server_id,
             )
         )
     elif rid_version == RIDVersion.f3411_22a:
@@ -499,7 +740,11 @@ def isa(
         url = f"{dss_base_url}{op.path}".replace("{id}", isa_id)
         return FetchedISA(
             v22a_query=fetch.query_and_describe(
-                session, op.verb, url, scope=v22a.constants.Scope.DisplayProvider
+                session,
+                op.verb,
+                url,
+                scope=v22a.constants.Scope.DisplayProvider,
+                server_id=server_id,
             )
         )
     else:
@@ -605,31 +850,44 @@ class FetchedISAs(RIDQuery):
 
 
 def isas(
-    box: s2sphere.LatLngRect,
-    start_time: datetime.datetime,
-    end_time: datetime.datetime,
+    area: List[s2sphere.LatLng],
+    start_time: Optional[datetime.datetime],
+    end_time: Optional[datetime.datetime],
     rid_version: RIDVersion,
     session: UTMClientSession,
     dss_base_url: str = "",
+    server_id: Optional[str] = None,
 ) -> FetchedISAs:
-    t0 = rid_version.format_time(start_time)
-    t1 = rid_version.format_time(end_time)
+    url_time_params = ""
+    if start_time is not None:
+        url_time_params += f"&earliest_time={rid_version.format_time(start_time)}"
+    if end_time is not None:
+        url_time_params += f"&latest_time={rid_version.format_time(end_time)}"
+
     if rid_version == RIDVersion.f3411_19:
         op = v19.api.OPERATIONS[v19.api.OperationID.SearchIdentificationServiceAreas]
-        area = rid_v1.geo_polygon_string_from_s2(geo.get_latlngrect_vertices(box))
-        url = f"{dss_base_url}{op.path}?area={area}&earliest_time={t0}&latest_time={t1}"
+        area = rid_v1.geo_polygon_string_from_s2(area)
+        url = f"{dss_base_url}{op.path}?area={area}{url_time_params}"
         return FetchedISAs(
             v19_query=fetch.query_and_describe(
-                session, op.verb, url, scope=v19.constants.Scope.Read
+                session,
+                op.verb,
+                url,
+                scope=v19.constants.Scope.Read,
+                server_id=server_id,
             )
         )
     elif rid_version == RIDVersion.f3411_22a:
         op = v22a.api.OPERATIONS[v22a.api.OperationID.SearchIdentificationServiceAreas]
-        area = rid_v2.geo_polygon_string_from_s2(geo.get_latlngrect_vertices(box))
-        url = f"{dss_base_url}{op.path}?area={area}&earliest_time={t0}&latest_time={t1}"
+        area = rid_v2.geo_polygon_string_from_s2(area)
+        url = f"{dss_base_url}{op.path}?area={area}{url_time_params}"
         return FetchedISAs(
             v22a_query=fetch.query_and_describe(
-                session, op.verb, url, scope=v22a.constants.Scope.DisplayProvider
+                session,
+                op.verb,
+                url,
+                scope=v22a.constants.Scope.DisplayProvider,
+                server_id=server_id,
             )
         )
     else:
@@ -706,6 +964,7 @@ def uss_flights(
     include_recent_positions: bool,
     rid_version: RIDVersion,
     session: UTMClientSession,
+    server_id: Optional[str] = None,
 ) -> FetchedUSSFlights:
     if rid_version == RIDVersion.f3411_19:
         query = fetch.query_and_describe(
@@ -724,7 +983,9 @@ def uss_flights(
                 else "false",
             },
             scope=v19.constants.Scope.Read,
+            server_id=server_id,
         )
+        query.query_type = QueryType.F3411v19Flights
         return FetchedUSSFlights(v19_query=query)
     elif rid_version == RIDVersion.f3411_22a:
         params = {
@@ -743,7 +1004,9 @@ def uss_flights(
             flights_url,
             params=params,
             scope=v22a.constants.Scope.DisplayProvider,
+            server_id=server_id,
         )
+        query.query_type = QueryType.F3411v22aFlights
         return FetchedUSSFlights(v22a_query=query)
     else:
         raise NotImplementedError(
@@ -828,10 +1091,11 @@ def flight_details(
     enhanced_details: bool,
     rid_version: RIDVersion,
     session: UTMClientSession,
+    server_id: Optional[str] = None,
 ) -> FetchedUSSFlightDetails:
     url = f"{flights_url}/{flight_id}/details"
     if rid_version == RIDVersion.f3411_19:
-        kwargs = {}
+        kwargs = {"server_id": server_id}
         if enhanced_details:
             kwargs["params"] = {"enhanced": "true"}
             kwargs["scope"] = (
@@ -843,7 +1107,11 @@ def flight_details(
         return FetchedUSSFlightDetails(v19_query=query)
     elif rid_version == RIDVersion.f3411_22a:
         query = fetch.query_and_describe(
-            session, "GET", url, scope=v22a.constants.Scope.DisplayProvider
+            session,
+            "GET",
+            url,
+            scope=v22a.constants.Scope.DisplayProvider,
+            server_id=server_id,
         )
         return FetchedUSSFlightDetails(v22a_query=query)
     else:
@@ -895,22 +1163,41 @@ def all_flights(
     session: UTMClientSession,
     dss_base_url: str = "",
     enhanced_details: bool = False,
+    server_id: Optional[str] = None,
 ) -> FetchedFlights:
     t = datetime.datetime.utcnow()
-    isa_list = isas(area, t, t, rid_version, session, dss_base_url)
+    isa_list = isas(
+        geo.get_latlngrect_vertices(area),
+        t,
+        t,
+        rid_version,
+        session,
+        dss_base_url,
+        server_id=server_id,
+    )
 
     uss_flight_queries: Dict[str, FetchedUSSFlights] = {}
     uss_flight_details_queries: Dict[str, FetchedUSSFlightDetails] = {}
     for flights_url in isa_list.flights_urls:
         flights_for_url = uss_flights(
-            flights_url, area, include_recent_positions, rid_version, session
+            flights_url,
+            area,
+            include_recent_positions,
+            rid_version,
+            session,
+            server_id=server_id,
         )
         uss_flight_queries[flights_url] = flights_for_url
 
         if get_details and flights_for_url.success:
             for flight in flights_for_url.flights:
                 details = flight_details(
-                    flights_url, flight.id, enhanced_details, rid_version, session
+                    flights_url,
+                    flight.id,
+                    enhanced_details,
+                    rid_version,
+                    session,
+                    server_id=server_id,
                 )
                 uss_flight_details_queries[flight.id] = details
 
@@ -988,13 +1275,18 @@ def subscription(
     rid_version: RIDVersion,
     session: UTMClientSession,
     dss_base_url: str = "",
+    server_id: Optional[str] = None,
 ) -> FetchedSubscription:
     if rid_version == RIDVersion.f3411_19:
         op = v19.api.OPERATIONS[v19.api.OperationID.GetSubscription]
         url = f"{dss_base_url}{op.path}".replace("{id}", subscription_id)
         return FetchedSubscription(
             v19_query=fetch.query_and_describe(
-                session, op.verb, url, scope=v19.constants.Scope.Read
+                session,
+                op.verb,
+                url,
+                scope=v19.constants.Scope.Read,
+                server_id=server_id,
             )
         )
     elif rid_version == RIDVersion.f3411_22a:
@@ -1002,7 +1294,11 @@ def subscription(
         url = f"{dss_base_url}{op.path}".replace("{id}", subscription_id)
         return FetchedSubscription(
             v22a_query=fetch.query_and_describe(
-                session, op.verb, url, scope=v22a.constants.Scope.DisplayProvider
+                session,
+                op.verb,
+                url,
+                scope=v22a.constants.Scope.DisplayProvider,
+                server_id=server_id,
             )
         )
     else:
@@ -1086,13 +1382,18 @@ def subscriptions(
     rid_version: RIDVersion,
     session: UTMClientSession,
     dss_base_url: str = "",
+    server_id: Optional[str] = None,
 ) -> FetchedSubscriptions:
     if rid_version == RIDVersion.f3411_19:
         op = v19.api.OPERATIONS[v19.api.OperationID.SearchSubscriptions]
         url = f"{dss_base_url}{op.path}?area={rid_v1.geo_polygon_string_from_s2(area)}"
         return FetchedSubscriptions(
             v19_query=fetch.query_and_describe(
-                session, op.verb, url, scope=v19.constants.Scope.Read
+                session,
+                op.verb,
+                url,
+                scope=v19.constants.Scope.Read,
+                server_id=server_id,
             )
         )
     elif rid_version == RIDVersion.f3411_22a:
@@ -1100,7 +1401,11 @@ def subscriptions(
         url = f"{dss_base_url}{op.path}?area={rid_v2.geo_polygon_string_from_s2(area)}"
         return FetchedSubscriptions(
             v22a_query=fetch.query_and_describe(
-                session, op.verb, url, scope=v22a.constants.Scope.DisplayProvider
+                session,
+                op.verb,
+                url,
+                scope=v22a.constants.Scope.DisplayProvider,
+                server_id=server_id,
             )
         )
     else:

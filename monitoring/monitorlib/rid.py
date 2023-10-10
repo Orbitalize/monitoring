@@ -5,6 +5,7 @@ import arrow
 
 from monitoring.monitorlib import schema_validation
 from uas_standards.astm.f3411 import v19, v22a
+import uas_standards.astm.f3411.v19.api
 import uas_standards.astm.f3411.v19.constants
 import uas_standards.astm.f3411.v22a.api
 import uas_standards.astm.f3411.v22a.constants
@@ -48,6 +49,15 @@ class RIDVersion(str, Enum):
             raise ValueError(f"Unsupported RID version '{self}'")
 
     @property
+    def openapi_search_isas_response_path(self) -> str:
+        if self == RIDVersion.f3411_19:
+            return schema_validation.F3411_19.SearchIdentificationServiceAreasResponse
+        elif self == RIDVersion.f3411_22a:
+            return schema_validation.F3411_22a.SearchIdentificationServiceAreasResponse
+        else:
+            raise ValueError(f"Unsupported RID version '{self}'")
+
+    @property
     def openapi_put_isa_response_path(self) -> str:
         if self == RIDVersion.f3411_19:
             return schema_validation.F3411_19.PutIdentificationServiceAreaResponse
@@ -57,13 +67,13 @@ class RIDVersion(str, Enum):
             raise ValueError(f"Unsupported RID version '{self}'")
 
     @property
-    def read_scope(self) -> str:
+    def openapi_delete_isa_response_path(self) -> str:
         if self == RIDVersion.f3411_19:
-            return v19.constants.Scope.Read
+            return schema_validation.F3411_19.DeleteIdentificationServiceAreaResponse
         elif self == RIDVersion.f3411_22a:
-            return v22a.constants.Scope.DisplayProvider
+            return schema_validation.F3411_22a.DeleteIdentificationServiceAreaResponse
         else:
-            raise ValueError("Unsupported RID version '{}'".format(self))
+            raise ValueError(f"Unsupported RID version '{self}'")
 
     @property
     def realtime_period(self) -> timedelta:
@@ -156,6 +166,24 @@ class RIDVersion(str, Enum):
             raise ValueError("Unsupported RID version '{}'".format(self))
 
     @property
+    def dp_details_resp_percentile95_s(self) -> float:
+        if self == RIDVersion.f3411_19:
+            return v19.constants.NetDpDetailsResponse95thPercentileSeconds
+        elif self == RIDVersion.f3411_22a:
+            return v22a.constants.NetDpDetailsResponse95thPercentileSeconds
+        else:
+            raise ValueError("Unsupported RID version '{}'".format(self))
+
+    @property
+    def dp_details_resp_percentile99_s(self) -> float:
+        if self == RIDVersion.f3411_19:
+            return v19.constants.NetDpDetailsResponse99thPercentileSeconds
+        elif self == RIDVersion.f3411_22a:
+            return v22a.constants.NetDpDetailsResponse99thPercentileSeconds
+        else:
+            raise ValueError("Unsupported RID version '{}'".format(self))
+
+    @property
     def dp_data_resp_percentile99_s(self) -> float:
         if self == RIDVersion.f3411_19:
             return v19.constants.NetDpDataResponse99thPercentileSeconds
@@ -164,9 +192,37 @@ class RIDVersion(str, Enum):
         else:
             raise ValueError("Unsupported RID version '{}'".format(self))
 
+    @property
+    def sp_data_resp_percentile95_s(self) -> float:
+        if self == RIDVersion.f3411_19:
+            return v19.constants.NetSpDataResponseTime95thPercentileSeconds
+        elif self == RIDVersion.f3411_22a:
+            return v22a.constants.NetSpDataResponseTime95thPercentileSeconds
+        else:
+            raise ValueError("Unsupported RID version '{}'".format(self))
+
+    @property
+    def sp_data_resp_percentile99_s(self) -> float:
+        if self == RIDVersion.f3411_19:
+            return v19.constants.NetSpDataResponseTime99thPercentileSeconds
+        elif self == RIDVersion.f3411_22a:
+            return v22a.constants.NetSpDataResponseTime99thPercentileSeconds
+        else:
+            raise ValueError("Unsupported RID version '{}'".format(self))
+
+    @property
+    def dss_max_subscriptions_per_area(self) -> int:
+        if self == RIDVersion.f3411_19:
+            return v19.constants.NetDSSMaxSubscriptionPerArea
+        elif self == RIDVersion.f3411_22a:
+            return v22a.constants.NetDSSMaxSubscriptionPerArea
+        else:
+            raise ValueError("Unsupported RID version '{}'".format(self))
+
     def flights_url_of(self, base_url: str) -> str:
         if self == RIDVersion.f3411_19:
-            return base_url
+            flights_path = v19.api.OPERATIONS[v19.api.OperationID.SearchFlights].path
+            return base_url + flights_path
         elif self == RIDVersion.f3411_22a:
             flights_path = v22a.api.OPERATIONS[v22a.api.OperationID.SearchFlights].path
             return base_url + flights_path

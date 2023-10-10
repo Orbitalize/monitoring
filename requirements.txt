@@ -26,6 +26,7 @@ loguru==0.6.0
 lxml==4.9.1
 marko==1.2.2  # uss_qualifier
 pem==21.2.0  # deployment_manager
+pvlib==0.10.1
 pyjwt==2.4.0
 pykml==0.2.0
 pyopenssl  # No specific version target because we always want the latest SSL/TLS support
@@ -38,5 +39,5 @@ s2sphere==0.2.5
 shapely==1.7.1
 structlog==21.5.0  # deployment_manager
 termcolor==1.1.0
-uas_standards==1.3.0
+uas_standards==2.1.0
 Werkzeug==2.0.3 # See https://github.com/interuss/dss/issues/753

@@ -6,10 +6,11 @@ import marko
 import marko.element
 import marko.inline
 
-import monitoring
 from monitoring import uss_qualifier as uss_qualifier_module
-from monitoring.monitorlib import versioning
 from monitoring.monitorlib.inspection import fullname, get_module_object_by_name
+from monitoring.monitorlib.versioning import repo_url_of
+from monitoring.uss_qualifier.requirements.definitions import RequirementID
+from monitoring.uss_qualifier.scenarios.definitions import TestScenarioTypeName
 from monitoring.uss_qualifier.scenarios.documentation.definitions import (
     TestStepDocumentation,
     TestCheckDocumentation,
@@ -17,7 +18,6 @@ from monitoring.uss_qualifier.scenarios.documentation.definitions import (
     TestScenarioDocumentation,
 )
 
-_REPO_ROOT = os.path.split(os.path.split(inspect.getfile(monitoring))[0])[0]
 RESOURCES_HEADING = "resources"
 CLEANUP_HEADING = "cleanup"
 TEST_SCENARIO_SUFFIX = " test scenario"
@@ -38,6 +38,8 @@ def _text_of(value) -> str:
             result += _text_of(child)
         return result
     elif isinstance(value, marko.inline.InlineElement):
+        if isinstance(value, marko.inline.LineBreak):
+            return "\n"
         if isinstance(value.children, str):
             return value.children
         result = ""
@@ -48,14 +50,6 @@ def _text_of(value) -> str:
         raise NotImplementedError(
             "Cannot yet extract raw text from {}".format(value.__class__.__name__)
         )
-
-
-def _url_of(abspath: str) -> str:
-    relpath = os.path.relpath(abspath, start=_REPO_ROOT)
-    version = versioning.get_commit_hash()
-    if version == "unknown":
-        version = "main"
-    return f"https://github.com/interuss/monitoring/blob/{version}/{relpath}"
 
 
 def _length_of_section(values, start_of_section: int) -> int:
@@ -72,18 +66,23 @@ def _parse_test_check(
     values, doc_filename: str, anchors: Dict[Any, str]
 ) -> TestCheckDocumentation:
     name = _text_of(values[0])[0 : -len(TEST_CHECK_SUFFIX)]
-    url = _url_of(doc_filename + anchors[values[0]])
+    url = repo_url_of(doc_filename + anchors[values[0]])
+    has_todo = False
 
     reqs: List[str] = []
     c = 1
     while c < len(values):
         if isinstance(values[c], marko.block.Paragraph):
+            if "TODO:" in _text_of(values[c]):
+                has_todo = True
             for child in values[c].children:
                 if isinstance(child, marko.inline.StrongEmphasis):
-                    reqs.append(_text_of(child))
+                    reqs.append(RequirementID(_text_of(child)))
         c += 1
 
-    return TestCheckDocumentation(name=name, url=url, applicable_requirements=reqs)
+    return TestCheckDocumentation(
+        name=name, url=url, applicable_requirements=reqs, has_todo=has_todo
+    )
 
 
 def _get_linked_test_step(
@@ -124,19 +123,18 @@ def _parse_test_step(
     name = _text_of(values[0])
     if name.lower().endswith(TEST_STEP_SUFFIX):
         name = name[0 : -len(TEST_STEP_SUFFIX)]
-    url = _url_of(doc_filename + anchors[values[0]])
+    url = repo_url_of(doc_filename + anchors[values[0]])
 
+    checks: List[TestCheckDocumentation] = []
     if values[0].children and isinstance(
         values[0].children[0], marko.block.inline.Link
     ):
-        # We should include the content of the linked test step document rather
-        # than extracting content from this section.
-        step = _get_linked_test_step(values[0].children[0].dest, doc_filename)
-        step = TestStepDocumentation(step)
-        step.name = name
-        return step
+        # We include the content of the linked test step document before
+        # extracting content from this section.
+        linked_step = _get_linked_test_step(values[0].children[0].dest, doc_filename)
+        url = linked_step.url
+        checks = linked_step.checks.copy()
 
-    checks: List[TestCheckDocumentation] = []
     c = 1
     while c < len(values):
         if isinstance(values[c], marko.block.Heading):
@@ -158,7 +156,7 @@ def _parse_test_case(
 ) -> TestCaseDocumentation:
     name = _text_of(values[0])[0 : -len(TEST_CASE_SUFFIX)]
 
-    url = _url_of(doc_filename + anchors[values[0]])
+    url = repo_url_of(doc_filename + anchors[values[0]])
 
     steps: List[TestStepDocumentation] = []
     c = 1
@@ -232,7 +230,7 @@ def _parse_documentation(scenario: Type) -> TestScenarioDocumentation:
         )
     with open(doc_filename, "r") as f:
         doc = marko.parse(f.read())
-    url = _url_of(doc_filename)
+    url = repo_url_of(doc_filename)
     anchors = _get_anchors(doc)
 
     # Extract the scenario name from the first top-level header
@@ -296,6 +294,7 @@ def _parse_documentation(scenario: Type) -> TestScenarioDocumentation:
         "cases": test_cases,
         "resources": resources,
         "url": url,
+        "local_path": os.path.abspath(doc_filename),
     }
     if cleanup is not None:
         kwargs["cleanup"] = cleanup
@@ -309,6 +308,8 @@ def get_documentation(scenario: Type) -> TestScenarioDocumentation:
     return getattr(scenario, DOC_CACHE_ATTRIBUTE)
 
 
-def get_documentation_by_name(scenario_type_name: str) -> TestScenarioDocumentation:
+def get_documentation_by_name(
+    scenario_type_name: TestScenarioTypeName,
+) -> TestScenarioDocumentation:
     scenario_type = get_module_object_by_name(uss_qualifier_module, scenario_type_name)
     return get_documentation(scenario_type)

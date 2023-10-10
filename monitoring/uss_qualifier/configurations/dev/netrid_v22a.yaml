@@ -18,21 +18,21 @@ v1:
     artifacts:
         report:
             report_path: output/report_netrid_v22a.json
-            redact_access_tokens: true
-
         tested_roles:
-            report_path: output/tested_requirements_netrid_v22a.html
-            roles:
-              - name: DSS Provider role
-                requirement_set: astm.f3411.v22a.dss_provider
-                participants:
-                  - uss1
-                  - uss2
-              - name: Service Provider role
-                requirement_set: astm.f3411.v22a.service_provider
-                participants:
-                  - uss1
-              - name: Display Provider role
-                requirement_set: astm.f3411.v22a.display_provider
-                participants:
-                  - uss2
+            report_path: output/tested_roles_netrid_v22a
+        tested_requirements:
+            output_path: output/tested_requirements_f3411v22a
+            requirement_collections:
+              sp_dp_dss:
+                  requirement_sets:
+                      - astm.f3411.v22a.service_provider#Mandatory requirements
+                      - astm.f3411.v22a.display_provider#Mandatory requirements
+                      - astm.f3411.v22a.dss_provider
+              sp_dss:
+                  requirement_sets:
+                      - astm.f3411.v22a.service_provider#Mandatory requirements
+                      - astm.f3411.v22a.dss_provider
+                      - astm.f3548.v21.scd#Automated verification
+            participant_requirements:
+                uss1: sp_dp_dss
+                uss2: sp_dss

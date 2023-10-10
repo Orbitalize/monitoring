@@ -14,7 +14,9 @@ format: json-schema
 	cd monitoring && make format
 
 .PHONY: lint
-lint: python-lint shell-lint json-schema-lint
+lint:
+	cd monitoring && make lint
+	cd schemas && make lint
 
 .PHONY: check-hygiene
 check-hygiene: python-lint hygiene validate-uss-qualifier-docs shell-lint
@@ -66,13 +68,11 @@ probe-locally:
 
 .PHONY: start-uss-mocks
 start-uss-mocks:
-	monitoring/atproxy/run_locally.sh -d
 	monitoring/mock_uss/start_all_local_mocks.sh
 
 .PHONY: stop-uss-mocks
 stop-uss-mocks:
 	monitoring/mock_uss/stop_all_local_mocks.sh
-	docker container rm -f atproxy
 
 # The prepended dash ignores errors. This allows collecting logs even if some containers are missing.
 .PHONY: collect-local-logs

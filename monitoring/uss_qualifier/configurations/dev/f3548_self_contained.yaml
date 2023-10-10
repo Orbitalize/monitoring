@@ -42,10 +42,10 @@ v1:
             flight_planners:
             # uss1 is the mock_uss directly exposing scdsc functionality
             - participant_id: uss1
-              injection_base_url: http://host.docker.internal:8074/scdsc
-            # uss2 uses atproxy, with requests being fulfilled by mock_uss with atproxy_client functionality enabled
+              injection_base_url: http://scdsc.uss1.localutm/scdsc
+            # uss2 is another mock_uss directly exposing scdsc functionality
             - participant_id: uss2
-              injection_base_url: http://host.docker.internal:8075/scd
+              injection_base_url: http://scdsc.uss2.localutm/scdsc
 
         # Details of conflicting flights (used in nominal planning scenario)
         conflicting_flights:
@@ -76,7 +76,15 @@ v1:
           specification:
             # A USS that hosts a DSS instance is also a participant in the test, even if they don't fulfill any other roles
             participant_id: uss1
-            base_url: http://host.docker.internal:8082
+            base_url: http://dss.uss1.localutm
+
+    # When a test run is executed, a "baseline signature" is computed uniquely identifying the "baseline" of the test,
+    # usually excluding exactly what systems are participating in the test (the "environment").  This is a list of
+    # elements within this configuration to exclude from the configuration when computing the baseline signature.
+    non_baseline_inputs:
+      - v1.test_run.resources.resource_declarations.utm_auth
+      - v1.test_run.resources.resource_declarations.flight_planners
+      - v1.test_run.resources.resource_declarations.dss
 
   # This block defines artifacts related to the test run.  Note that all paths are
   # relative to where uss_qualifier is executed from, and are located inside the
@@ -85,17 +93,10 @@ v1:
     report:
       # Path to main report output
       report_path: output/report_f3548_self_contained.json
-      redact_access_tokens: true
 
     # Information about a report including a list of roles tested and which participants are attempting to fill them
     tested_roles:
-      report_path: output/tested_requirements_f3548_self_contained.html
-      roles:
-        - name: Strategic Coordination role
-          requirement_set: astm.f3548.v21.scd
-          participants:
-            - uss1
-            - uss2
+      report_path: output/tested_roles_f3548_self_contained
 
     graph:
       # Path to output GraphViz test file summarizing test run

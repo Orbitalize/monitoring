@@ -8,6 +8,7 @@ class TestCheckDocumentation(ImplicitDict):
     name: str
     url: Optional[str] = None
     applicable_requirements: List[RequirementID]
+    has_todo: bool
 
 
 class TestStepDocumentation(ImplicitDict):
@@ -31,6 +32,7 @@ class TestCaseDocumentation(ImplicitDict):
 class TestScenarioDocumentation(ImplicitDict):
     name: str
     url: Optional[str] = None
+    local_path: str
     resources: Optional[List[str]]
     cases: List[TestCaseDocumentation]
     cleanup: Optional[TestStepDocumentation]

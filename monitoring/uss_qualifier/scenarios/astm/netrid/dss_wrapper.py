@@ -3,12 +3,14 @@ import s2sphere
 
 from typing import Optional, List, Set
 
+from monitoring.monitorlib import schema_validation
 from monitoring.monitorlib.fetch import QueryError
 from monitoring.monitorlib.fetch.rid import (
     FetchedSubscription,
     FetchedSubscriptions,
     RIDQuery,
     FetchedISA,
+    FetchedISAs,
 )
 from monitoring.monitorlib.mutate import rid as mutate
 from monitoring.monitorlib.fetch import rid as fetch
@@ -20,9 +22,13 @@ from monitoring.uss_qualifier.scenarios.scenario import (
     TestScenario,
 )
 
+MAX_SKEW = 1e-6  # seconds maximum difference between expected and actual timestamps
+
 
 class DSSWrapper(object):
     """Wraps a DSS instance with test checks."""
+
+    # TODO: adapt other functions with corresponding test step and sub-checks like it is done for put_isa
 
     _scenario: TestScenario
     _dss: DSSInstance
@@ -47,6 +53,7 @@ class DSSWrapper(object):
     def has_private_address(self) -> bool:
         return self._dss.has_private_address
 
+    # TODO: QueryError is not actually raised for RID functions, this function and its uses should be removed
     def _handle_query_error(
         self,
         check: PendingCheck,
@@ -69,6 +76,7 @@ class DSSWrapper(object):
         fail_msg: str,
         required_status_code: Optional[Set[int]] = None,
         severity: Severity = Severity.High,
+        fail_details: Optional[str] = None,
     ):
         """
         :param required_status_code: one of those status code is expected, overrides the success check
@@ -82,9 +90,96 @@ class DSSWrapper(object):
                 summary=fail_msg,
                 severity=severity,
                 participants=[self._dss.participant_id],
-                details=f"{q.status_code} response: " + "\n".join(q.errors),
+                details=f"{fail_details}\n{q.status_code} response: "
+                + "\n".join(q.errors)
+                if fail_details is not None
+                else f"{q.status_code} response: " + "\n".join(q.errors),
                 query_timestamps=[q.query.request.timestamp],
             )
+
+    def search_isas(
+        self,
+        main_check: PendingCheck,
+        area: List[s2sphere.LatLng],
+        start_time: Optional[datetime.datetime] = None,
+        end_time: Optional[datetime.datetime] = None,
+    ) -> FetchedISAs:
+        """Search for ISAs at the DSS.
+
+        Query failure will fail the provided main check. If the query is successful, the sub-checks of the test step
+        described in '[v19|v22a]/dss/test_steps/search_isas.md' are performed. Some of those might fail the main check.
+
+        :return: the DSS response
+        """
+
+        isas = fetch.isas(
+            area=area,
+            start_time=start_time,
+            end_time=end_time,
+            rid_version=self._dss.rid_version,
+            session=self._dss.client,
+            server_id=self._dss.participant_id,
+        )
+        self._handle_query_result(
+            main_check,
+            isas,
+            f"Failed to search ISAs in {area} from {start_time} to {end_time}",
+        )
+
+        dss_id = [self._dss.participant_id]
+        t_dss = isas.query.request.timestamp
+
+        with self._scenario.check("ISAs search response format", dss_id) as sub_check:
+            errors = schema_validation.validate(
+                self._dss.rid_version.openapi_path,
+                self._dss.rid_version.openapi_search_isas_response_path,
+                isas.query.response.json,
+            )
+            if errors:
+                details = "\n".join(f"[{e.json_path}] {e.message}" for e in errors)
+                sub_check.record_failed(
+                    "Search ISA response format was invalid",
+                    Severity.Medium,
+                    "Found the following schema validation errors in the DSS response:\n"
+                    + details,
+                    query_timestamps=[t_dss],
+                )
+
+        return isas
+
+    def search_isas_expect_response_code(
+        self,
+        main_check: PendingCheck,
+        expected_error_codes: Set[int],
+        area: List[s2sphere.LatLng],
+        start_time: Optional[datetime.datetime] = None,
+        end_time: Optional[datetime.datetime] = None,
+    ) -> FetchedISAs:
+        """Attempt to search for ISAs at the DSS, and expect the specified HTTP response code.
+
+        A check fail is considered of high severity and as such will raise a ScenarioCannotContinueError.
+
+        :return: the DSS response
+        """
+
+        isas = fetch.isas(
+            area=area,
+            start_time=start_time,
+            end_time=end_time,
+            rid_version=self._dss.rid_version,
+            session=self._dss.client,
+            server_id=self._dss.participant_id,
+        )
+
+        self._handle_query_result(
+            check=main_check,
+            q=isas,
+            required_status_code=expected_error_codes,
+            fail_msg=f"Searching for ISAs resulted in an HTTP code not in {expected_error_codes}",
+            fail_details=f"Search area: {area}; from {start_time} to {end_time}",
+        )
+
+        return isas
 
     def get_isa(
         self,
@@ -103,6 +198,7 @@ class DSSWrapper(object):
                 isa_id=isa_id,
                 rid_version=self._dss.rid_version,
                 session=self._dss.client,
+                server_id=self._dss.participant_id,
             )
 
             self._handle_query_result(check, isa, f"Failed to get ISA {isa_id}")
@@ -124,9 +220,39 @@ class DSSWrapper(object):
             "DSS query was not successful, but a High Severity issue didn't interrupt execution"
         )
 
-    def put_isa(
+    def get_isa_expect_response_code(
         self,
         check: PendingCheck,
+        expected_error_codes: Set[int],
+        isa_id: str,
+    ) -> FetchedISA:
+        """Attempt to fetch an ISA at the DSS, and expect the specified HTTP response code.
+
+        A check fail is considered of high severity and as such will raise a ScenarioCannotContinueError.
+
+        :return: the DSS response
+        """
+
+        isa = fetch.isa(
+            isa_id=isa_id,
+            rid_version=self._dss.rid_version,
+            session=self._dss.client,
+            server_id=self._dss.participant_id,
+        )
+
+        self._handle_query_result(
+            check=check,
+            q=isa,
+            required_status_code=expected_error_codes,
+            fail_msg=f"Fetching ISA {isa_id} resulted in an HTTP code not in {expected_error_codes}",
+            fail_details=f"ISA: ID {isa_id}",
+        )
+
+        return isa
+
+    def put_isa(
+        self,
+        main_check: PendingCheck,
         area_vertices: List[s2sphere.LatLng],
         alt_lo: float,
         alt_hi: float,
@@ -137,110 +263,252 @@ class DSSWrapper(object):
         isa_version: Optional[str] = None,
     ) -> ISAChange:
         """Create or update an ISA at the DSS.
-        A check fail is considered of high severity and as such will raise a ScenarioCannotContinueError.
-        Fails if the ID of the ISA returned by the DSS does not match the submitted one.
-        Fails if the end time of the ISA returned by the DSS does not match the submitted one.
+
+        Query failure will fail the provided main check. If the query is successful, the sub-checks of the test step
+        described in '[v19|v22a]/dss/test_steps/put_isa.md' are performed. Some of those might fail the main check.
 
         :return: the DSS response
         """
 
-        try:
-            mutated_isa = mutate.put_isa(
-                area_vertices=area_vertices,
-                alt_lo=alt_lo,
-                alt_hi=alt_hi,
-                start_time=start_time,
-                end_time=end_time,
-                uss_base_url=uss_base_url,
-                isa_id=isa_id,
-                isa_version=isa_version,
-                rid_version=self._dss.rid_version,
-                utm_client=self._dss.client,
-            )
-
-            self._handle_query_result(
-                check, mutated_isa.dss_query, f"Failed to insert ISA {isa_id}"
-            )
-
-            dt = abs(
-                mutated_isa.dss_query.isa.time_end.timestamp() - end_time.timestamp()
-            )
-            if dt > 0.001:
-                check.record_failed(
-                    summary=f"DSS did not correctly create or update ISA; mismatched end time",
-                    severity=Severity.Medium,
-                    participants=[self._dss.participant_id],
-                    details=f"Expected: '{end_time}', received: '{mutated_isa.dss_query.isa.time_end}'",
-                    query_timestamps=[mutated_isa.dss_query.query.request.timestamp],
-                )
-            elif isa_id != mutated_isa.dss_query.isa.id:
-                check.record_failed(
-                    summary=f"DSS did not return correct ISA",
-                    severity=Severity.High,
-                    participants=[self._dss.participant_id],
-                    details=f"Expected ISA ID {isa_id} but got {mutated_isa.dss_query.isa.id}",
-                    query_timestamps=[mutated_isa.dss_query.query.request.timestamp],
-                )
-            elif (
-                isa_version is not None
-                and mutated_isa.dss_query.isa.version == isa_version
-            ):
-                check.record_failed(
-                    summary=f"ISA was not modified",
-                    severity=Severity.High,
-                    participants=[self._dss.participant_id],
-                    details=f"Got old version {isa_version} while expecting new version",
-                    query_timestamps=[mutated_isa.dss_query.query.request.timestamp],
-                )
-            else:
-                return mutated_isa
-
-        except QueryError as e:
-            self._handle_query_error(check, e)
-        raise RuntimeError(
-            "DSS query was not successful, but a High Severity issue didn't interrupt execution"
+        mutated_isa = mutate.put_isa(
+            area_vertices=area_vertices,
+            alt_lo=alt_lo,
+            alt_hi=alt_hi,
+            start_time=start_time,
+            end_time=end_time,
+            uss_base_url=uss_base_url,
+            isa_id=isa_id,
+            isa_version=isa_version,
+            rid_version=self._dss.rid_version,
+            utm_client=self._dss.client,
+            server_id=self._dss.participant_id,
         )
+        self._handle_query_result(
+            main_check, mutated_isa.dss_query, f"Failed to insert ISA {isa_id}"
+        )
+        for notification_query in mutated_isa.notifications.values():
+            self._scenario.record_query(notification_query.query)
+
+        dss_id = [self._dss.participant_id]
+        t_dss = mutated_isa.dss_query.query.request.timestamp
+        dss_isa = mutated_isa.dss_query.isa
+
+        # sub-checks that do not fail the main check
+        with self._scenario.check("ISA response code", dss_id) as sub_check:
+            if mutated_isa.dss_query.query.status_code == 201:
+                sub_check.record_failed(
+                    summary=f"PUT ISA returned technically-incorrect 201",
+                    severity=Severity.Low,
+                    details="DSS should return 200 from PUT ISA, but instead returned the reasonable-but-technically-incorrect code 201",
+                    query_timestamps=[t_dss],
+                )
+
+        with self._scenario.check("ISA response format", dss_id) as sub_check:
+            errors = schema_validation.validate(
+                self._dss.rid_version.openapi_path,
+                self._dss.rid_version.openapi_put_isa_response_path,
+                mutated_isa.dss_query.query.response.json,
+            )
+            if errors:
+                details = "\n".join(f"[{e.json_path}] {e.message}" for e in errors)
+                sub_check.record_failed(
+                    "PUT ISA response format was invalid",
+                    Severity.Medium,
+                    "Found the following schema validation errors in the DSS response:\n"
+                    + details,
+                    query_timestamps=[t_dss],
+                )
+
+        # sub-checks that fail the main check
+        def _fail_sub_check(
+            _sub_check: PendingCheck, _summary: str, _details: str
+        ) -> None:
+            """Fails with Medium severity the sub_check and with High severity the main check."""
+
+            _sub_check.record_failed(
+                summary=_summary,
+                severity=Severity.Medium,
+                details=_details,
+                query_timestamps=[t_dss],
+            )
+            main_check.record_failed(
+                summary=f"PUT ISA request succeeded, but the DSS response is not valid: {_summary}",
+                severity=Severity.High,
+                details=_details,
+                query_timestamps=[t_dss],
+            )
+
+        with self._scenario.check("ISA ID matches", dss_id) as sub_check:
+            if isa_id != dss_isa.id:
+                _fail_sub_check(
+                    sub_check,
+                    "DSS did not return correct ISA",
+                    f"Expected ISA ID {isa_id} but got {dss_isa.id}",
+                )
+
+        if isa_version is not None:
+            with self._scenario.check("ISA version changed", dss_id) as sub_check:
+                if dss_isa.version == isa_version:
+                    _fail_sub_check(
+                        sub_check,
+                        "ISA was not modified",
+                        f"Got old version {isa_version} while expecting new version",
+                    )
+
+        with self._scenario.check("ISA version format", dss_id) as sub_check:
+            if not all(c not in "\0\t\r\n#%/:?@[\]" for c in dss_isa.version):
+                _fail_sub_check(
+                    sub_check,
+                    f"DSS returned ISA (ID {isa_id}) with invalid version format",
+                    f"DSS returned an ISA with a version that is not URL-safe: {dss_isa.version}",
+                )
+
+        with self._scenario.check("ISA start time matches", dss_id) as sub_check:
+            if abs((dss_isa.time_start - start_time).total_seconds()) > MAX_SKEW:
+                _fail_sub_check(
+                    sub_check,
+                    f"DSS returned ISA (ID {isa_id}) with incorrect start time",
+                    f"DSS should have returned an ISA with a start time of {start_time}, but instead the ISA returned had a start time of {dss_isa.time_start}",
+                )
+
+        with self._scenario.check("ISA end time matches", dss_id) as sub_check:
+            if abs((dss_isa.time_end - end_time).total_seconds()) > MAX_SKEW:
+                _fail_sub_check(
+                    sub_check,
+                    f"DSS returned ISA (ID {isa_id}) with incorrect end time",
+                    f"DSS should have returned an ISA with an end time of {end_time}, but instead the ISA returned had an end time of {dss_isa.time_end}",
+                )
+
+        with self._scenario.check("ISA URL matches", dss_id) as sub_check:
+            expected_flights_url = self._dss.rid_version.flights_url_of(uss_base_url)
+            actual_flights_url = dss_isa.flights_url
+            if actual_flights_url != expected_flights_url:
+                _fail_sub_check(
+                    sub_check,
+                    f"DSS returned ISA (ID {isa_id}) with incorrect URL",
+                    f"DSS should have returned an ISA with a flights URL of {expected_flights_url}, but instead the ISA returned had a flights URL of {actual_flights_url}",
+                )
+
+        # TODO: Validate subscriber notifications
+
+        return mutated_isa
 
     def del_isa(
         self,
-        check: PendingCheck,
+        main_check: PendingCheck,
         isa_id: str,
         isa_version: str,
     ) -> ISAChange:
         """Delete an ISA at the DSS.
+
+        Query failure will fail the provided main check. If the query is successful, the sub-checks of the test step
+        described in '[v19|v22a]/dss/test_steps/delete_isa.md' are performed. Some of those might fail the main check.
+
+        :return: the DSS response
+        """
+
+        del_isa = mutate.delete_isa(
+            isa_id=isa_id,
+            isa_version=isa_version,
+            rid_version=self._dss.rid_version,
+            utm_client=self._dss.client,
+            server_id=self._dss.participant_id,
+        )
+        self._handle_query_result(
+            main_check, del_isa.dss_query, f"Failed to delete ISA {isa_id}"
+        )
+        for notification_query in del_isa.notifications.values():
+            self._scenario.record_query(notification_query.query)
+
+        dss_id = [self._dss.participant_id]
+        t_dss = del_isa.dss_query.query.request.timestamp
+        dss_isa = del_isa.dss_query.isa
+
+        # sub-checks that do not fail the main check
+        with self._scenario.check("ISA response format", dss_id) as sub_check:
+            errors = schema_validation.validate(
+                self._dss.rid_version.openapi_path,
+                self._dss.rid_version.openapi_delete_isa_response_path,
+                del_isa.dss_query.query.response.json,
+            )
+            if errors:
+                details = "\n".join(f"[{e.json_path}] {e.message}" for e in errors)
+                sub_check.record_failed(
+                    "Delete ISA response format was invalid",
+                    Severity.Medium,
+                    "Found the following schema validation errors in the DSS response:\n"
+                    + details,
+                    query_timestamps=[t_dss],
+                )
+
+        # sub-checks that fail the main check
+        def _fail_sub_check(
+            _sub_check: PendingCheck, _summary: str, _details: str
+        ) -> None:
+            """Fails with Medium severity the sub_check and with High severity the main check."""
+
+            _sub_check.record_failed(
+                summary=_summary,
+                severity=Severity.Medium,
+                details=_details,
+                query_timestamps=[t_dss],
+            )
+            main_check.record_failed(
+                summary=f"Delete ISA request succeeded, but the DSS response is not valid: {_summary}",
+                severity=Severity.High,
+                details=_details,
+                query_timestamps=[t_dss],
+            )
+
+        with self._scenario.check("ISA ID matches", dss_id) as sub_check:
+            if isa_id != dss_isa.id:
+                _fail_sub_check(
+                    sub_check,
+                    "Deleted ISA ID did not match",
+                    f"Expected ISA ID {isa_id} but got {dss_isa.id}",
+                )
+
+        with self._scenario.check("ISA version matches", dss_id) as sub_check:
+            if dss_isa.version != isa_version:
+                _fail_sub_check(
+                    sub_check,
+                    "Deleted ISA version did not match",
+                    f"Expected ISA version {isa_version} but got {dss_isa.version}",
+                )
+
+        return del_isa
+
+    def del_isa_expect_response_code(
+        self,
+        main_check: PendingCheck,
+        expected_error_codes: Set[int],
+        isa_id: str,
+        isa_version: str,
+    ) -> ISAChange:
+        """Attempt to delete an ISA at the DSS, and expect the specified HTTP response code.
+
         A check fail is considered of high severity and as such will raise a ScenarioCannotContinueError.
 
         :return: the DSS response
         """
 
-        try:
-            del_isa = mutate.delete_isa(
-                isa_id=isa_id,
-                isa_version=isa_version,
-                rid_version=self._dss.rid_version,
-                utm_client=self._dss.client,
-            )
-
-            self._handle_query_result(
-                check, del_isa.dss_query, f"Failed to delete ISA {isa_id}"
-            )
-
-            if isa_version != del_isa.dss_query.isa.version:
-                check.record_failed(
-                    summary=f"Deleted ISA did not match",
-                    severity=Severity.High,
-                    participants=[self._dss.participant_id],
-                    details=f"DSS reported deletion of version {isa_version} while expecting {del_isa.dss_query.isa.version}",
-                    query_timestamps=[del_isa.dss_query.query.request.timestamp],
-                )
-            else:
-                return del_isa
-
-        except QueryError as e:
-            self._handle_query_error(check, e)
-        raise RuntimeError(
-            "DSS query was not successful, but a High Severity issue didn't interrupt execution"
+        del_isa = mutate.delete_isa(
+            isa_id=isa_id,
+            isa_version=isa_version,
+            rid_version=self._dss.rid_version,
+            utm_client=self._dss.client,
+            server_id=self._dss.participant_id,
         )
+
+        self._handle_query_result(
+            check=main_check,
+            q=del_isa.dss_query,
+            required_status_code=expected_error_codes,
+            fail_msg=f"Deleting ISA {isa_id} resulted in an HTTP code not in {expected_error_codes}",
+            fail_details=f"ISA: ID {isa_id}; version {isa_version}",
+        )
+
+        return del_isa
 
     def cleanup_isa(
         self,
@@ -257,6 +525,7 @@ class DSSWrapper(object):
                 isa_id=isa_id,
                 rid_version=self._dss.rid_version,
                 session=self._dss.client,
+                server_id=self._dss.participant_id,
             )
 
             self._handle_query_result(
@@ -271,6 +540,7 @@ class DSSWrapper(object):
                 isa_version=isa.isa.version,
                 rid_version=self._dss.rid_version,
                 utm_client=self._dss.client,
+                server_id=self._dss.participant_id,
             )
 
             self._handle_query_result(
@@ -305,6 +575,7 @@ class DSSWrapper(object):
                 area=area,
                 rid_version=self._dss.rid_version,
                 session=self._dss.client,
+                server_id=self._dss.participant_id,
             )
 
             self._handle_query_result(
@@ -335,6 +606,7 @@ class DSSWrapper(object):
                 subscription_id=sub_id,
                 rid_version=self._dss.rid_version,
                 session=self._dss.client,
+                server_id=self._dss.participant_id,
             )
 
             self._handle_query_result(
@@ -374,12 +646,61 @@ class DSSWrapper(object):
                 subscription_id=sub_id,
                 rid_version=self._dss.rid_version,
                 session=self._dss.client,
+                server_id=self._dss.participant_id,
             )
 
             self._handle_query_result(
                 check, sub, f"Failed to get subscription {sub_id}", {404}
             )
             return
+
+        except QueryError as e:
+            self._handle_query_error(check, e)
+        raise RuntimeError(
+            "DSS query was not successful, but a High Severity issue didn't interrupt execution"
+        )
+
+    def put_sub_expect_response_code(
+        self,
+        check: PendingCheck,
+        area_vertices: List[s2sphere.LatLng],
+        alt_lo: float,
+        alt_hi: float,
+        start_time: datetime.datetime,
+        end_time: datetime.datetime,
+        expected_error_codes: Set[int],
+        uss_base_url: str,
+        sub_id: str,
+        sub_version: Optional[str] = None,
+    ) -> ChangedSubscription:
+        """Attempt to create or update a subscription at the DSS, and expect the specified HTTP response code.
+
+        :return: the DSS response
+        """
+        try:
+            created_sub = mutate.upsert_subscription(
+                area_vertices=area_vertices,
+                alt_lo=alt_lo,
+                alt_hi=alt_hi,
+                start_time=start_time,
+                end_time=end_time,
+                uss_base_url=uss_base_url,
+                subscription_id=sub_id,
+                subscription_version=sub_version,
+                rid_version=self._dss.rid_version,
+                utm_client=self._dss.client,
+                server_id=self._dss.participant_id,
+            )
+
+            self._handle_query_result(
+                check=check,
+                q=created_sub,
+                required_status_code=expected_error_codes,
+                fail_msg=f"Inserting subscription {sub_id} had an http code not in {expected_error_codes}",
+                fail_details=f"Passed subscription start and end times: {start_time} - {end_time} (duration: {end_time - start_time})"
+                f"altitudes: {alt_lo} - {alt_hi}, area: {area_vertices}",
+            )
+            return created_sub
 
         except QueryError as e:
             self._handle_query_error(check, e)
@@ -417,6 +738,7 @@ class DSSWrapper(object):
                 subscription_version=sub_version,
                 rid_version=self._dss.rid_version,
                 utm_client=self._dss.client,
+                server_id=self._dss.participant_id,
             )
 
             self._handle_query_result(
@@ -448,6 +770,7 @@ class DSSWrapper(object):
                 subscription_version=sub_version,
                 rid_version=self._dss.rid_version,
                 utm_client=self._dss.client,
+                server_id=self._dss.participant_id,
             )
 
             self._handle_query_result(
@@ -486,6 +809,7 @@ class DSSWrapper(object):
                 subscription_id=sub_id,
                 rid_version=self._dss.rid_version,
                 session=self._dss.client,
+                server_id=self._dss.participant_id,
             )
 
             self._handle_query_result(
@@ -504,6 +828,7 @@ class DSSWrapper(object):
                 subscription_version=sub.subscription.version,
                 rid_version=self._dss.rid_version,
                 utm_client=self._dss.client,
+                server_id=self._dss.participant_id,
             )
 
             self._handle_query_result(

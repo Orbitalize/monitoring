@@ -38,7 +38,6 @@ done
 OUTPUT_DIR="monitoring/prober/output"
 mkdir -p "$OUTPUT_DIR"
 
-# TODO(#17): Remove F3411_22A_ALTITUDE_REFERENCE environment variable once DSS behaves correctly
 if ! docker run \
 	-u "$(id -u):$(id -g)" \
 	--network interop_ecosystem_network \
@@ -49,11 +48,11 @@ if ! docker run \
 	"${1:-.}" \
 	-rsx \
 	--junitxml="/app/$OUTPUT_DIR/e2e_test_result" \
-	--dss-endpoint http://dss:8082 \
-	--rid-auth "DummyOAuth(http://oauth:8085/token,sub=fake_uss)" \
-	--rid-v2-auth "DummyOAuth(http://oauth:8085/token,sub=fake_uss)" \
-	--scd-auth1 "DummyOAuth(http://oauth:8085/token,sub=fake_uss)" \
-	--scd-auth2 "DummyOAuth(http://oauth:8085/token,sub=fake_uss2)"	\
+	--dss-endpoint http://dss.uss1.localutm \
+	--rid-auth "DummyOAuth(http://oauth.authority.localutm:8085/token,sub=fake_uss)" \
+	--rid-v2-auth "DummyOAuth(http://oauth.authority.localutm:8085/token,sub=fake_uss)" \
+	--scd-auth1 "DummyOAuth(http://oauth.authority.localutm:8085/token,sub=fake_uss)" \
+	--scd-auth2 "DummyOAuth(http://oauth.authority.localutm:8085/token,sub=fake_uss2)"	\
 	--scd-api-version 1.0.0; then
 
     if [ "$CI" == "true" ]; then

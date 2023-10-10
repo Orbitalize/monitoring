@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 from enum import Enum
 import inspect
-from typing import Callable, Dict, List, Optional, TypeVar, Union, Set
+from typing import Callable, Dict, List, Optional, TypeVar, Union, Set, Type
 
 import arrow
 from implicitdict import StringBasedDateTime
@@ -24,7 +24,11 @@ from monitoring.uss_qualifier.reports.report import (
     ParticipantID,
     PassedCheck,
 )
-from monitoring.uss_qualifier.scenarios.definitions import TestScenarioDeclaration
+from monitoring.uss_qualifier.resources.resource import MissingResourceError
+from monitoring.uss_qualifier.scenarios.definitions import (
+    TestScenarioDeclaration,
+    TestScenarioTypeName,
+)
 from monitoring.uss_qualifier.scenarios.documentation.definitions import (
     TestScenarioDocumentation,
     TestCaseDocumentation,
@@ -61,6 +65,7 @@ class ScenarioPhase(str, Enum):
 
 
 class PendingCheck(object):
+    _phase: ScenarioPhase
     _documentation: TestCheckDocumentation
     _step_report: TestStepReport
     _on_failed_check: Optional[Callable[[FailedCheck], None]]
@@ -69,11 +74,13 @@ class PendingCheck(object):
 
     def __init__(
         self,
+        phase: ScenarioPhase,
         documentation: TestCheckDocumentation,
         participants: List[ParticipantID],
         step_report: TestStepReport,
         on_failed_check: Optional[Callable[[FailedCheck], None]],
     ):
+        self._phase = phase
         self._documentation = documentation
         self._participants = participants
         self._step_report = step_report
@@ -102,7 +109,11 @@ class PendingCheck(object):
         if requirements is None:
             requirements = self._documentation.applicable_requirements
 
-        if STOP_FAST and severity != Severity.Critical:
+        if (
+            STOP_FAST
+            and severity != Severity.Critical
+            and self._phase != ScenarioPhase.CleaningUp
+        ):
             note = f"Severity {severity} upgraded to Critical because {_STOP_FAST_FLAG} environment variable indicates true"
             logger.info(note)
             details += "\n" + note
@@ -152,6 +163,20 @@ class PendingCheck(object):
         self._step_report.passed_checks.append(passed_check)
 
 
+def get_scenario_type_by_name(scenario_type_name: TestScenarioTypeName) -> Type:
+    inspection.import_submodules(scenarios_module)
+    scenario_type = inspection.get_module_object_by_name(
+        parent_module=uss_qualifier_module, object_name=scenario_type_name
+    )
+    if not issubclass(scenario_type, TestScenario):
+        raise NotImplementedError(
+            "Scenario type {} is not a subclass of the TestScenario base class".format(
+                scenario_type.__name__
+            )
+        )
+    return scenario_type
+
+
 class GenericTestScenario(ABC):
     """Generic Test Scenario allowing mutualization of test scenario implementation.
 
@@ -178,16 +203,7 @@ class GenericTestScenario(ABC):
         declaration: TestScenarioDeclaration,
         resource_pool: Dict[ResourceID, ResourceTypeName],
     ) -> "TestScenario":
-        inspection.import_submodules(scenarios_module)
-        scenario_type = inspection.get_module_object_by_name(
-            parent_module=uss_qualifier_module, object_name=declaration.scenario_type
-        )
-        if not issubclass(scenario_type, TestScenario):
-            raise NotImplementedError(
-                "Scenario type {} is not a subclass of the TestScenario base class".format(
-                    scenario_type.__name__
-                )
-            )
+        scenario_type = get_scenario_type_by_name(declaration.scenario_type)
 
         constructor_signature = inspect.signature(scenario_type.__init__)
         constructor_args = {}
@@ -202,8 +218,9 @@ class GenericTestScenario(ABC):
 
                 # Missing value for required argument
                 available_pool = ", ".join(resource_pool)
-                raise ValueError(
-                    f'Resource to populate test scenario argument "{arg_name}" was not found in the resource pool when trying to create {declaration.scenario_type} test scenario (resource pool: {available_pool})'
+                raise MissingResourceError(
+                    f'Resource to populate test scenario argument "{arg_name}" was not found in the resource pool when trying to create {declaration.scenario_type} test scenario (resource pool: {available_pool})',
+                    arg_name,
                 )
             constructor_args[arg_name] = resource_pool[arg_name]
 
@@ -349,13 +366,22 @@ class GenericTestScenario(ABC):
             check_list = ", ".join(available_checks)
             if self._allow_undocumented_checks:
                 check_documentation = TestCheckDocumentation(
-                    name=name, applicable_requirements=[]
+                    name=name, applicable_requirements=[], has_todo=False
                 )
             else:
+                test_step_name = (
+                    self._current_step.name if self._current_step else "<none>"
+                )
+                test_case_name = (
+                    self._current_case.name
+                    if self._current_case
+                    else "<none; possibly cleanup>"
+                )
                 raise RuntimeError(
-                    f'Test scenario `{self.me()}` was instructed to prepare to record outcome for check "{name}" during test step "{self._current_step.name}" during test case "{self._current_case.name}", but that check is not declared in documentation; declared checks are: {check_list}'
+                    f'Test scenario `{self.me()}` was instructed to prepare to record outcome for check "{name}" during test step "{test_step_name}" during test case "{test_case_name}", but that check is not declared in documentation; declared checks are: {check_list}'
                 )
         return PendingCheck(
+            phase=self._phase,
             documentation=check_documentation,
             participants=[] if participants is None else participants,
             step_report=self._step_report,
@@ -423,6 +449,16 @@ class GenericTestScenario(ABC):
         self._expect_phase(ScenarioPhase.CleaningUp)
         self._step_report.end_time = StringBasedDateTime(datetime.utcnow())
         self._phase = ScenarioPhase.Complete
+
+    def ensure_cleanup_ended(self) -> None:
+        """This method should be called if the scenario may or may not be done cleaning up.
+
+        For instance, if an exception happened during cleanup and the exception may have been before or after
+        end_cleanup was called."""
+        self._expect_phase({ScenarioPhase.CleaningUp, ScenarioPhase.Complete})
+        if self._phase == ScenarioPhase.CleaningUp:
+            self._step_report.end_time = StringBasedDateTime(datetime.utcnow())
+            self._phase = ScenarioPhase.Complete
 
     def record_execution_error(self, e: Exception) -> None:
         if self._phase == ScenarioPhase.Complete:

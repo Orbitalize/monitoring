@@ -1,14 +1,20 @@
 # Validate flight sharing test step
 
-This step verifies that a created flight is shared properly per ASTM F3548-21 by querying the DSS for flights in the area of the flight intent, and then retrieving the details from the USS if the operational intent reference is found.  See `validate_shared_operational_intent` in [test_steps.py](test_steps.py).
+This step verifies that a created flight is shared properly per ASTM F3548-21 by querying the DSS for flights in the area of the flight intent, and then retrieving the details from the USS if the operational intent reference is found.  See `OpIntentValidator.expect_shared()` in [test_steps.py](test_steps.py).
 
-## DSS response check
+## DSS responses check
 
 **astm.f3548.v21.DSS0005**
 
 ## Operational intent shared correctly check
 
 If a reference to the operational intent for the flight is not found in the DSS, this check will fail per **astm.f3548.v21.USS0005** and **astm.f3548.v21.OPIN0025**.
+
+## Operational intent for active flight not deleted check
+
+If an activated operational intent is expected to exist after it has been modified or activated and that it is not found
+in the DSS, this means that there is an active flight without a corresponding operational intent, then this check will
+fail per **[interuss.automated_testing.flight_planning.FlightCoveredByOperationalIntent](../../../requirements/interuss/automated_testing/flight_planning.md)**.
 
 ## Operational intent details retrievable check
 

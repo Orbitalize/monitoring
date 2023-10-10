@@ -1,19 +1,21 @@
-from abc import ABC, abstractmethod
+from __future__ import annotations
+
+import os
 from datetime import datetime
-import inspect
 import json
-from typing import Dict, List, Optional, TypeVar, Generic
+from typing import Dict, List, Optional
 
 from implicitdict import StringBasedDateTime, ImplicitDict
 from loguru import logger
 import yaml
 
-from monitoring import uss_qualifier as uss_qualifier_module
-from monitoring.monitorlib.inspection import (
-    fullname,
-    get_module_object_by_name,
-    import_submodules,
+from monitoring.monitorlib.inspection import fullname
+from monitoring.monitorlib.versioning import repo_url_of
+from monitoring.uss_qualifier.action_generators.action_generator import (
+    ActionGeneratorType,
+    ActionGenerator,
 )
+from monitoring.uss_qualifier.fileio import resolve_filename
 from monitoring.uss_qualifier.reports.capabilities import (
     evaluate_condition_for_test_suite,
 )
@@ -27,11 +29,13 @@ from monitoring.uss_qualifier.reports.report import (
     TestSuiteReport,
     TestSuiteActionReport,
     ParticipantCapabilityEvaluationReport,
+    SkippedActionReport,
 )
 from monitoring.uss_qualifier.resources.definitions import ResourceID
 from monitoring.uss_qualifier.resources.resource import (
     ResourceType,
     make_child_resources,
+    MissingResourceError,
 )
 from monitoring.uss_qualifier.scenarios.scenario import (
     TestScenario,
@@ -42,8 +46,6 @@ from monitoring.uss_qualifier.suites.definitions import (
     TestSuiteActionDeclaration,
     TestSuiteDefinition,
     ReactionToFailure,
-    ActionGeneratorSpecificationType,
-    ActionGeneratorDefinition,
     ActionType,
     TestSuiteDeclaration,
 )
@@ -59,8 +61,8 @@ def _print_failed_check(failed_check: FailedCheck) -> None:
 class TestSuiteAction(object):
     declaration: TestSuiteActionDeclaration
     test_scenario: Optional[TestScenario] = None
-    test_suite: Optional["TestSuite"] = None
-    action_generator: Optional["ActionGeneratorType"] = None
+    test_suite: Optional[TestSuite] = None
+    action_generator: Optional[ActionGeneratorType] = None
 
     def __init__(
         self,
@@ -112,7 +114,7 @@ class TestSuiteAction(object):
             try:
                 scenario.cleanup()
             except (ScenarioCannotContinueError, TestRunCannotContinueError):
-                pass
+                scenario.ensure_cleanup_ended()
         except KeyboardInterrupt:
             raise
         except Exception as e:
@@ -152,14 +154,35 @@ class TestSuiteAction(object):
 class TestSuite(object):
     declaration: TestSuiteDeclaration
     definition: TestSuiteDefinition
+    documentation_url: str
     local_resources: Dict[ResourceID, ResourceType]
     actions: List[TestSuiteAction]
+    skipped_actions: List[SkippedActionReport]
 
     def __init__(
         self,
         declaration: TestSuiteDeclaration,
         resources: Dict[ResourceID, ResourceType],
     ):
+        # Determine the suite's documentation URL
+        if "suite_type" in declaration and declaration.suite_type:
+            suite_yaml_path = resolve_filename(declaration.suite_type)
+            if suite_yaml_path.lower().startswith(
+                "http://"
+            ) or suite_yaml_path.lower().startswith("https://"):
+                self.documentation_url = suite_yaml_path
+            else:
+                self.documentation_url = repo_url_of(
+                    os.path.splitext(suite_yaml_path)[0] + ".md"
+                )
+        elif "suite_definition" in declaration and declaration.suite_definition:
+            # TODO: Accept information about the declaration origin in order to populate the URL in this case
+            self.documentation_url = ""
+        else:
+            raise ValueError(
+                "Unrecognized declaration type (neither suite_type nor suite_definition were defined)"
+            )
+
         self.declaration = declaration
         self.definition = TestSuiteDefinition.load_from_declaration(declaration)
         self.local_resources = {
@@ -171,19 +194,33 @@ class TestSuite(object):
             if is_optional:
                 resource_type = resource_type[:-1]
             if not is_optional and resource_id not in self.local_resources:
-                raise ValueError(
-                    f'Test suite "{self.definition.name}" is missing resource {resource_id} ({resource_type})'
+                raise MissingResourceError(
+                    f'Test suite "{self.definition.name}" is missing resource {resource_id} ({resource_type})',
+                    resource_id,
                 )
             if resource_id in self.local_resources and not self.local_resources[
                 resource_id
             ].is_type(resource_type):
                 raise ValueError(
-                    f'Test suite "{self.definition.name}" expected resource {resource_id} to be {resource_type}, but instead it was provided {fullname(resources[resource_id].__class__)}'
+                    f'Test suite "{self.definition.name}" expected resource {resource_id} to be {resource_type}, but instead it was provided {fullname(self.local_resources[resource_id].__class__)}'
                 )
-        self.actions = [
-            TestSuiteAction(action=a, resources=self.local_resources)
-            for a in self.definition.actions
-        ]
+        actions: List[TestSuiteAction] = []
+        skipped_actions: List[SkippedActionReport] = []
+        for a, action_dec in enumerate(self.definition.actions):
+            try:
+                actions.append(
+                    TestSuiteAction(action=action_dec, resources=self.local_resources)
+                )
+            except MissingResourceError as e:
+                skipped_actions.append(
+                    SkippedActionReport(
+                        reason=str(e),
+                        action_declaration_index=a,
+                        declaration=action_dec,
+                    )
+                )
+        self.actions = actions
+        self.skipped_actions = skipped_actions
 
     def _make_report_evaluation_action(
         self, report: TestSuiteReport
@@ -214,9 +251,10 @@ class TestSuite(object):
         report = TestSuiteReport(
             name=self.definition.name,
             suite_type=self.declaration.type_name,
-            documentation_url="",  # TODO: Populate correctly
+            documentation_url=self.documentation_url,
             start_time=StringBasedDateTime(datetime.utcnow()),
             actions=[],
+            skipped_actions=self.skipped_actions,
             capability_evaluations=[],
         )
         success = True
@@ -277,69 +315,3 @@ class TestSuite(object):
                         )
 
         return report
-
-
-class ActionGenerator(ABC, Generic[ActionGeneratorSpecificationType]):
-    definition: ActionGeneratorDefinition
-
-    @abstractmethod
-    def __init__(
-        self,
-        specification: ActionGeneratorSpecificationType,
-        resources: Dict[ResourceID, ResourceType],
-    ):
-        """Create an instance of the action generator.
-
-        Concrete subclasses of ActionGenerator must implement their constructor according to this specification.
-
-        :param specification: A serializable (subclass of implicitdict.ImplicitDict) specification for how to create the action generator.  This parameter may be omitted if not needed.
-        :param resources: All of the resources available in the test suite in which the action generator is run.
-        """
-        raise NotImplementedError(
-            "A concrete action generator type must implement __init__ method"
-        )
-
-    @abstractmethod
-    def run_next_action(self) -> Optional[TestSuiteActionReport]:
-        """Run the next action from the generator, or else return None if there are no more actions"""
-        raise NotImplementedError(
-            "A concrete action generator must implement `actions` method"
-        )
-
-    @staticmethod
-    def make_from_definition(
-        definition: ActionGeneratorDefinition, resources: Dict[ResourceID, ResourceType]
-    ) -> "ActionGeneratorType":
-        from monitoring.uss_qualifier import (
-            action_generators as action_generators_module,
-        )
-
-        import_submodules(action_generators_module)
-        action_generator_type = get_module_object_by_name(
-            parent_module=uss_qualifier_module,
-            object_name=definition.generator_type,
-        )
-        if not issubclass(action_generator_type, ActionGenerator):
-            raise NotImplementedError(
-                "Action generator type {} is not a subclass of the ActionGenerator base class".format(
-                    action_generator_type.__name__
-                )
-            )
-        constructor_signature = inspect.signature(action_generator_type.__init__)
-        specification_type = None
-        constructor_args = {}
-        for arg_name, arg in constructor_signature.parameters.items():
-            if arg_name == "specification":
-                specification_type = arg.annotation
-                break
-        if specification_type is not None:
-            constructor_args["specification"] = ImplicitDict.parse(
-                definition.specification, specification_type
-            )
-        constructor_args["resources"] = resources
-        generator = action_generator_type(**constructor_args)
-        generator.definition = definition
-        return generator
-
-
-ActionGeneratorType = TypeVar("ActionGeneratorType", bound=ActionGenerator)

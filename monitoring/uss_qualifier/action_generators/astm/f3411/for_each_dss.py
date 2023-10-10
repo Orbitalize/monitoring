@@ -3,13 +3,22 @@ from typing import Dict, List, Optional
 from implicitdict import ImplicitDict
 
 from monitoring.monitorlib.inspection import fullname
+from monitoring.uss_qualifier.action_generators.documentation.definitions import (
+    PotentialGeneratedAction,
+)
+from monitoring.uss_qualifier.action_generators.documentation.documentation import (
+    list_potential_actions_for_action_declaration,
+)
 from monitoring.uss_qualifier.reports.report import TestSuiteActionReport
 from monitoring.uss_qualifier.resources.astm.f3411 import (
     DSSInstanceResource,
     DSSInstancesResource,
 )
 from monitoring.uss_qualifier.resources.definitions import ResourceID
-from monitoring.uss_qualifier.resources.resource import ResourceType
+from monitoring.uss_qualifier.resources.resource import (
+    ResourceType,
+    MissingResourceError,
+)
 from monitoring.uss_qualifier.suites.definitions import TestSuiteActionDeclaration
 from monitoring.uss_qualifier.suites.suite import (
     ActionGenerator,
@@ -34,14 +43,23 @@ class ForEachDSS(ActionGenerator[ForEachDSSSpecification]):
     _current_action: int
     _failure_reaction: ReactionToFailure
 
+    @classmethod
+    def list_potential_actions(
+        cls, specification: ForEachDSSSpecification
+    ) -> List[PotentialGeneratedAction]:
+        return list_potential_actions_for_action_declaration(
+            specification.action_to_repeat
+        )
+
     def __init__(
         self,
         specification: ForEachDSSSpecification,
         resources: Dict[ResourceID, ResourceType],
     ):
         if specification.dss_instances_source not in resources:
-            raise ValueError(
-                f"Resource ID {specification.dss_instances_source} specified as `dss_instances` was not present in the available resource pool"
+            raise MissingResourceError(
+                f"Resource ID {specification.dss_instances_source} specified as `dss_instances_source` was not present in the available resource pool",
+                specification.dss_instances_source,
             )
         dss_instances_resource: DSSInstancesResource = resources[
             specification.dss_instances_source

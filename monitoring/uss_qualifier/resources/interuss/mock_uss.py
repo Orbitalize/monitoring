@@ -1,5 +1,3 @@
-import arrow
-
 from implicitdict import ImplicitDict
 from monitoring.monitorlib import fetch
 from monitoring.monitorlib.infrastructure import AuthAdapter, UTMClientSession
@@ -25,7 +23,11 @@ class MockUSSClient(object):
 
     def get_status(self) -> fetch.Query:
         return fetch.query_and_describe(
-            self.session, "GET", "/scdsc/v1/status", scope=SCOPE_SCD_QUALIFIER_INJECT
+            self.session,
+            "GET",
+            "/scdsc/v1/status",
+            scope=SCOPE_SCD_QUALIFIER_INJECT,
+            server_id=self.participant_id,
         )
 
     # TODO: Add other methods to interact with the mock USS in other ways (like starting/stopping message signing data collection)

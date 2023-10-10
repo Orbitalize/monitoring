@@ -36,7 +36,12 @@ In this step, uss_qualifier injects a single nominal flight into each SP under t
 
 Per **[interuss.automated_testing.rid.injection.UpsertTestSuccess](../../../../requirements/interuss/automated_testing/rid/injection.md)**, the injection attempt of the valid flight should succeed for every NetRID Service Provider under test.
 
+**[astm.f3411.v19.NET0500](../../../../requirements/astm/f3411/v19.md)** requires a Service Provider to provide a persistently supported test instance of their implementation.
+This check will fail if the flight was not successfully injected.
+
 #### Valid flight check
+
+TODO: Validate injected flights, especially to make sure they contain the specified injection IDs
 
 Per **[interuss.automated_testing.rid.injection.UpsertTestResult](../../../../requirements/interuss/automated_testing/rid/injection.md)**, the NetRID Service Provider under test should only make valid modifications to the injected flights.  This includes:
 * A flight with the specified injection ID must be returned.
@@ -50,13 +55,18 @@ This particular test requires each flight to be uniquely identifiable by its 2D 
 If a DSS was provided to this test scenario, uss_qualifier acts as a Display Provider to query Service Providers under test in this step.
 
 #### Recent positions timestamps check
-**[astm.f3411.v22a.NET0270](../../../../requirements/astm/f3411/v22a.md)** requires all recent positions to be within the NetMaxNearRealTimeDataPeriod. This check will fail if any of the reported positions are older than the maximally allowed period plus NetSpDataResponseTime99thPercentile.
+**[astm.f3411.v19.NET0270](../../../../requirements/astm/f3411/v19.md)** requires all recent positions to be within the NetMaxNearRealTimeDataPeriod. This check will fail if any of the reported positions are older than the maximally allowed period plus NetSpDataResponseTime99thPercentile.
 
-TODO Julien add required checks here for NET0270 b) and c)
+#### Recent positions for aircraft crossing the requested area boundary show only one position before or after crossing check
+**[astm.f3411.v19.NET0270](../../../../requirements/astm/f3411/v19.md)** requires that when an aircraft enters or leaves the queried area, the last or first reported position outside the area is provided in the recent positions, as long as it is not older than NetMaxNearRealTimeDataPeriod.
+
+This implies that any recent position outside the area must be either preceded or followed by a position inside the area.
+
+(This check validates NET0270 b and c).
 
 #### Flights data format check
 
-**[astm.f3411.v19.NET0710](../../../../requirements/astm/f3411/v19.md)** requires a Service Provider to implement the P2P portion of the OpenAPI specification.  This check will fail if the response to the /flights endpoint does not validate against the OpenAPI-specified schema.
+**[astm.f3411.v19.NET0710](../../../../requirements/astm/f3411/v19.md)** and **[astm.f3411.v19.NET0340](../../../../requirements/astm/f3411/v19.md)** require a Service Provider to implement the P2P portion of the OpenAPI specification.  This check will fail if the response to the /flights endpoint does not validate against the OpenAPI-specified schema.
 
 #### ISA query check
 
@@ -70,7 +80,7 @@ The timestamps of the injected telemetry usually start in the future.  If a flig
 
 **[astm.f3411.v19.NET0610](../../../../requirements/astm/f3411/v19.md)** requires that SPs make all UAS operations discoverable over the duration of the flight plus *NetMaxNearRealTimeDataPeriod*, so each injected flight should be observable during this time.  If a flight is not observed during its appropriate time period, this check will fail.
 
-**[astm.f3411.v19.NET0710](../../../../requirements/astm/f3411/v19.md)** requires a Service Provider to implement the GET flights endpoint.  This check will also fail if uss_qualifier cannot query that endpoint (specified in the ISA present in the DSS) successfully.
+**[astm.f3411.v19.NET0710](../../../../requirements/astm/f3411/v19.md)** and **[astm.f3411.v19.NET0340](../../../../requirements/astm/f3411/v19.md)** require a Service Provider to implement the GET flights endpoint.  This check will also fail if uss_qualifier cannot query that endpoint (specified in the ISA present in the DSS) successfully.
 
 #### Service Provider altitude check
 
@@ -78,11 +88,11 @@ The timestamps of the injected telemetry usually start in the future.  If a flig
 
 #### Successful flight details query check
 
-**[astm.f3411.v19.NET0710](../../../../requirements/astm/f3411/v19.md)** requires a Service Provider to implement the GET flight details endpoint.  This check will fail if uss_qualifier cannot query that endpoint (specified in the ISA present in the DSS) successfully.
+**[astm.f3411.v19.NET0710](../../../../requirements/astm/f3411/v19.md)** and **[astm.f3411.v19.NET0340](../../../../requirements/astm/f3411/v19.md)** require a Service Provider to implement the GET flight details endpoint.  This check will fail if uss_qualifier cannot query that endpoint (specified in the ISA present in the DSS) successfully.
 
 #### Flight details data format check
 
-**[astm.f3411.v19.NET0710](../../../../requirements/astm/f3411/v19.md)** requires a Service Provider to implement the P2P portion of the OpenAPI specification.  This check will fail if the response to the flight details endpoint does not validate against the OpenAPI-specified schema.
+**[astm.f3411.v19.NET0710](../../../../requirements/astm/f3411/v19.md)** and **[astm.f3411.v19.NET0340](../../../../requirements/astm/f3411/v19.md)** require a Service Provider to implement the P2P portion of the OpenAPI specification.  This check will fail if the response to the flight details endpoint does not validate against the OpenAPI-specified schema.
 
 #### Lingering flight check
 
@@ -116,9 +126,17 @@ The timestamps of the injected telemetry usually start in the future.  If a flig
 
 **[astm.f3411.v19.NET0260](../../../../requirements/astm/f3411/v19.md)** requires a SP to provide flights up to *NetMaxNearRealTimeDataPeriod* in the past, but an SP should preserve privacy and ensure relevancy by not sharing flights that are further in the past than this window.
 
-#### Observed altitude check
+#### Telemetry being used when present check
 
-**[astm.f3411.v19.NET0470](../../../../requirements/astm/f3411/v19.md)** requires that a Display Provider provides any specified data fields in accordance with the common data dictionary when responding to a Display Application.  If the observed altitude of a flight does not match the altitude of the injected telemetry, this check will fail.
+**[astm.f3411.v19.NET0290](../../../../requirements/astm/f3411/v19.md)** requires a SP uses Telemetry vs extrapolation when telemetry is present.
+
+#### Altitude is present check
+
+Failure to report the altitude of a flight is a violation of **[astm.f3411.v19.NET0470](../../../../requirements/astm/f3411/v19.md)**.
+
+#### Correct up-to-date altitude check
+
+If the observed altitude of a flight does not match the altitude of the injected telemetry, the display provider is not providing precise and up-to-date information, and thus does not respect **[astm.f3411.v19.NET0450](../../../../requirements/astm/f3411/v19.md)**.
 
 #### Area too large check
 
@@ -149,6 +167,14 @@ Taking into account the propagation time of the injected flights, if the total n
 
 For a display area with a diagonal greather than *NetDetailsMaxDisplayAreaDiagonal* and less than *NetMaxDisplayAreaDiagonal*, **[astm.f3411.v19.NET0480](../../../../requirements/astm/f3411/v19.md)** requires that a Display provider shall cluster UAs in close proximity to each other using a circular or polygonal area covering no less than *NetMinClusterSize* percent of the display area size.
 This check validates that the display area of a cluster, measured and provided in square meters by the test harness, is no less than *NetMinClusterSize* percent of the display area.
+
+#### Successful details observation check
+
+Per **[interuss.automated_testing.rid.observation.ObservationSuccess](../../../../requirements/interuss/automated_testing/rid/observation.md)**, the call for flight details is expected to succeed since a valid ID was provided by uss_qualifier.
+
+#### Current state present check
+
+**[astm.f3411.v19.NET0470](../../../../requirements/astm/f3411/v19.md)** requires that Net-RID Display Provider shall provide access to required and optional fields to Remote ID Display Applications according to the Common Dictionary. This check validates that the current state is present. If it is not, this check will fail.
 
 ## Cleanup
 

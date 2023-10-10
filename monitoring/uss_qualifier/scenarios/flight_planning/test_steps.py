@@ -1,17 +1,15 @@
 import inspect
-from datetime import datetime
-from typing import List, Union, Optional, Tuple, Iterable, Set, Dict
+from typing import List, Optional, Tuple, Iterable, Set, Dict, Union
 
+from monitoring.monitorlib.geotemporal import Volume4DCollection
 from uas_standards.astm.f3548.v21.api import OperationalIntentState
 
 from monitoring.monitorlib.fetch import QueryError
-from monitoring.monitorlib.scd import bounding_vol4
-from monitoring.monitorlib.scd_automated_testing.scd_injection_api import (
+from uas_standards.interuss.automated_testing.scd.v1.api import (
     InjectFlightRequest,
-    Capability,
-    InjectFlightResult,
+    InjectFlightResponseResult,
     InjectFlightResponse,
-    DeleteFlightResult,
+    DeleteFlightResponseResult,
     DeleteFlightResponse,
 )
 from monitoring.uss_qualifier.common_data_definitions import Severity
@@ -48,7 +46,7 @@ def clear_area(
     for flight_intent in flight_intents:
         volumes += flight_intent.request.operational_intent.volumes
         volumes += flight_intent.request.operational_intent.off_nominal_volumes
-    extent = bounding_vol4(volumes)
+    extent = Volume4DCollection.from_f3548v21(volumes).bounding_volume
     for uss in flight_planners:
         with scenario.check("Area cleared successfully", [uss.participant_id]) as check:
             try:
@@ -72,149 +70,6 @@ def clear_area(
                 )
 
     scenario.end_test_step()
-
-
-OneOrMoreFlightPlanners = Union[FlightPlanner, List[FlightPlanner]]
-OneOrMoreCapabilities = Union[Capability, List[Capability]]
-
-
-def check_capabilities(
-    scenario: TestScenarioType,
-    test_step: str,
-    required_capabilities: Optional[
-        List[Tuple[OneOrMoreFlightPlanners, OneOrMoreCapabilities]]
-    ] = None,
-    prerequisite_capabilities: Optional[
-        List[Tuple[OneOrMoreFlightPlanners, OneOrMoreCapabilities]]
-    ] = None,
-) -> bool:
-    """Perform a check that flight planners support certain capabilities.
-
-    This function assumes:
-    * `scenario` is ready to execute a test step
-    *  If `required_capabilities` is specified:
-      * "Valid responses" check declared for specified test step in `scenario`'s documentation
-      * "Support {required_capability}" check declared for specified test in step`scenario`'s documentation
-
-    Args:
-      scenario: Scenario in which this step is being executed
-      test_step: Name of this test step (according to scenario's documentation)
-      required_capabilities: The specified USSs must support these capabilities.
-        If a capability is not supported, a "Valid responses" failed check will
-        be created.
-      prerequisite_capabilities: If any of the specified USSs do not support
-        these capabilities, a "Prerequisite capabilities" note will be added and
-        the scenario will be indicated to stop, but no failed check will be
-        created.
-    """
-    scenario.begin_test_step(test_step)
-
-    if required_capabilities is None:
-        required_capabilities = []
-    if prerequisite_capabilities is None:
-        prerequisite_capabilities = []
-
-    # Collect all the flight planners that need to be queried
-    all_flight_planners: List[FlightPlanner] = []
-    for flight_planner_list in [p for p, _ in required_capabilities] + [
-        p for p, _ in prerequisite_capabilities
-    ]:
-        if not isinstance(flight_planner_list, list):
-            flight_planner_list = [flight_planner_list]
-        for flight_planner in flight_planner_list:
-            if flight_planner not in all_flight_planners:
-                all_flight_planners.append(flight_planner)
-
-    # Query all the flight planners and collect key results
-    flight_planner_capabilities: List[Tuple[FlightPlanner, List[Capability]]] = []
-    flight_planner_capability_query_timestamps: List[
-        Tuple[FlightPlanner, datetime]
-    ] = []
-    for flight_planner in all_flight_planners:
-        check = scenario.check("Valid responses", [flight_planner.participant_id])
-        try:
-            uss_info = flight_planner.get_target_information()
-            check.record_passed()
-        except QueryError as e:
-            for q in e.queries:
-                scenario.record_query(q)
-            check.record_failed(
-                summary=f"Failed to query {flight_planner.participant_id} for information",
-                severity=Severity.Medium,
-                details=f"{str(e)}\n\nStack trace:\n{e.stacktrace}",
-                query_timestamps=[q.request.timestamp for q in e.queries],
-            )
-            continue
-        scenario.record_query(uss_info.version_query)
-        scenario.record_query(uss_info.capabilities_query)
-        flight_planner_capabilities.append((flight_planner, uss_info.capabilities))
-        flight_planner_capability_query_timestamps.append(
-            (flight_planner, uss_info.capabilities_query.request.timestamp)
-        )
-
-    # Check for required capabilities
-    for flight_planners, capabilities in required_capabilities:
-        if not isinstance(flight_planners, list):
-            flight_planners = [flight_planners]
-        if not isinstance(capabilities, list):
-            capabilities = [capabilities]
-        for flight_planner in flight_planners:
-            for required_capability in capabilities:
-                available_capabilities = [
-                    c for p, c in flight_planner_capabilities if p is flight_planner
-                ]
-                if not available_capabilities:
-                    available_capabilities = []
-                else:
-                    available_capabilities = available_capabilities[0]
-                with scenario.check(
-                    f"Support {required_capability}", [flight_planner.participant_id]
-                ) as check:
-                    if required_capability not in available_capabilities:
-                        timestamp = [
-                            t
-                            for p, t in flight_planner_capability_query_timestamps
-                            if p is flight_planner
-                        ]
-                        if timestamp:
-                            timestamps = [timestamp[0]]
-                        else:
-                            timestamps = []
-                        check.record_failed(
-                            summary=f"Flight planner {flight_planner.participant_id} does not support {required_capability}",
-                            severity=Severity.High,
-                            details=f"Reported capabilities: ({', '.join(available_capabilities)})",
-                            query_timestamps=timestamps,
-                        )
-                        return False
-
-    # Check for prerequisite capabilities
-    unsupported_prerequisites: List[str] = []
-    for flight_planners, capabilities in prerequisite_capabilities:
-        if not isinstance(flight_planners, list):
-            flight_planners = [flight_planners]
-        if not isinstance(capabilities, list):
-            capabilities = [capabilities]
-        for flight_planner in flight_planners:
-            available_capabilities = [
-                c for p, c in flight_planner_capabilities if p is flight_planner
-            ][0]
-            unmet_capabilities = ", ".join(
-                c for c in capabilities if c not in available_capabilities
-            )
-            if unmet_capabilities:
-                unsupported_prerequisites.append(
-                    f"* {flight_planner.participant_id}: {unmet_capabilities}"
-                )
-    if unsupported_prerequisites:
-        scenario.record_note(
-            "Unsupported prerequisite capabilities",
-            "\n".join(unsupported_prerequisites),
-        )
-        return False
-
-    scenario.end_test_step()
-    return True
 
 
 def expect_flight_intent_state(
@@ -254,8 +109,8 @@ def plan_flight_intent(
         scenario,
         test_step,
         "Successful planning",
-        {InjectFlightResult.Planned},
-        {InjectFlightResult.Failed: "Failure"},
+        {InjectFlightResponseResult.Planned},
+        {InjectFlightResponseResult.Failed: "Failure"},
         flight_planner,
         flight_intent,
     )
@@ -283,8 +138,8 @@ def activate_flight_intent(
         scenario,
         test_step,
         "Successful activation",
-        {InjectFlightResult.ReadyToFly},
-        {InjectFlightResult.Failed: "Failure"},
+        {InjectFlightResponseResult.ReadyToFly},
+        {InjectFlightResponseResult.Failed: "Failure"},
         flight_planner,
         flight_intent,
         flight_id,
@@ -313,8 +168,8 @@ def modify_planned_flight_intent(
         scenario,
         test_step,
         "Successful modification",
-        {InjectFlightResult.Planned},
-        {InjectFlightResult.Failed: "Failure"},
+        {InjectFlightResponseResult.Planned},
+        {InjectFlightResponseResult.Failed: "Failure"},
         flight_planner,
         flight_intent,
         flight_id,
@@ -327,8 +182,10 @@ def modify_activated_flight_intent(
     flight_planner: FlightPlanner,
     flight_intent: InjectFlightRequest,
     flight_id: str,
+    preexisting_conflict: bool = False,
 ) -> InjectFlightResponse:
-    """Modify an activated flight intent that should result in success.
+    """Attempt to modify an activated flight intent.
+    If present, a pre-existing conflict must be indicated with `preexisting_conflict=True`.
 
     This function implements the test step described in
     modify_activated_flight_intent.md.
@@ -339,12 +196,35 @@ def modify_activated_flight_intent(
         flight_intent, OperationalIntentState.Activated, scenario, test_step
     )
 
+    if preexisting_conflict:
+        expected_results = {
+            InjectFlightResponseResult.ReadyToFly,
+            InjectFlightResponseResult.NotSupported,
+            # the following two results are considered expected in order to fail another check as low severity
+            InjectFlightResponseResult.Rejected,
+            InjectFlightResponseResult.ConflictWithFlight,
+        }
+        failed_checks = {
+            InjectFlightResponseResult.Failed: "Failure",
+            InjectFlightResponseResult.Rejected: (
+                "Rejected modification",
+                Severity.Low,
+            ),
+            InjectFlightResponseResult.ConflictWithFlight: (
+                "Rejected modification",
+                Severity.Low,
+            ),
+        }
+    else:
+        expected_results = {InjectFlightResponseResult.ReadyToFly}
+        failed_checks = {InjectFlightResponseResult.Failed: "Failure"}
+
     return submit_flight_intent(
         scenario,
         test_step,
         "Successful modification",
-        {InjectFlightResult.ReadyToFly},
-        {InjectFlightResult.Failed: "Failure"},
+        expected_results,
+        failed_checks,
         flight_planner,
         flight_intent,
         flight_id,
@@ -355,14 +235,15 @@ def submit_flight_intent(
     scenario: TestScenarioType,
     test_step: str,
     success_check: str,
-    expected_results: Set[InjectFlightResult],
-    failed_checks: Dict[InjectFlightResult, str],
+    expected_results: Set[InjectFlightResponseResult],
+    failed_checks: Dict[InjectFlightResponseResult, Union[str, Tuple[str, Severity]]],
     flight_planner: FlightPlanner,
     flight_intent: InjectFlightRequest,
     flight_id: Optional[str] = None,
 ) -> Tuple[InjectFlightResponse, Optional[str]]:
     """Submit a flight intent with an expected result.
-    A check fail is considered of high severity and as such will raise an ScenarioCannotContinueError.
+    A check fail is considered by default of high severity and as such will raise an ScenarioCannotContinueError.
+    The severity of each failed check may be overridden if needed.
 
     This function does not directly implement a test step.
 
@@ -389,13 +270,19 @@ def submit_flight_intent(
         notes_suffix = f': "{resp.notes}"' if "notes" in resp and resp.notes else ""
 
         for unexpected_result, failed_test_check in failed_checks.items():
+            if isinstance(failed_test_check, str):
+                check_name = failed_test_check
+                check_severity = Severity.High
+            else:
+                check_name, check_severity = failed_test_check
+
             with scenario.check(
-                failed_test_check, [flight_planner.participant_id]
+                check_name, [flight_planner.participant_id]
             ) as specific_failed_check:
                 if resp.result == unexpected_result:
                     specific_failed_check.record_failed(
                         summary=f"Flight unexpectedly {resp.result}",
-                        severity=Severity.High,
+                        severity=check_severity,
                         details=f'{flight_planner.participant_id} indicated {resp.result} rather than the expected {" or ".join(expected_results)}{notes_suffix}',
                         query_timestamps=[query.request.timestamp],
                     )
@@ -447,14 +334,14 @@ def delete_flight_intent(
         scenario.record_query(query)
         notes_suffix = f': "{resp.notes}"' if "notes" in resp and resp.notes else ""
 
-        if resp.result == DeleteFlightResult.Closed:
+        if resp.result == DeleteFlightResponseResult.Closed:
             scenario.end_test_step()
             return resp
         else:
             check.record_failed(
                 summary=f"Flight deletion attempt unexpectedly {resp.result}",
                 severity=Severity.High,
-                details=f"{flight_planner.participant_id} indicated {resp.result} rather than the expected {DeleteFlightResult.Closed}{notes_suffix}",
+                details=f"{flight_planner.participant_id} indicated {resp.result} rather than the expected {DeleteFlightResponseResult.Closed}{notes_suffix}",
                 query_timestamps=[query.request.timestamp],
             )
 
@@ -493,7 +380,7 @@ def cleanup_flights(
                     )
                     continue
 
-                if resp.result == DeleteFlightResult.Closed:
+                if resp.result == DeleteFlightResponseResult.Closed:
                     removed.append(flight_id)
                 else:
                     check.record_failed(

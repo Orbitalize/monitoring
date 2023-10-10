@@ -11,9 +11,13 @@ implementation.
 
 ## Resources
 
-### dss_instances
+### primary_dss_instance
 
-A resources.astm.f3411.DSSInstancesResource containing at least two DSS instances complying with ASTM F3411-19.  The first instance is the "Primary DSS" instance and the other instances are the "Other DSS" instances.
+A resources.astm.f3411.DSSInstanceResource containing the "primary" DSS instance for this scenario.
+
+### all_dss_instances
+
+A resources.astm.f3411.DSSInstancesResource containing at least two DSS instances complying with ASTM F3411-19.
 
 ## Test sequence legend
 
@@ -52,7 +56,7 @@ As such, this check will fail if the DSS is not reachable with a dummy query,
 
 ## Interoperability sequence test case
 
-### S1 test step
+### [S1 test step](dss/test_steps/put_isa.md)
 
 Action: USS1@DSS*P*: PUT ISA with no start time and end time 10 minutes from now
 
@@ -76,6 +80,22 @@ Qualitatively proves: Can create Subscription in primary DSS, ISA accessible fro
 
 **[astm.f3411.v19.A2-6-1,1c](../../../../requirements/astm/f3411/v19.md)**
 
+#### ID of ISA from S1 is properly synchronized with all DSS check
+
+**[astm.f3411.v19.DSS0130,3,a](../../../../requirements/astm/f3411/v19.md)**
+
+#### Owner of ISA from S1 is properly synchronized with all DSS check
+
+**[astm.f3411.v19.DSS0130,3,b](../../../../requirements/astm/f3411/v19.md)**
+
+#### URL of ISA from S1 is properly synchronized with all DSS check
+
+**[astm.f3411.v19.DSS0130,3,c](../../../../requirements/astm/f3411/v19.md)**
+
+#### Start/end times of ISA from S1 are properly synchronized with all DSS check
+
+**[astm.f3411.v19.DSS0130,3,d](../../../../requirements/astm/f3411/v19.md)**
+
 ### S3 test step
 
 Action: USS2@DSS*n*: GET Subscription[*P*] by ID
@@ -85,6 +105,28 @@ Qualitatively proves: Can retrieve specific Subscription emplaced in primary DSS
 #### Subscription[*P*] returned with proper response check
 
 **[astm.f3411.v19.A2-6-1,5](../../../../requirements/astm/f3411/v19.md)**
+
+**[astm.f3411.v19.DSS0070](../../../../requirements/astm/f3411/v19.md)** requires that all DSS instances in a pool return the same result. This check fails if the DSS instance does not return the same result as the other DSS instances.
+
+#### Subscription[*P*] ID is properly synchronized with all DSS check
+
+**[astm.f3411.v19.DSS0130,2,a](../../../../requirements/astm/f3411/v19.md)**
+
+#### Subscription[*P*] owner is properly synchronized with all DSS check
+
+**[astm.f3411.v19.DSS0130,2,b](../../../../requirements/astm/f3411/v19.md)**
+
+#### Subscription[*P*] URL is properly synchronized with all DSS check
+
+**[astm.f3411.v19.DSS0130,2,c](../../../../requirements/astm/f3411/v19.md)**
+
+#### Subscription[*P*] start/end times are properly synchronized with all DSS check
+
+**[astm.f3411.v19.DSS0130,2,d](../../../../requirements/astm/f3411/v19.md)**
+
+#### Subscription[*P*] notification count is properly synchronized with all DSS check
+
+**[astm.f3411.v19.DSS0130,2,f](../../../../requirements/astm/f3411/v19.md)**
 
 ### S4 test step
 
@@ -96,7 +138,9 @@ Qualitatively proves: All Subscription[i] 1≤i≤n are returned in subscription
 
 **[astm.f3411.v19.A2-6-1,6](../../../../requirements/astm/f3411/v19.md)**
 
-### S5 test step
+**[astm.f3411.v19.DSS0070](../../../../requirements/astm/f3411/v19.md)** requires that all DSS instances in a pool return the same result. This check fails if the DSS instance does not return the same result as the other DSS instances.
+
+### [S5 test step](dss/test_steps/put_isa.md)
 
 Action: USS1@DSS*P*: PUT ISA[*P*] setting end time to now + D seconds
 
@@ -111,6 +155,8 @@ Qualitatively proves: ISA[*P*] modified with proper response, all Subscription[i
 **[astm.f3411.v19.A2-6-1,1b](../../../../requirements/astm/f3411/v19.md)**
 
 #### ISA modification triggers subscription notification requests check
+
+TODO: Implement
 
 **[astm.f3411.v19.A2-6-1,3c](../../../../requirements/astm/f3411/v19.md)**
 
@@ -134,6 +180,8 @@ Qualitatively proves: Subscription deletion from ID index was effective from pri
 
 **[astm.f3411.v19.A2-6-1,4b](../../../../requirements/astm/f3411/v19.md)**
 
+**[astm.f3411.v19.DSS0070](../../../../requirements/astm/f3411/v19.md)** requires that all DSS instances in a pool return the same result. This check fails if the DSS instance does not return the same result as the other DSS instances.
+
 ### S8 test step
 
 Action: USS2@DSS*n*: GET Subscriptions using ISA[*P*]’s area
@@ -147,6 +195,8 @@ Qualitatively proves: Subscription deletion from geographic index was effective 
 #### No Subscription[i] 1≤i≤n returned with proper response check
 
 **[astm.f3411.v19.A2-6-1,4b](../../../../requirements/astm/f3411/v19.md)**
+
+**[astm.f3411.v19.DSS0070](../../../../requirements/astm/f3411/v19.md)** requires that all DSS instances in a pool return the same result. This check fails if the DSS instance does not return the same result as the other DSS instances.
 
 ### S9 test step
 
@@ -162,7 +212,9 @@ Qualitatively proves: Expired ISA automatically removed, ISA modifications acces
 
 **[astm.f3411.v19.A2-6-1,1d](../../../../requirements/astm/f3411/v19.md)**
 
-### S10 test step
+**[astm.f3411.v19.DSS0070](../../../../requirements/astm/f3411/v19.md)** requires that all DSS instances in a pool return the same result. This check fails if the DSS instance does not return the same result as the other DSS instances.
+
+### [S10 test step](dss/test_steps/put_isa.md)
 
 Action: USS1@DSS*P*: PUT ISA with no start time and end time 10 minutes from now
 
@@ -176,7 +228,7 @@ Qualitatively proves: ISA creation triggers subscription notification requests
 
 **[astm.f3411.v19.A2-6-1,3b](../../../../requirements/astm/f3411/v19.md)**
 
-### S11 test step
+### [S11 test step](dss/test_steps/delete_isa.md)
 
 Action: USS1@DSS*P*: DELETE ISA[*P*]
 
@@ -190,7 +242,7 @@ Qualitatively proves: ISA deletion triggers subscription notification requests
 
 **[astm.f3411.v19.A2-6-1,3c](../../../../requirements/astm/f3411/v19.md)**
 
-### S12 test step
+### [S12 test step](dss/test_steps/put_isa.md)
 
 Action: Wait >D seconds from S9 then USS1@DSS*P*: PUT ISA with no start time and end time 10 minutes from now
 
@@ -218,6 +270,8 @@ Qualitatively proves: Expired Subscription removed from geographic index on prim
 
 **[astm.f3411.v19.A2-6-1,3d](../../../../requirements/astm/f3411/v19.md)**
 
+**[astm.f3411.v19.DSS0070](../../../../requirements/astm/f3411/v19.md)** requires that all DSS instances in a pool return the same result. This check fails if the DSS instance does not return the same result as the other DSS instances.
+
 ### S14 test step
 
 Action: USS2@DSS*n*: GET Subscription[*n*] by ID
@@ -226,9 +280,11 @@ Qualitatively proves: Expired Subscription removed from ID index on primary DSS
 
 #### 404 with proper response check
 
+TODO: Investigate expected behavior and "404 with proper response" check
+
 **[astm.f3411.v19.A2-6-1,3d](../../../../requirements/astm/f3411/v19.md)**
 
-### S15 test step
+### [S15 test step](dss/test_steps/delete_isa.md)
 
 Action: USS1@DSS*P*: DELETE ISA[*P*]
 
@@ -255,6 +311,8 @@ Qualitatively proves: Deleted ISA removed from all DSSs
 #### service_areas does not include ISA from S12 check
 
 **[astm.f3411.v19.A2-6-1,2b](../../../../requirements/astm/f3411/v19.md)**
+
+**[astm.f3411.v19.DSS0070](../../../../requirements/astm/f3411/v19.md)** requires that all DSS instances in a pool return the same result. This check fails if the DSS instance does not return the same result as the other DSS instances.
 
 ### S17 test step
 

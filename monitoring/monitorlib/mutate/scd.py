@@ -7,6 +7,8 @@ from yaml.representer import Representer
 
 from monitoring.monitorlib import infrastructure, scd
 from monitoring.monitorlib import fetch
+from monitoring.monitorlib.geo import Polygon
+from monitoring.monitorlib.geotemporal import Volume4D
 
 
 class MutatedSubscription(fetch.Query):
@@ -55,15 +57,16 @@ def put_subscription(
     min_alt_m: float = 0,
     max_alt_m: float = 3048,
     version: Optional[str] = None,
+    server_id: Optional[str] = None,
 ) -> MutatedSubscription:
     body = {
-        "extents": scd.make_vol4(
+        "extents": Volume4D.from_values(
             start_time,
             end_time,
             min_alt_m,
             max_alt_m,
-            polygon=scd.make_polygon(latlngrect=area),
-        ),
+            polygon=Polygon.from_latlng_rect(latlngrect=area),
+        ).to_f3548v21(),
         "uss_base_url": base_url,
         "notify_for_operational_intents": notify_for_op_intents,
         "notify_for_constraints": notify_for_constraints,
@@ -72,18 +75,25 @@ def put_subscription(
     if version:
         url += f"/{version}"
     result = MutatedSubscription(
-        fetch.query_and_describe(utm_client, "PUT", url, json=body, scope=scd.SCOPE_SC)
+        fetch.query_and_describe(
+            utm_client, "PUT", url, json=body, scope=scd.SCOPE_SC, server_id=server_id
+        )
     )
     result.mutation = "update" if version else "create"
     return result
 
 
 def delete_subscription(
-    utm_client: infrastructure.UTMClientSession, subscription_id: str, version: str
+    utm_client: infrastructure.UTMClientSession,
+    subscription_id: str,
+    version: str,
+    server_id: Optional[str] = None,
 ) -> MutatedSubscription:
     url = f"/dss/v1/subscriptions/{subscription_id}/{version}"
     result = MutatedSubscription(
-        fetch.query_and_describe(utm_client, "DELETE", url, scope=scd.SCOPE_SC)
+        fetch.query_and_describe(
+            utm_client, "DELETE", url, scope=scd.SCOPE_SC, server_id=server_id
+        )
     )
     result.mutation = "delete"
     return result

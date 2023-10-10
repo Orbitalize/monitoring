@@ -10,7 +10,7 @@ from monitoring.uss_qualifier.scenarios.astm.netrid.common_dictionary_evaluator 
     RIDCommonDictionaryEvaluator,
 )
 
-from monitoring.monitorlib.fetch import Query
+from monitoring.monitorlib.fetch import Query, QueryType
 from monitoring.monitorlib.fetch.rid import (
     all_flights,
     FetchedFlights,
@@ -36,7 +36,10 @@ from monitoring.uss_qualifier.scenarios.astm.netrid.injected_flight_collection i
 from monitoring.uss_qualifier.scenarios.astm.netrid.virtual_observer import (
     VirtualObserver,
 )
-from monitoring.uss_qualifier.scenarios.scenario import TestScenarioType, PendingCheck
+from monitoring.uss_qualifier.scenarios.scenario import (
+    TestScenarioType,
+    TestScenario,
+)
 from monitoring.uss_qualifier.scenarios.astm.netrid.injection import InjectedFlight
 
 DISTANCE_TOLERANCE_M = 0.01
@@ -190,7 +193,7 @@ class RIDObservationEvaluator(object):
 
     def __init__(
         self,
-        test_scenario: TestScenarioType,
+        test_scenario: TestScenario,
         injected_flights: List[InjectedFlight],
         config: EvaluationConfiguration,
         rid_version: RIDVersion,
@@ -215,6 +218,11 @@ class RIDObservationEvaluator(object):
             raise ValueError(
                 f"Cannot evaluate a system using RID version {rid_version} with a DSS using RID version {dss.rid_version}"
             )
+        self._retrieved_flight_details: Set[
+            str
+        ] = (
+            set()
+        )  # Contains the observed IDs of the flights whose details were retrieved.
 
     def evaluate_system_instantaneously(
         self,
@@ -231,6 +239,7 @@ class RIDObservationEvaluator(object):
                 get_details=True,
                 rid_version=self._rid_version,
                 session=self._dss.client,
+                server_id=self._dss.participant_id,
             )
             for q in sp_observation.queries:
                 self._test_scenario.record_query(q)
@@ -351,9 +360,18 @@ class RIDObservationEvaluator(object):
             ]
             observed_position = mapping.observed_flight.most_recent_position
             injected_position = injected_telemetry.position
+
+            with self._test_scenario.check("Altitude is present") as check:
+                if "alt" not in observed_position:
+                    check.record_failed(
+                        summary="Displayed flight is missing altitude",
+                        severity=Severity.Medium,
+                        details=f"Displayed data for injected flight {mapping.injected_flight.flight.injection_id} in test {mapping.injected_flight.test_id} at {injected_telemetry.timestamp} does not have altitude",
+                    )
+
             if "alt" in observed_position:
                 with self._test_scenario.check(
-                    "Observed altitude",
+                    "Correct up-to-date altitude",
                     [
                         observer.participant_id,
                         mapping.injected_flight.uss_participant_id,
@@ -368,6 +386,91 @@ class RIDObservationEvaluator(object):
                             Severity.Medium,
                             details=f"{mapping.injected_flight.uss_participant_id}'s flight with injection ID {mapping.injected_flight.flight.injection_id} in test {mapping.injected_flight.test_id} had telemetry index {mapping.telemetry_index} at {injected_telemetry.timestamp} with lat={injected_telemetry.position.lat}, lng={injected_telemetry.position.lng}, alt={injected_telemetry.position.alt}, but {observer.participant_id} observed lat={observed_position.lat}, lng={observed_position.lng}, alt={observed_position.alt} at {query.request.initiated_at}",
                         )
+
+            self._common_dictionary_evaluator.evaluate_dp_flight(
+                injected_flight=injected_telemetry,
+                observed_flight=mapping.observed_flight,
+                participants=[observer.participant_id],
+            )
+
+        # Check that flights using telemetry are not using extrapolated position data
+        for mapping in mapping_by_injection_id.values():
+            injected_telemetry = mapping.injected_flight.flight.telemetry[
+                mapping.telemetry_index
+            ]
+
+            with self._test_scenario.check(
+                "Telemetry being used when present",
+                [
+                    mapping.injected_flight.uss_participant_id,
+                ],
+            ) as check:
+                injected_telemetry_extrapolated = (
+                    "extrapolated" in injected_telemetry.position
+                    and injected_telemetry.position.extrapolated
+                )
+
+                observed_telemetry_extrapolated = (
+                    "extrapolated" in mapping.observed_flight.most_recent_position
+                    and mapping.observed_flight.most_recent_position["extrapolated"]
+                )
+
+                # if telemetry is present then extrapolated position data should not be used.
+                if (
+                    not injected_telemetry_extrapolated
+                    and observed_telemetry_extrapolated
+                ):
+                    check.record_failed(
+                        "Position Data is using extrapolation when Telemetry is available.",
+                        Severity.Medium,
+                        details=(
+                            f"{mapping.injected_flight.uss_participant_id}'s flight with injection ID "
+                            f"{mapping.injected_flight.flight.injection_id} in test {mapping.injected_flight.test_id} had telemetry index {mapping.telemetry_index} at {injected_telemetry.timestamp} "
+                            f"with extrapolated position state, but Service Provider reported non-extrapolated telemetry at {mapping.observed_flight.query.query.request.initiated_at}. "
+                            f"Extrapolation State: Injected={injected_telemetry_extrapolated}, Observed={observed_telemetry_extrapolated}"
+                        ),
+                    )
+
+        # Check details of flights (once per flight)
+        for mapping in mapping_by_injection_id.values():
+
+            with self._test_scenario.check(
+                "Successful details observation",
+                [mapping.injected_flight.uss_participant_id],
+            ) as check:
+                # query for flight details only once per flight
+                if mapping.observed_flight.id in self._retrieved_flight_details:
+                    continue
+
+                details_obs, query = observer.observe_flight_details(
+                    mapping.observed_flight.id, self._rid_version
+                )
+
+                self._test_scenario.record_query(query)
+
+                if query.status_code != 200:
+                    check.record_failed(
+                        summary=f"Observation of details failed for {mapping.observed_flight.id}",
+                        details=f"When queried for details of observation (ID {mapping.observed_flight.id}), {observer.participant_id} returned code {query.status_code}",
+                        severity=Severity.Medium,
+                        query_timestamps=[query.request.timestamp],
+                    )
+                else:
+                    telemetry_inj = mapping.injected_flight.flight.telemetry[
+                        mapping.telemetry_index
+                    ]
+                    # Get details that are expected to be valid for the present telemetry:
+                    details_inj = mapping.injected_flight.flight.get_details(
+                        telemetry_inj.timestamp.datetime
+                    )
+                    self._retrieved_flight_details.add(mapping.observed_flight.id)
+                    self._common_dictionary_evaluator.evaluate_dp_details(
+                        details_inj,
+                        details_obs,
+                        participants=[
+                            observer.participant_id,
+                        ],
+                    )
 
     def _evaluate_flight_presence(
         self,
@@ -579,14 +682,14 @@ class RIDObservationEvaluator(object):
                 check.record_failed(
                     summary="Error while evaluating clustered area view. Missing flight",
                     severity=Severity.Medium,
-                    details=f"{expected_count-clustered_flight_count} (~{uncertain_count}) missing flight(s)",
+                    details=f"{expected_count - clustered_flight_count} (~{uncertain_count}) missing flight(s)",
                 )
             elif clustered_flight_count > expected_count + uncertain_count:
                 # Unexpected flight
                 check.record_failed(
                     summary="Error while evaluating clustered area view. Unexpected flight",
                     severity=Severity.Medium,
-                    details=f"{clustered_flight_count-expected_count} (~{uncertain_count}) unexpected flight(s)",
+                    details=f"{clustered_flight_count - expected_count} (~{uncertain_count}) unexpected flight(s)",
                 )
             elif clustered_flight_count == expected_count:
                 # evaluate cluster obfuscation distance
@@ -636,7 +739,7 @@ class RIDObservationEvaluator(object):
                 cluster_width, cluster_height = geo.flatten(
                     cluster_rect.lo(), cluster_rect.hi()
                 )
-                min_dim = 2 * observer.rid_version.min_obfuscation_distance_m
+                min_dim = 2 * self._rid_version.min_obfuscation_distance_m
                 if cluster_height < min_dim or cluster_width < min_dim:
                     # Cluster has a too small distance to the edge
                     check.record_failed(
@@ -740,6 +843,13 @@ class RIDObservationEvaluator(object):
             self._injected_flights, observed_flights
         )
 
+        for telemetry_mapping in mapping_by_injection_id.values():
+            # For flights that were mapped to an injection ID,
+            # update the observation queries with the participant id for future use in the aggregate checks
+            telemetry_mapping.observed_flight.query.set_server_id(
+                telemetry_mapping.injected_flight.uss_participant_id
+            )
+
         diagonal_km = (
             rect.lo().get_distance(rect.hi()).degrees * geo.EARTH_CIRCUMFERENCE_KM / 360
         )
@@ -749,11 +859,12 @@ class RIDObservationEvaluator(object):
             )
         else:
             self._evaluate_normal_sp_observation(
-                sp_observation, mapping_by_injection_id
+                rect, sp_observation, mapping_by_injection_id
             )
 
     def _evaluate_normal_sp_observation(
         self,
+        requested_area: s2sphere.LatLngRect,
         sp_observation: FetchedFlights,
         mappings: Dict[str, TelemetryMapping],
     ) -> None:
@@ -798,6 +909,7 @@ class RIDObservationEvaluator(object):
                         query_timestamps=[flights_query.query.request.timestamp],
                     )
             self._common_dictionary_evaluator.evaluate_sp_flights(
+                requested_area,
                 sp_observation,
                 participants=[mapping.injected_flight.uss_participant_id],
             )

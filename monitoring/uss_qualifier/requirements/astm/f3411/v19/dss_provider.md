@@ -1,16 +1,10 @@
 # ASTM F3411-19: DSS Provider requirement set
 
-This file describes the set of ASTM F3411-19 requirements with which a USS providing a DSS instance must comply.
+This file describes the set of ASTM F3411-19 requirements with which a USS providing a DSS instance must comply, according to ASTM F3411-19.
 
-## Manual verification
+## DSS Compliance Matrix
 
-All DSS instance provider requirements can be verified by automation.
-
-## Automated verification
-
-### DSS Compliance Matrix
-
-#### DSS Implementation Requirements
+### DSS Implementation Requirements
 
 * **astm.f3411.v19.DSS0010**
 * **astm.f3411.v19.DSS0020**
@@ -20,11 +14,20 @@ All DSS instance provider requirements can be verified by automation.
 * **astm.f3411.v19.DSS0060**
 * **astm.f3411.v19.DSS0070**
 
-#### Data Synchronization Requirements
+### Data Synchronization Requirements
 
 * **astm.f3411.v19.DSS0110**
 * **astm.f3411.v19.DSS0120**
 * **astm.f3411.v19.DSS0130**
+    * **astm.f3411.v19.DSS0130,2,a**
+    * **astm.f3411.v19.DSS0130,2,b**
+    * **astm.f3411.v19.DSS0130,2,c**
+    * **astm.f3411.v19.DSS0130,2,d**
+    * **astm.f3411.v19.DSS0130,2,f**
+    * **astm.f3411.v19.DSS0130,3,a**
+    * **astm.f3411.v19.DSS0130,3,b**
+    * **astm.f3411.v19.DSS0130,3,c**
+    * **astm.f3411.v19.DSS0130,3,d**
     * **astm.f3411.v19.A2-6-1,1a**
     * **astm.f3411.v19.A2-6-1,1b**
     * **astm.f3411.v19.A2-6-1,1c**
@@ -40,6 +43,6 @@ All DSS instance provider requirements can be verified by automation.
     * **astm.f3411.v19.A2-6-1,5**
     * **astm.f3411.v19.A2-6-1,6**
 
-#### Test Environment Requirements
+### Test Environment Requirements
 
 * **astm.f3411.v19.DSS0210**
