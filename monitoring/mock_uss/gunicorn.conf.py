@@ -11,7 +11,16 @@ from monitoring.mock_uss import webapp
 loglevel = "debug"
 
 
-threads = 2
+workers = 2
+
+
+threads = 4
+
+
+worker_tmp_dir = "/dev/shm"
+
+
+worker_class = "gthread"
 
 
 def on_starting(server: Arbiter):
