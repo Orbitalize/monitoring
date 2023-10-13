@@ -8,6 +8,7 @@ from loguru import logger
 
 from monitoring.mock_uss import webapp
 
+loglevel = "debug"
 
 def on_starting(server: Arbiter):
     """gunicorn server hook called just before master process is initialized."""
