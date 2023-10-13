@@ -18,7 +18,7 @@ from implicitdict import ImplicitDict, StringBasedDateTime
 from monitoring.monitorlib import infrastructure
 from monitoring.monitorlib.rid import RIDVersion
 
-TIMEOUTS = (5, 5)  # Timeouts of `connect` and `read` in seconds
+TIMEOUTS = (5, 25)  # Timeouts of `connect` and `read` in seconds
 ATTEMPTS = (
     2  # Number of attempts to query when experiencing a retryable error like a timeout
 )
