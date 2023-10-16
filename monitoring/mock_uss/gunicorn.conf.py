@@ -20,7 +20,7 @@ threads = 4
 worker_tmp_dir = "/dev/shm"
 
 
-worker_class = "gthread"
+worker_class = "gevent"
 
 
 preload_app = True
