@@ -1,4 +1,6 @@
 import inspect
+import logging
+import multiprocessing
 import os
 from typing import Any, Optional, Callable
 from loguru import logger
@@ -16,6 +18,9 @@ SERVICE_INTERACTION_LOGGING = "interaction_logging"
 
 webapp = MockUSS(__name__)
 enabled_services = set()
+
+mp_logger = multiprocessing.log_to_stderr()
+mp_logger.setLevel(logging.DEBUG)
 
 
 def import_environment_variable(
