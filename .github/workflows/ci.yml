@@ -54,6 +54,33 @@ jobs:
     with:
       name: uss_qualifier
       script: |
+        sudo apt install linux-modules-extra-$(uname -r)
+        sudo cat /proc/sys/net/netfilter/nf_conntrack_max
+        sudo cat /proc/sys/net/core/somaxconn
+        sudo cat /proc/sys/net/ipv4/tcp_max_syn_backlog
+
+        sudo sysctl net.ipv6.conf.all.disable_ipv6=1
+        sudo sysctl net.ipv6.conf.default.disable_ipv6=1
+        sudo sysctl net.ipv6.conf.lo.disable_ipv6=1
+
+        sudo sysctl net.ipv4.ip_local_port_range
+        sudo sysctl net.ipv4.tcp_fin_timeout
+        sudo sysctl net.ipv4.tcp_max_syn_backlog=16384
+        sudo cat /proc/sys/net/ipv4/tcp_max_syn_backlog
+        sudo sysctl -w net.ipv4.neigh.default.gc_thresh3=4096
+        sudo sysctl fs.inotify.max_user_instances=1048576
+        sudo prlimit --pid $$ --nofile=1048576:1048576
+        sudo sysctl fs.inotify.max_user_instances=1280
+        sudo sysctl fs.inotify.max_user_watches=655360
+        sudo sysctl net.core.netdev_max_backlog=65536
+
+        sudo sysctl -p
+
+        sudo tcpdump -nn -i any -w /tmp/sntp.cap &
+        sudo sh -c 'while true; do ss -s ; ss -ti ; sysctl fs.file-nr ; netstat -s ; date ; sleep 10; done' &
+        sudo sh -c 'while true; do lsof -n | wc -l ; date ; sleep 30; done' &
+        sleep 1
+
         export CONFIG_NAME="" \
           USS_QUALIFIER_STOP_FAST=true
 

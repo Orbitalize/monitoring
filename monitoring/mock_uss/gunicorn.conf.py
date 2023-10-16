@@ -8,6 +8,23 @@ from loguru import logger
 
 from monitoring.mock_uss import webapp
 
+loglevel = "debug"
+
+
+workers = 2
+
+
+threads = 4
+
+
+worker_tmp_dir = "/dev/shm"
+
+
+worker_class = "gevent"
+
+
+preload_app = True
+
 
 def on_starting(server: Arbiter):
     """gunicorn server hook called just before master process is initialized."""

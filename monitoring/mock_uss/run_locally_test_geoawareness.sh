@@ -23,6 +23,7 @@ docker container rm -f ${container_name} || echo "${container_name} container wa
 
 # shellcheck disable=SC2086
 docker run ${docker_args} --rm --name ${container_name} \
+  --ulimit nofile=10000 \
   -e MOCK_USS_PUBLIC_KEY="${PUBLIC_KEY}" \
   -e MOCK_USS_TOKEN_AUDIENCE="${AUD}" \
   -e MOCK_USS_SERVICES="geoawareness" \
