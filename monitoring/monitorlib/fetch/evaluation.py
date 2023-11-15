@@ -2,6 +2,8 @@ import statistics
 from operator import attrgetter
 from typing import List, Tuple, Dict
 
+import loguru
+
 from . import Query
 
 
@@ -28,12 +30,20 @@ def get_init_subsequent_queries_durations(
     init_durations: List[float] = list()  # list of initial queries duration
     subsequent_durations: List[float] = list()  # list of subsequent queries duration
 
-    for queries in queries_by_url.values():
+    for url, queries_iter in queries_by_url.items():
+        queries = queries_iter.copy()
         queries.sort(key=attrgetter("request.initiated_at"))  # sort queries by time
+
+        initiated_times = [f"{q.request.initiated_at} - {q.response.elapsed_s}" for q in queries]
+
+        loguru.logger.info(f"{len(queries)} Queries to url {url}: {initiated_times}")
 
         for idx, query in enumerate(queries):
             if query.request.initiated_at is None:
                 # ignore query if it does not have time
+                loguru.logger.warning(
+                    f"Ignoring query without initiated_at to {query.request.url}"
+                )
                 continue
 
             query_time = query.request.initiated_at.datetime
@@ -46,6 +56,10 @@ def get_init_subsequent_queries_durations(
                 init_durations.append(query.response.elapsed_s)
             else:
                 subsequent_durations.append(query.response.elapsed_s)
+
+    loguru.logger.info(
+        f"Computed durations: init={init_durations}, subsequent={subsequent_durations}"
+    )
 
     return init_durations, subsequent_durations
 

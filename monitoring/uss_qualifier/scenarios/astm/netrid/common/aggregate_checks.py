@@ -1,6 +1,8 @@
 import re
 from typing import List, Dict, Set
 
+import loguru
+
 from monitoring.monitorlib import fetch
 from monitoring.monitorlib.fetch import evaluation, QueryType
 from monitoring.monitorlib.rid import RIDVersion
@@ -332,6 +334,10 @@ class AggregateChecks(GenericTestScenario):
                 subsequent_durations, [95, 99]
             )
 
+            loguru.logger.info(
+                f"Verifying performance for initial query durations {init_durations} and subsequent query durations {subsequent_durations} for participant"
+            )
+
             with self.check(
                 "Performance of /display_data initial requests", [participant]
             ) as check:
@@ -371,4 +377,9 @@ class AggregateChecks(GenericTestScenario):
             self.record_note(
                 f"{participant}/display_data",
                 f"percentiles on {len(relevant_queries)} relevant queries ({len(relevant_queries_by_url)} different URLs, {len(init_durations)} initial queries, {len(subsequent_durations)} subsequent queries): init 95th: {init_95th}; init 99th: {init_99th}; subsequent 95th: {subsequent_95th}; subsequent 99th: {subsequent_99th}",
+            )
+
+            self.record_note(
+                f"{participant}/display_data details",
+                f"Initial durations: {init_durations} subsequent durations: {subsequent_durations}",
             )
