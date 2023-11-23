@@ -3,10 +3,17 @@ from typing import Optional, Dict
 
 from monitoring.monitorlib import schema_validation
 from monitoring.monitorlib.fetch import rid as fetch
-from monitoring.monitorlib.fetch.rid import ISA, FetchedISA, FetchedISAs
+from monitoring.monitorlib.fetch.rid import (
+    ISA,
+    FetchedISA,
+    FetchedISAs,
+    Subscription,
+    FetchedSubscription,
+    FetchedSubscriptions,
+)
 from monitoring.monitorlib.infrastructure import UTMClientSession
 from monitoring.monitorlib.mutate import rid as mutate
-from monitoring.monitorlib.mutate.rid import ChangedISA
+from monitoring.monitorlib.mutate.rid import ChangedISA, ChangedSubscription
 from monitoring.monitorlib.rid import RIDVersion
 from monitoring.uss_qualifier.common_data_definitions import Severity
 from monitoring.uss_qualifier.scenarios.scenario import (
@@ -318,4 +325,272 @@ class ISAValidator(object):
                 fetched_isas.isas[isa_id],
                 fetched_isas.query.request.timestamp,
                 expected_version=expected_versions[isa_id],
+            )
+
+
+class SubscriptionValidator(object):
+    """Wraps the validation logic for a subscription that was returned by the DSS.
+    It will compare the returned subscription with the parameters specified at its creation.
+    """
+
+    _main_check: PendingCheck
+    _scenario: GenericTestScenario
+    _sub_params: Dict[str, any]
+    _dss_id: [str]
+    _rid_version: RIDVersion
+    _owner: str
+
+    def __init__(
+        self,
+        main_check: PendingCheck,
+        scenario: GenericTestScenario,
+        sub_params: Dict[str, any],
+        dss_id: str,
+        rid_version: RIDVersion,
+        owner: str,
+    ):
+        self._main_check = main_check
+        self._scenario = scenario
+        self._sub_params = sub_params
+        self._dss_id = [dss_id]
+        self._rid_version = rid_version
+        self._owner = owner
+
+    def _fail_sub_check(
+        self, _sub_check: PendingCheck, _summary: str, _details: str, t_dss: datetime
+    ) -> None:
+        """Fails with Medium severity the sub_check and with High severity the main check."""
+
+        _sub_check.record_failed(
+            summary=_summary,
+            severity=Severity.Medium,
+            details=_details,
+            query_timestamps=[t_dss],
+        )
+
+        self._main_check.record_failed(
+            summary=f"Subscription request succeeded, but the DSS response is not valid: {_summary}",
+            severity=Severity.High,
+            details=_details,
+            query_timestamps=[t_dss],
+        )
+
+    def _validate_subscription(
+        self,
+        expected_sub_id: str,
+        sub: Subscription,
+        t_dss: datetime,
+        previous_version: Optional[
+            str
+        ] = None,  # If set, we control that the version changed
+        expected_version: Optional[
+            str
+        ] = None,  # If set, we control that the version has not changed
+    ) -> None:
+
+        dss_id = self._dss_id
+        with self._scenario.check("Subscription ID matches", dss_id) as sub_check:
+            if expected_sub_id != sub.id:
+                self._fail_sub_check(
+                    sub_check,
+                    "DSS did not return correct subscription",
+                    f"Expected subscription ID {expected_sub_id} but got {sub.id}",
+                    t_dss,
+                )
+
+        with self._scenario.check(
+            "Subscription start time matches", dss_id
+        ) as sub_check:
+            expected_start = self._sub_params["start_time"]
+            if abs((sub.time_start - expected_start).total_seconds()) > MAX_SKEW:
+                self._fail_sub_check(
+                    sub_check,
+                    f"DSS returned subscription (ID {expected_sub_id}) with incorrect start time",
+                    f"DSS should have returned a subscription with a start time of {expected_start}, but instead the subscription returned had a start time of {sub.time_start}",
+                    t_dss,
+                )
+
+        with self._scenario.check("Subscription end time matches", dss_id) as sub_check:
+            expected_end = self._sub_params["end_time"]
+            if abs((sub.time_end - expected_end).total_seconds()) > MAX_SKEW:
+                self._fail_sub_check(
+                    sub_check,
+                    f"DSS returned subscription (ID {expected_sub_id}) with incorrect end time",
+                    f"DSS should have returned a subscription with an end time of {expected_end}, but instead the subscription returned had an end time of {sub.time_end}",
+                    t_dss,
+                )
+
+        if previous_version is not None:
+            with self._scenario.check(
+                "Subscription version changed", dss_id
+            ) as sub_check:
+                if sub.version == previous_version:
+                    self._fail_sub_check(
+                        sub_check,
+                        f"Subscription (ID {expected_sub_id}) version was not updated",
+                        f"Got old version {previous_version} while expecting new version",
+                        t_dss,
+                    )
+
+        if expected_version is not None:
+            with self._scenario.check(
+                "Subscription version matches", dss_id
+            ) as sub_check:
+                if sub.version != expected_version:
+                    self._fail_sub_check(
+                        sub_check,
+                        f"Subscription (ID {expected_sub_id}) version is not the previously held one, although no modification was done to the subscription",
+                        f"Got old version {sub.version} while expecting {expected_version}",
+                        t_dss,
+                    )
+
+        with self._scenario.check(
+            "Subscription flights url matches", dss_id
+        ) as sub_check:
+            # TODO Confirm that the base URL should contain the
+            # ID in the path for v22a
+            expected_isa_url = self._rid_version.post_isa_url_of(
+                self._sub_params["uss_base_url"], expected_sub_id
+            )
+            if sub.isa_url != expected_isa_url:
+                self._fail_sub_check(
+                    sub_check,
+                    f"DSS returned subscription (ID {expected_sub_id}) with incorrect ISA URL",
+                    f"DSS should have returned a subscription with an ISA URL of {expected_isa_url}, but instead the subscription returned had an ISA URL of {sub.isa_url}",
+                    t_dss,
+                )
+
+        with self._scenario.check("Subscription owner matches", dss_id) as sub_check:
+            if sub.owner != self._owner:
+                self._fail_sub_check(
+                    sub_check,
+                    f"DSS returned subscription (ID {expected_sub_id}) with incorrect owner",
+                    f"DSS should have returned a subscription with an owner of {self._owner}, but instead the subscription returned had an owner of {sub.owner}",
+                    t_dss,
+                )
+
+    def validate_fetched_subscription(
+        self,
+        expected_sub_id: str,
+        sub: FetchedSubscription,
+        expected_version: str,
+    ):
+        # Validate schema of Subscription:
+        t_dss = sub.query.request.timestamp
+        with self._scenario.check(
+            "Subscription response format", self._dss_id
+        ) as sub_check:
+            errors = schema_validation.validate(
+                self._rid_version.openapi_path,
+                self._rid_version.openapi_get_subscription_response_path,
+                sub.query.response.json,
+            )
+            if errors:
+                details = "\n".join(f"[{e.json_path}] {e.message}" for e in errors)
+                self._fail_sub_check(
+                    sub_check,
+                    "GET Subscription response format was invalid",
+                    "Found the following schema validation errors in the DSS response:\n"
+                    + details,
+                    t_dss,
+                )
+
+        self._validate_subscription(
+            expected_sub_id, sub.subscription, t_dss, expected_version=expected_version
+        )
+
+    def validate_mutated_subscription(
+        self,
+        expected_sub_id: str,
+        mutated_sub: ChangedSubscription,
+        previous_version: Optional[str] = None,
+    ):
+        # Validate schema of Subscription:
+        t_dss = mutated_sub.query.request.timestamp
+        with self._scenario.check(
+            "Subscription response format", self._dss_id
+        ) as sub_check:
+            errors = schema_validation.validate(
+                self._rid_version.openapi_path,
+                self._rid_version.openapi_put_subscription_response_path,
+                mutated_sub.query.response.json,
+            )
+            if errors:
+                details = "\n".join(f"[{e.json_path}] {e.message}" for e in errors)
+                self._fail_sub_check(
+                    sub_check,
+                    "Mutated Subscription response format was invalid",
+                    "Found the following schema validation errors in the DSS response:\n"
+                    + details,
+                    t_dss,
+                )
+
+        self._validate_subscription(
+            expected_sub_id,
+            mutated_sub.subscription,
+            t_dss,
+            previous_version=previous_version,
+            expected_version=None,
+        )
+
+    def validate_deleted_subscription(
+        self,
+        expected_sub_id: str,
+        sub: ChangedSubscription,
+        expected_version: str,
+    ):
+        # Validate schema of Subscription:
+        t_dss = sub.query.request.timestamp
+        with self._scenario.check(
+            "Delete subscription response format", self._dss_id
+        ) as sub_check:
+            errors = schema_validation.validate(
+                self._rid_version.openapi_path,
+                self._rid_version.openapi_delete_subscription_response_path,
+                sub.query.response.json,
+            )
+            if errors:
+                details = "\n".join(f"[{e.json_path}] {e.message}" for e in errors)
+                self._fail_sub_check(
+                    sub_check,
+                    "DELETE Subscription response format was invalid",
+                    "Found the following schema validation errors in the DSS response:\n"
+                    + details,
+                    t_dss,
+                )
+
+        self._validate_subscription(
+            expected_sub_id, sub.subscription, t_dss, expected_version=expected_version
+        )
+
+    def validate_searched_subscriptions(
+        self,
+        fetched_subscriptions: FetchedSubscriptions,
+        current_subs: Dict[str, Subscription],
+    ):
+        with self._scenario.check(
+            "Subscriptions response format", self._dss_id
+        ) as sub_check:
+            errors = schema_validation.validate(
+                self._rid_version.openapi_path,
+                self._rid_version.openapi_search_subscriptions_response_path,
+                fetched_subscriptions.query.response.json,
+            )
+            if errors:
+                details = "\n".join(f"[{e.json_path}] {e.message}" for e in errors)
+
+                self._fail_sub_check(
+                    sub_check,
+                    "GET Subscriptions response format was invalid",
+                    "Found the following schema validation errors in the DSS response:\n"
+                    + details,
+                    fetched_subscriptions.query.request.timestamp,
+                )
+
+        for sub_id, expected_sub in current_subs.items():
+            self._validate_subscription(
+                sub_id,
+                fetched_subscriptions.subscriptions[sub_id],
+                fetched_subscriptions.query.request.timestamp,
+                expected_version=expected_sub.version,
             )

@@ -7,6 +7,19 @@ resources:
   problematically_big_area: resources.VerticesResource
 actions:
   - test_scenario:
+      scenario_type: scenarios.astm.netrid.v19.dss.SubscriptionSimple
+      resources:
+        dss: dss
+        id_generator: id_generator
+        isa: isa
+        problematically_big_area: problematically_big_area
+  - test_scenario:
+      scenario_type: scenarios.astm.netrid.v19.dss.HeavyTrafficConcurrent
+      resources:
+        dss: dss
+        id_generator: id_generator
+        isa: isa
+  - test_scenario:
       scenario_type: scenarios.astm.netrid.v19.dss.ISASimple
       resources:
         dss: dss
@@ -39,13 +52,6 @@ actions:
         id_generator: id_generator
         isa: isa
   - test_scenario:
-      scenario_type: scenarios.astm.netrid.v19.dss.SubscriptionSimple
-      resources:
-        dss: dss
-        id_generator: id_generator
-        isa: isa
-        problematically_big_area: problematically_big_area
-  - test_scenario:
       scenario_type: scenarios.astm.netrid.v19.DSSInteroperability
       resources:
         primary_dss_instance: dss
@@ -60,9 +66,3 @@ actions:
       scenario_type: scenarios.astm.netrid.v19.dss.CRDBAccess
       resources: {}
       on_failure: Continue
-  - test_scenario:
-      scenario_type: scenarios.astm.netrid.v19.dss.HeavyTrafficConcurrent
-      resources:
-        dss: dss
-        id_generator: id_generator
-        isa: isa

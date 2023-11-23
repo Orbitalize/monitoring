@@ -1018,7 +1018,7 @@ class DSSWrapper(object):
                     Severity.Medium,
                 )
 
-            if sub.status_code == 404:
+            if sub.status_code in [404, 500]:
                 return None
 
             with self._scenario.check(

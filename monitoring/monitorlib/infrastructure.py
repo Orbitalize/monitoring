@@ -190,6 +190,7 @@ class AsyncUTMTestSession:
         return kwargs
 
     async def put_with_headers(self, url, **kwargs):
+        """Issues a PUT and returns the status code, headers, and JSON body."""
         url = self._prefix_url + url
         if "auth" not in kwargs:
             kwargs = self.adjust_request_kwargs(url, "PUT", kwargs)
@@ -201,10 +202,12 @@ class AsyncUTMTestSession:
             )
 
     async def put(self, url, **kwargs):
+        """Issues a PUT and returns the status code and JSON body."""
         (status, _, json) = await self.put_with_headers(url, **kwargs)
         return status, json
 
     async def get_with_headers(self, url, **kwargs):
+        """Issues a GET and returns the status code, headers, and JSON body."""
         url = self._prefix_url + url
         if "auth" not in kwargs:
             kwargs = self.adjust_request_kwargs(url, "GET", kwargs)
@@ -216,6 +219,7 @@ class AsyncUTMTestSession:
             )
 
     async def get(self, url, **kwargs):
+        """Issues a GET and returns the status code and JSON body."""
         (status, _, json) = await self.get_with_headers(url, **kwargs)
         return status, json
 
@@ -227,6 +231,7 @@ class AsyncUTMTestSession:
             return response.status, await response.json()
 
     async def delete_with_headers(self, url, **kwargs):
+        """Issues a DELETE and returns the status code, headers, and JSON body."""
         url = self._prefix_url + url
         if "auth" not in kwargs:
             kwargs = self.adjust_request_kwargs(url, "DELETE", kwargs)
@@ -238,6 +243,7 @@ class AsyncUTMTestSession:
             )
 
     async def delete(self, url, **kwargs):
+        """Issues a DELETE and returns the status code and JSON body."""
         (status, _, json) = await self.delete_with_headers(url, **kwargs)
         return status, json
 

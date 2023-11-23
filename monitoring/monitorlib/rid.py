@@ -2,13 +2,13 @@ from datetime import datetime, timedelta
 from enum import Enum
 
 import arrow
-
-from monitoring.monitorlib import schema_validation
-from uas_standards.astm.f3411 import v19, v22a
 import uas_standards.astm.f3411.v19.api
 import uas_standards.astm.f3411.v19.constants
 import uas_standards.astm.f3411.v22a.api
 import uas_standards.astm.f3411.v22a.constants
+from uas_standards.astm.f3411 import v19, v22a
+
+from monitoring.monitorlib import schema_validation
 
 
 class RIDVersion(str, Enum):
@@ -81,6 +81,42 @@ class RIDVersion(str, Enum):
             return schema_validation.F3411_19.DeleteIdentificationServiceAreaResponse
         elif self == RIDVersion.f3411_22a:
             return schema_validation.F3411_22a.DeleteIdentificationServiceAreaResponse
+        else:
+            raise ValueError(f"Unsupported RID version '{self}'")
+
+    @property
+    def openapi_get_subscription_response_path(self) -> str:
+        if self == RIDVersion.f3411_19:
+            return schema_validation.F3411_19.GetSubscriptionResponse
+        elif self == RIDVersion.f3411_22a:
+            return schema_validation.F3411_22a.GetSubscriptionResponse
+        else:
+            raise ValueError(f"Unsupported RID version '{self}'")
+
+    @property
+    def openapi_put_subscription_response_path(self) -> str:
+        if self == RIDVersion.f3411_19:
+            return schema_validation.F3411_19.PutSubscriptionResponse
+        elif self == RIDVersion.f3411_22a:
+            return schema_validation.F3411_22a.PutSubscriptionResponse
+        else:
+            raise ValueError(f"Unsupported RID version '{self}'")
+
+    @property
+    def openapi_delete_subscription_response_path(self) -> str:
+        if self == RIDVersion.f3411_19:
+            return schema_validation.F3411_19.DeleteSubscriptionResponse
+        elif self == RIDVersion.f3411_22a:
+            return schema_validation.F3411_22a.DeleteSubscriptionResponse
+        else:
+            raise ValueError(f"Unsupported RID version '{self}'")
+
+    @property
+    def openapi_search_subscriptions_response_path(self) -> str:
+        if self == RIDVersion.f3411_19:
+            return schema_validation.F3411_19.SearchSubscriptionsResponse
+        elif self == RIDVersion.f3411_22a:
+            return schema_validation.F3411_22a.SearchSubscriptionsResponse
         else:
             raise ValueError(f"Unsupported RID version '{self}'")
 
@@ -235,5 +271,20 @@ class RIDVersion(str, Enum):
         elif self == RIDVersion.f3411_22a:
             flights_path = v22a.api.OPERATIONS[v22a.api.OperationID.SearchFlights].path
             return base_url + flights_path
+        else:
+            raise ValueError("Unsupported RID version '{}'".format(self))
+
+    def post_isa_url_of(self, base_url: str, sub_id: str) -> str:
+        if self == RIDVersion.f3411_19:
+            isa_path = v19.api.OPERATIONS[
+                v19.api.OperationID.PostIdentificationServiceArea
+            ].path[: -len("/{id}")]
+            return base_url + isa_path
+        elif self == RIDVersion.f3411_22a:
+            # TODO: Urls returned by the DSS contain the ID, confirm this is as expected
+            isa_path = v22a.api.OPERATIONS[
+                v22a.api.OperationID.PostIdentificationServiceArea
+            ].path.format(id=sub_id)
+            return base_url + isa_path
         else:
             raise ValueError("Unsupported RID version '{}'".format(self))

@@ -28,6 +28,10 @@ class F3411_19(str, Enum):
     DeleteIdentificationServiceAreaResponse = (
         "components.schemas.DeleteIdentificationServiceAreaResponse"
     )
+    GetSubscriptionResponse = "components.schemas.GetSubscriptionResponse"
+    PutSubscriptionResponse = "components.schemas.PutSubscriptionResponse"
+    DeleteSubscriptionResponse = "components.schemas.DeleteSubscriptionResponse"
+    SearchSubscriptionsResponse = "components.schemas.SearchSubscriptionsResponse"
 
 
 class F3411_22a(str, Enum):
@@ -46,6 +50,10 @@ class F3411_22a(str, Enum):
     DeleteIdentificationServiceAreaResponse = (
         "components.schemas.DeleteIdentificationServiceAreaResponse"
     )
+    GetSubscriptionResponse = "components.schemas.GetSubscriptionResponse"
+    PutSubscriptionResponse = "components.schemas.PutSubscriptionResponse"
+    DeleteSubscriptionResponse = "components.schemas.DeleteSubscriptionResponse"
+    SearchSubscriptionsResponse = "components.schemas.SearchSubscriptionsResponse"
 
 
 class F3548_21(str, Enum):
