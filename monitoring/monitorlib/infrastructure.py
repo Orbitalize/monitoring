@@ -3,7 +3,7 @@ import datetime
 import functools
 from typing import Dict, List, Optional
 import urllib.parse
-from aiohttp import ClientSession
+from aiohttp import ClientSession, ClientResponse
 
 import jwt
 import requests
@@ -189,19 +189,39 @@ class AsyncUTMTestSession:
             kwargs["timeout"] = self.timeout_seconds
         return kwargs
 
-    async def put(self, url, **kwargs):
+    async def put_with_headers(self, url, **kwargs):
+        """Issues a PUT and returns the status code, headers, and JSON body."""
         url = self._prefix_url + url
         if "auth" not in kwargs:
             kwargs = self.adjust_request_kwargs(url, "PUT", kwargs)
         async with self._client.put(url, **kwargs) as response:
-            return response.status, await response.json()
+            return (
+                response.status,
+                {k: v for k, v in response.headers.items()},
+                await response.json(),
+            )
 
-    async def get(self, url, **kwargs):
+    async def put(self, url, **kwargs):
+        """Issues a PUT and returns the status code and JSON body."""
+        (status, _, json) = await self.put_with_headers(url, **kwargs)
+        return status, json
+
+    async def get_with_headers(self, url, **kwargs):
+        """Issues a GET and returns the status code, headers, and JSON body."""
         url = self._prefix_url + url
         if "auth" not in kwargs:
             kwargs = self.adjust_request_kwargs(url, "GET", kwargs)
         async with self._client.get(url, **kwargs) as response:
-            return response.status, await response.json()
+            return (
+                response.status,
+                {k: v for k, v in response.headers.items()},
+                await response.json(),
+            )
+
+    async def get(self, url, **kwargs):
+        """Issues a GET and returns the status code and JSON body."""
+        (status, _, json) = await self.get_with_headers(url, **kwargs)
+        return status, json
 
     async def post(self, url, **kwargs):
         url = self._prefix_url + url
@@ -210,12 +230,22 @@ class AsyncUTMTestSession:
         async with self._client.post(url, **kwargs) as response:
             return response.status, await response.json()
 
-    async def delete(self, url, **kwargs):
+    async def delete_with_headers(self, url, **kwargs):
+        """Issues a DELETE and returns the status code, headers, and JSON body."""
         url = self._prefix_url + url
         if "auth" not in kwargs:
             kwargs = self.adjust_request_kwargs(url, "DELETE", kwargs)
         async with self._client.delete(url, **kwargs) as response:
-            return response.status, await response.json()
+            return (
+                response.status,
+                {k: v for k, v in response.headers.items()},
+                await response.json(),
+            )
+
+    async def delete(self, url, **kwargs):
+        """Issues a DELETE and returns the status code and JSON body."""
+        (status, _, json) = await self.delete_with_headers(url, **kwargs)
+        return status, json
 
 
 def default_scopes(scopes: List[str]):

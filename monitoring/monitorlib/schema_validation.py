@@ -19,12 +19,19 @@ class F3411_19(str, Enum):
     SearchIdentificationServiceAreasResponse = (
         "components.schemas.SearchIdentificationServiceAreasResponse"
     )
+    GetIdentificationServiceAreaResponse = (
+        "components.schemas.GetIdentificationServiceAreaResponse"
+    )
     PutIdentificationServiceAreaResponse = (
         "components.schemas.PutIdentificationServiceAreaResponse"
     )
     DeleteIdentificationServiceAreaResponse = (
         "components.schemas.DeleteIdentificationServiceAreaResponse"
     )
+    GetSubscriptionResponse = "components.schemas.GetSubscriptionResponse"
+    PutSubscriptionResponse = "components.schemas.PutSubscriptionResponse"
+    DeleteSubscriptionResponse = "components.schemas.DeleteSubscriptionResponse"
+    SearchSubscriptionsResponse = "components.schemas.SearchSubscriptionsResponse"
 
 
 class F3411_22a(str, Enum):
@@ -34,12 +41,19 @@ class F3411_22a(str, Enum):
     SearchIdentificationServiceAreasResponse = (
         "components.schemas.SearchIdentificationServiceAreasResponse"
     )
+    GetIdentificationServiceAreaResponse = (
+        "components.schemas.GetIdentificationServiceAreaResponse"
+    )
     PutIdentificationServiceAreaResponse = (
         "components.schemas.PutIdentificationServiceAreaResponse"
     )
     DeleteIdentificationServiceAreaResponse = (
         "components.schemas.DeleteIdentificationServiceAreaResponse"
     )
+    GetSubscriptionResponse = "components.schemas.GetSubscriptionResponse"
+    PutSubscriptionResponse = "components.schemas.PutSubscriptionResponse"
+    DeleteSubscriptionResponse = "components.schemas.DeleteSubscriptionResponse"
+    SearchSubscriptionsResponse = "components.schemas.SearchSubscriptionsResponse"
 
 
 class F3548_21(str, Enum):

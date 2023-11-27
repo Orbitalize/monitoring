@@ -1,17 +1,15 @@
 import datetime
 from typing import Dict, List, Optional, Union, Set
 
-from implicitdict import ImplicitDict
 import s2sphere
-
-from monitoring.monitorlib.fetch.rid import RIDQuery, Subscription, ISA
-from monitoring.monitorlib.rid import RIDVersion
-from uas_standards.astm.f3411 import v19, v22a
 import uas_standards.astm.f3411.v19.api
 import uas_standards.astm.f3411.v19.constants
 import uas_standards.astm.f3411.v22a.api
 import uas_standards.astm.f3411.v22a.constants
 import yaml
+from implicitdict import ImplicitDict
+from uas_standards import Operation
+from uas_standards.astm.f3411 import v19, v22a
 from yaml.representer import Representer
 
 from monitoring.monitorlib import (
@@ -20,6 +18,8 @@ from monitoring.monitorlib import (
     rid_v1,
     rid_v2,
 )
+from monitoring.monitorlib.fetch.rid import RIDQuery, Subscription, ISA
+from monitoring.monitorlib.rid import RIDVersion
 
 
 class ChangedSubscription(RIDQuery):
@@ -93,6 +93,80 @@ class ChangedSubscription(RIDQuery):
             )
 
 
+def build_subscription_url(
+    sub_id: str,
+    sub_version: Optional[str],
+    rid_version: RIDVersion,
+) -> (Operation, str):
+    """
+    Build the required URL to create, get, update or delete a subscription on a DSS,
+    in accordance with the specified rid_version and sub_version, if it is available.
+
+    Note that for mutations and deletions, sub_version must be provided.
+    """
+    if rid_version == RIDVersion.f3411_19:
+        if sub_version is None:
+            op = v19.api.OPERATIONS[v19.api.OperationID.CreateSubscription]
+            return (op, op.path.format(id=sub_id))
+        else:
+            op = v19.api.OPERATIONS[v19.api.OperationID.UpdateSubscription]
+            return (op, op.path.format(id=sub_id, version=sub_version))
+    elif rid_version == RIDVersion.f3411_22a:
+        if sub_version is None:
+            op = v22a.api.OPERATIONS[v22a.api.OperationID.CreateSubscription]
+            return (op, op.path.format(id=sub_id))
+        else:
+            op = v22a.api.OPERATIONS[v22a.api.OperationID.UpdateSubscription]
+            return (op, op.path.format(id=sub_id, version=sub_version))
+    else:
+        raise NotImplementedError(
+            f"Cannot build subscription URL for RID version {rid_version}"
+        )
+
+
+def build_subscription_payload(
+    sub_id: str,
+    area_vertices: List[s2sphere.LatLng],
+    alt_lo: float,
+    alt_hi: float,
+    start_time: Optional[datetime.datetime],
+    end_time: Optional[datetime.datetime],
+    uss_base_url: str,
+    rid_version: RIDVersion,
+) -> Dict[str, any]:
+    if rid_version == RIDVersion.f3411_19:
+        return {
+            "extents": rid_v1.make_volume_4d(
+                area_vertices,
+                alt_lo,
+                alt_hi,
+                start_time,
+                end_time,
+            ),
+            "callbacks": {
+                "identification_service_area_url": rid_version.post_isa_url_of(
+                    uss_base_url,
+                    sub_id,
+                ),
+            },
+        }
+    elif rid_version == RIDVersion.f3411_22a:
+        return {
+            "extents": rid_v2.make_volume_4d(
+                area_vertices,
+                alt_lo,
+                alt_hi,
+                start_time,
+                end_time,
+            ),
+            "uss_base_url": uss_base_url,
+        }
+    else:
+        raise NotImplementedError(
+            f"Cannot upsert subscription using RID version {rid_version}"
+        )
+
+
 def upsert_subscription(
     area_vertices: List[s2sphere.LatLng],
     alt_lo: float,
@@ -107,28 +181,20 @@ def upsert_subscription(
     participant_id: Optional[str] = None,
 ) -> ChangedSubscription:
     mutation = "create" if subscription_version is None else "update"
+    (op, url) = build_subscription_url(
+        subscription_id, subscription_version, rid_version
+    )
+    body = build_subscription_payload(
+        subscription_id,
+        area_vertices,
+        alt_lo,
+        alt_hi,
+        start_time,
+        end_time,
+        uss_base_url,
+        rid_version,
+    )
     if rid_version == RIDVersion.f3411_19:
-        body = {
-            "extents": rid_v1.make_volume_4d(
-                area_vertices,
-                alt_lo,
-                alt_hi,
-                start_time,
-                end_time,
-            ),
-            "callbacks": {
-                "identification_service_area_url": uss_base_url
-                + v19.api.OPERATIONS[
-                    v19.api.OperationID.PostIdentificationServiceArea
-                ].path[: -len("/{id}")]
-            },
-        }
-        if subscription_version is None:
-            op = v19.api.OPERATIONS[v19.api.OperationID.CreateSubscription]
-            url = op.path.format(id=subscription_id)
-        else:
-            op = v19.api.OPERATIONS[v19.api.OperationID.UpdateSubscription]
-            url = op.path.format(id=subscription_id, version=subscription_version)
         return ChangedSubscription(
             mutation=mutation,
             v19_query=fetch.query_and_describe(
@@ -141,22 +207,6 @@ def upsert_subscription(
             ),
         )
     elif rid_version == RIDVersion.f3411_22a:
-        body = {
-            "extents": rid_v2.make_volume_4d(
-                area_vertices,
-                alt_lo,
-                alt_hi,
-                start_time,
-                end_time,
-            ),
-            "uss_base_url": uss_base_url,
-        }
-        if subscription_version is None:
-            op = v22a.api.OPERATIONS[v22a.api.OperationID.CreateSubscription]
-            url = op.path.format(id=subscription_id)
-        else:
-            op = v22a.api.OPERATIONS[v22a.api.OperationID.UpdateSubscription]
-            url = op.path.format(id=subscription_id, version=subscription_version)
         return ChangedSubscription(
             mutation=mutation,
             v22a_query=fetch.query_and_describe(
@@ -439,6 +489,76 @@ class ISAChange(ImplicitDict):
     """Mapping from USS base URL to change notification query"""
 
 
+def build_isa_payload(
+    area_vertices: List[s2sphere.LatLng],
+    alt_lo: float,
+    alt_hi: float,
+    start_time: datetime.datetime,
+    end_time: datetime.datetime,
+    uss_base_url: str,
+    rid_version: RIDVersion,
+) -> Dict[str, any]:
+    """Build the payload expected to PUT or UPDATE an ISA on a DSS,
+    in accordance with the specified rid_version."""
+    if rid_version == RIDVersion.f3411_19:
+        return {
+            "extents": rid_v1.make_volume_4d(
+                area_vertices,
+                alt_lo,
+                alt_hi,
+                start_time,
+                end_time,
+            ),
+            "flights_url": uss_base_url
+            + v19.api.OPERATIONS[v19.api.OperationID.SearchFlights].path,
+        }
+    elif rid_version == RIDVersion.f3411_22a:
+        return {
+            "extents": rid_v2.make_volume_4d(
+                area_vertices,
+                alt_lo,
+                alt_hi,
+                start_time,
+                end_time,
+            ),
+            "uss_base_url": uss_base_url,
+        }
+    else:
+        raise NotImplementedError(
+            f"Cannot build ISA payload for RID version {rid_version}"
+        )
+
+
+def build_isa_url(
+    rid_version: RIDVersion, isa_id: str, isa_version: Optional[str] = None
+) -> (Operation, str):
+    """Build the required URL to create, get, update or delete an ISA on a DSS,
+    in accordance with the specified rid_version and isa_version, if it is available.
+
+    Note that for mutations and deletions, isa_version must be provided.
+    """
+    if rid_version == RIDVersion.f3411_19:
+        if isa_version is None:
+            op = v19.api.OPERATIONS[v19.api.OperationID.CreateIdentificationServiceArea]
+            return (op, op.path.format(id=isa_id))
+        else:
+            op = v19.api.OPERATIONS[v19.api.OperationID.UpdateIdentificationServiceArea]
+            return (op, op.path.format(id=isa_id, version=isa_version))
+    elif rid_version == RIDVersion.f3411_22a:
+        if isa_version is None:
+            op = v22a.api.OPERATIONS[
+                v22a.api.OperationID.CreateIdentificationServiceArea
+            ]
+            return (op, op.path.format(id=isa_id))
+        else:
+            op = v22a.api.OPERATIONS[
+                v22a.api.OperationID.UpdateIdentificationServiceArea
+            ]
+            return (op, op.path.format(id=isa_id, version=isa_version))
+    else:
+        raise NotImplementedError(f"Cannot build ISA URL for RID version {rid_version}")
+
+
 def put_isa(
     area_vertices: List[s2sphere.LatLng],
     alt_lo: float,
@@ -453,24 +573,17 @@ def put_isa(
     participant_id: Optional[str] = None,
 ) -> ISAChange:
     mutation = "create" if isa_version is None else "update"
+    body = build_isa_payload(
+        area_vertices,
+        alt_lo,
+        alt_hi,
+        start_time,
+        end_time,
+        uss_base_url,
+        rid_version,
+    )
+    (op, url) = build_isa_url(rid_version, isa_id, isa_version)
     if rid_version == RIDVersion.f3411_19:
-        body = {
-            "extents": rid_v1.make_volume_4d(
-                area_vertices,
-                alt_lo,
-                alt_hi,
-                start_time,
-                end_time,
-            ),
-            "flights_url": uss_base_url
-            + v19.api.OPERATIONS[v19.api.OperationID.SearchFlights].path,
-        }
-        if isa_version is None:
-            op = v19.api.OPERATIONS[v19.api.OperationID.CreateIdentificationServiceArea]
-            url = op.path.format(id=isa_id)
-        else:
-            op = v19.api.OPERATIONS[v19.api.OperationID.UpdateIdentificationServiceArea]
-            url = op.path.format(id=isa_id, version=isa_version)
         dss_response = ChangedISA(
             mutation=mutation,
             v19_query=fetch.query_and_describe(
@@ -483,26 +596,6 @@ def put_isa(
             ),
         )
     elif rid_version == RIDVersion.f3411_22a:
-        body = {
-            "extents": rid_v2.make_volume_4d(
-                area_vertices,
-                alt_lo,
-                alt_hi,
-                start_time,
-                end_time,
-            ),
-            "uss_base_url": uss_base_url,
-        }
-        if isa_version is None:
-            op = v22a.api.OPERATIONS[
-                v22a.api.OperationID.CreateIdentificationServiceArea
-            ]
-            url = op.path.format(id=isa_id)
-        else:
-            op = v22a.api.OPERATIONS[
-                v22a.api.OperationID.UpdateIdentificationServiceArea
-            ]
-            url = op.path.format(id=isa_id, version=isa_version)
         dss_response = ChangedISA(
             mutation=mutation,
             v22a_query=fetch.query_and_describe(
