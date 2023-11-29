@@ -88,16 +88,10 @@ class RIDCommonDictionaryEvaluator(object):
         observed_flight: observation_api.Flight,
         participants: List[str],
     ):
-        with self._test_scenario.check("Current state present", participants) as check:
-            if not observed_flight.has_field_with_value("current_state"):
-                check.record_failed(
-                    f"Current state for flight {observed_flight.id}",
-                    details=f"The current state must be specified.",
-                    severity=Severity.High,
-                )
-
-        logger.debug(f"Injected flight: {injected_flight}")
-        logger.debug(f"Observed flight: {observed_flight.current_state}")
+        # If the state is present, we do validate its content,
+        # but its presence is optional
+        if not injected_flight.has_field_with_value("current_state"):
+            return
 
         self._evaluate_speed(
             injected_flight.speed, observed_flight.current_state.speed, participants
