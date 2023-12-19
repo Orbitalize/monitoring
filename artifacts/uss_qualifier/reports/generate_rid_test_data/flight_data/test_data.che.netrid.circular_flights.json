@@ -636,7 +636,7 @@
       ],
       "flight_details": {
         "id": "0",
-        "serial_number": "T8F7F3L99ST4ZTSAD0WC",
+        "serial_number": "GEMXDHBRKN8BT5ZXCW",
         "operation_description": "News recording, live event",
         "operator_location": {
           "lat": 46.97615311620088,
@@ -1283,7 +1283,7 @@
       ],
       "flight_details": {
         "id": "1",
-        "serial_number": "Y1TJD2XCN440RL2TKQ",
+        "serial_number": "DRCY8HDPDHHQZ",
         "operation_description": "Delivery operation, see more details at https://deliveryops.com/operation",
         "operator_location": {
           "lat": 46.97615311620088,
@@ -1930,7 +1930,7 @@
       ],
       "flight_details": {
         "id": "2",
-        "serial_number": "BJA2EC4WASY89AEK0ZB",
+        "serial_number": "SX6H5MK3TG",
         "operation_description": "Wind farm survey",
         "operator_location": {
           "lat": 46.97615311620088,
@@ -2577,7 +2577,7 @@
       ],
       "flight_details": {
         "id": "3",
-        "serial_number": "E2L186AMQ2F6Y",
+        "serial_number": "M6NQADCSSYZ2V2Y",
         "operation_description": "Solar Panel Inspection",
         "operator_location": {
           "lat": 46.97615311620088,
@@ -3224,7 +3224,7 @@
       ],
       "flight_details": {
         "id": "4",
-        "serial_number": "HRBACQE53HUDCVL5Q",
+        "serial_number": "YT5G9B43MXSYPF",
         "operation_description": "Emergency services / rescue",
         "operator_location": {
           "lat": 46.97615311620088,
@@ -3871,7 +3871,7 @@
       ],
       "flight_details": {
         "id": "5",
-        "serial_number": "HUJT42F0W",
+        "serial_number": "KKKJB9Z20C737Z1J",
         "operation_description": "Traffic Monitoring",
         "operator_location": {
           "lat": 46.97615311620088,
