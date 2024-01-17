@@ -4,7 +4,13 @@ from typing import List, Optional
 import s2sphere
 import yaml
 from implicitdict import ImplicitDict
-from uas_standards.astm.f3548.v21.api import OPERATIONS, OperationID, Subscription
+from uas_standards.astm.f3548.v21.api import (
+    Subscription,
+    OPERATIONS,
+    OperationID,
+    PutOperationalIntentDetailsParameters,
+    OperationalIntent, OperationalIntentReference,
+)
 from yaml.representer import Representer
 
 from monitoring.monitorlib import fetch
@@ -45,6 +51,18 @@ class MutatedSubscription(fetch.Query):
             )
         except ValueError:
             return None
+
+    @property
+    def operational_intent_references(self) -> List[OperationalIntentReference]:
+        if self.json_result is None:
+            return []
+        try:
+            # We get a ValueError if .parse is fed a None,
+            # or if the JSON can't be parsed as a Subscription.
+            return [ImplicitDict.parse(oir_raw, OperationalIntentReference) for oir_raw in
+             self.json_result.get("operational_intent_references", [])]
+        except ValueError:
+            return []
 
 
 yaml.add_representer(MutatedSubscription, Representer.represent_dict)
@@ -121,3 +139,33 @@ def delete_subscription(
     )
     result.mutation = "delete"
     return result
+
+
+def upsert_operational_intent(
+    utm_client: infrastructure.UTMClientSession,
+    operational_intent_id: str,
+    operational_intent: Optional[OperationalIntent],
+    subscriptions: List[Subscription],
+    participant_id: Optional[str] = None,
+) -> fetch.Query:
+    """
+    Create or update an operational intent on a USS.
+    :return: This endpoint has no payload for successful responses: the raw Query is returned
+    """
+    op = OPERATIONS[OperationID.NotifyOperationalIntentDetailsChanged]
+
+    params = PutOperationalIntentDetailsParameters(
+        operational_intent_id=operational_intent_id,
+        operational_intent=operational_intent,
+        subscriptions=subscriptions,
+    )
+
+    return fetch.query_and_describe(
+        client=utm_client,
+        verb=op.verb,
+        url=op.path,
+        json=params,
+        query_type=QueryType.F3548v21USSNotifyOperationalIntentDetailsChanged,
+        scope=scd.SCOPE_SC,
+        participant_id=participant_id,
+    )

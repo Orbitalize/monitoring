@@ -26,6 +26,30 @@ actions:
       flight_intents4: non_conflicting_flights?
   on_failure: Abort
 - action_generator:
+    generator_type: action_generators.flight_planning.FlightPlannerCombinations
+    resources:
+      id_generator: id_generator
+      flight_planners: flight_planners
+      dss: dss
+      planning_area: planning_area
+      flight_intents: non_conflicting_flights
+    specification:
+      action_to_repeat:
+        test_scenario:
+          scenario_type: scenarios.astm.utm.USSTimeSynchronization
+          resources:
+            id_generator: id_generator
+            tested_uss: uss1
+            dss: dss
+            flight_intents: flight_intents
+            planning_area: planning_area
+        on_failure: Continue
+      combination_selector_source: flight_intent_validation_selector
+      flight_planners_source: flight_planners
+      roles:
+        - uss1
+  on_failure: Continue
+- action_generator:
     generator_type: action_generators.astm.f3548.ForEachDSS
     resources:
       dss_instances: dss_instances

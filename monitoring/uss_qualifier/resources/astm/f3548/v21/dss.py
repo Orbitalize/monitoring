@@ -304,10 +304,8 @@ class DSSInstance(object):
             return None, None, query
         else:
             try:
-                result = ChangeOperationalIntentReferenceResponse(
-                    ImplicitDict.parse(
-                        query.response.json, ChangeOperationalIntentReferenceResponse
-                    )
+                result = ImplicitDict.parse(
+                    query.response.json, ChangeOperationalIntentReferenceResponse
                 )
                 return result.operational_intent_reference, result.subscribers, query
             except ValueError as e:
