@@ -10,6 +10,10 @@ resources:
   problematically_big_area: resources.VerticesResource
 actions:
   - test_scenario:
+      scenario_type: scenarios.astm.utm.dss.DSSReport
+      resources:
+        dss: dss
+  - test_scenario:
       scenario_type: scenarios.astm.utm.dss.SubscriptionSimple
       resources:
         dss: dss

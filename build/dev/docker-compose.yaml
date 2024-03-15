@@ -43,7 +43,7 @@ services:
 
   dss:
     hostname: dss.uss1.localutm
-    image: interuss/dss:v0.12.0-rc1
+    image: interuss-local/dss:latest
     volumes:
       - $PWD/../test-certs:/var/test-certs:ro
       - dss_component_coordination:/var/dss_component_coordination
