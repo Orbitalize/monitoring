@@ -1,96 +1,158 @@
 {
-  "codebase_version": "Orbitalize/monitoring/v0.0.0-ee68c0d",
-  "commit_hash": "ee68c0da9ddb09bda9ffa5593ac5ef6c8160dc21",
-  "baseline_signature": "91802960ff295cbe18de205c3239540001ee95a37c655c6ddec62a2f92c3c1f0",
+  "codebase_version": "Orbitalize/monitoring/v0.0.0-b887ee1",
+  "commit_hash": "b887ee1d22f9e0040ee02169f8ccc90190c60f28",
+  "baseline_signature": "3281e4d8b0fab1306b44392be1c90ab879b92623d46552a998fb31394a857675",
   "environment_signature": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
   "configuration": {
-    "resources": {
-      "resource_declarations": {
-        "noop_config": {
-          "resource_type": "resources.dev.NoOpResource",
-          "specification": {
-            "sleep_secs": 5
-          },
-          "dependencies": {}
-        }
-      }
-    },
-    "action": {
-      "test_suite": {
-        "suite_definition": {
-          "name": "No-op",
-          "resources": {
-            "noop_config": "resources.dev.NoOpResource"
-          },
-          "actions": [
-            {
-              "test_scenario": {
-                "scenario_type": "scenarios.dev.NoOp",
-                "resources": {
-                  "noop_config": "noop_config"
-                }
-              },
-              "on_failure": "Continue"
-            }
-          ]
-        },
+    "v1": {
+      "test_run": {
         "resources": {
-          "noop_config": "noop_config"
-        }
+          "resource_declarations": {
+            "noop_config": {
+              "resource_type": "resources.dev.NoOpResource",
+              "specification": {
+                "sleep_secs": 5
+              },
+              "dependencies": {}
+            }
+          }
+        },
+        "action": {
+          "test_suite": {
+            "suite_definition": {
+              "name": "No-op",
+              "resources": {
+                "noop_config": "resources.dev.NoOpResource"
+              },
+              "actions": [
+                {
+                  "test_scenario": {
+                    "scenario_type": "scenarios.dev.NoOp",
+                    "resources": {
+                      "noop_config": "noop_config"
+                    }
+                  },
+                  "on_failure": "Continue"
+                }
+              ]
+            },
+            "resources": {
+              "noop_config": "noop_config"
+            }
+          },
+          "on_failure": "Continue"
+        },
+        "non_baseline_inputs": null
       },
-      "on_failure": "Continue"
-    },
-    "non_baseline_inputs": null
+      "artifacts": {
+        "output_path": "output/noop",
+        "raw_report": {
+          "indent": 2,
+          "redact_access_tokens": true
+        },
+        "sequence_view": {
+          "render_kml": true,
+          "redact_access_tokens": true
+        },
+        "report_html": {
+          "redact_access_tokens": true
+        },
+        "templated_reports": null,
+        "tested_requirements": null
+      },
+      "validation": {
+        "criteria": [
+          {
+            "applicability": {
+              "test_scenarios": {}
+            },
+            "pass_condition": {
+              "each_element": {
+                "has_execution_error": false
+              }
+            }
+          },
+          {
+            "applicability": {
+              "failed_checks": {
+                "has_severity": {
+                  "higher_than": "Low"
+                }
+              }
+            },
+            "pass_condition": {
+              "elements": {
+                "count": {
+                  "equal_to": 0.0
+                }
+              }
+            }
+          },
+          {
+            "applicability": {
+              "skipped_actions": {}
+            },
+            "pass_condition": {
+              "elements": {
+                "count": {
+                  "equal_to": 0.0
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
   },
   "report": {
     "test_suite": {
       "name": "No-op",
       "suite_type": "<in-configuration definition>",
       "documentation_url": "",
-      "start_time": "2023-12-22T08:45:03.683150Z",
+      "start_time": "2024-03-20T13:30:06.093119Z",
       "actions": [
         {
           "test_scenario": {
             "name": "NoOp",
             "scenario_type": "scenarios.dev.NoOp",
-            "documentation_url": "https://github.com/interuss/monitoring/blob/ee68c0da9ddb09bda9ffa5593ac5ef6c8160dc21/monitoring/uss_qualifier/scenarios/dev/noop.md",
-            "start_time": "2023-12-22T08:45:03.683615Z",
+            "documentation_url": "https://github.com/interuss/monitoring/blob/b887ee1d22f9e0040ee02169f8ccc90190c60f28/monitoring/uss_qualifier/scenarios/dev/noop.md",
+            "start_time": "2024-03-20T13:30:06.093643Z",
             "cases": [
               {
                 "name": "Sleep",
-                "documentation_url": "https://github.com/interuss/monitoring/blob/ee68c0da9ddb09bda9ffa5593ac5ef6c8160dc21/monitoring/uss_qualifier/scenarios/dev/noop.md#sleep-test-case",
-                "start_time": "2023-12-22T08:45:03.684107Z",
+                "documentation_url": "https://github.com/interuss/monitoring/blob/b887ee1d22f9e0040ee02169f8ccc90190c60f28/monitoring/uss_qualifier/scenarios/dev/noop.md#sleep-test-case",
+                "start_time": "2024-03-20T13:30:06.094127Z",
                 "steps": [
                   {
                     "name": "Sleep",
-                    "documentation_url": "https://github.com/interuss/monitoring/blob/ee68c0da9ddb09bda9ffa5593ac5ef6c8160dc21/monitoring/uss_qualifier/scenarios/dev/noop.md#sleep-test-step",
-                    "start_time": "2023-12-22T08:45:03.684276Z",
+                    "documentation_url": "https://github.com/interuss/monitoring/blob/b887ee1d22f9e0040ee02169f8ccc90190c60f28/monitoring/uss_qualifier/scenarios/dev/noop.md#sleep-test-step",
+                    "start_time": "2024-03-20T13:30:06.094293Z",
                     "failed_checks": [],
                     "passed_checks": [],
-                    "end_time": "2023-12-22T08:45:08.685123Z"
+                    "end_time": "2024-03-20T13:30:11.095326Z"
                   }
                 ],
-                "end_time": "2023-12-22T08:45:08.685154Z"
+                "end_time": "2024-03-20T13:30:11.095361Z"
               }
             ],
             "successful": true,
             "notes": {
               "Start time": {
-                "message": "Starting at 2023-12-22T08:45:03.684501Z, sleeping for 5s...",
-                "timestamp": "2023-12-22T08:45:03.684517Z"
+                "message": "Starting at 2024-03-20T13:30:06.094517Z, sleeping for 5s...",
+                "timestamp": "2024-03-20T13:30:06.094532Z"
               },
               "End time": {
-                "message": "Ending at 2023-12-22T08:45:08.684809Z.",
-                "timestamp": "2023-12-22T08:45:08.684863Z"
+                "message": "Ending at 2024-03-20T13:30:11.094973Z.",
+                "timestamp": "2024-03-20T13:30:11.095033Z"
               }
             },
-            "end_time": "2023-12-22T08:45:08.685180Z"
+            "end_time": "2024-03-20T13:30:11.095390Z"
           }
         }
       ],
       "capability_evaluations": [],
       "successful": true,
-      "end_time": "2023-12-22T08:45:08.686900Z"
+      "end_time": "2024-03-20T13:30:11.096027Z"
     }
   }
 }
