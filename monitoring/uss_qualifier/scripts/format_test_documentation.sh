@@ -13,10 +13,10 @@ else
 fi
 cd "${BASEDIR}/../../.." || exit 1
 
-(
-cd monitoring || exit 1
-make image
-)
+#(
+#cd monitoring || exit 1
+#make image
+#)
 
 # shellcheck disable=SC2086
 docker run --name test_documentation_formatter \
