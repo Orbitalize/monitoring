@@ -12,9 +12,9 @@ else
 fi
 cd "${BASEDIR}/../.." || exit 1
 
-(
-cd monitoring || exit 1
-make image
-)
+#(
+#cd monitoring || exit 1
+#make image
+#)
 
 ./monitoring/mock_uss/run_locally.sh up --wait --wait-timeout 60 -d

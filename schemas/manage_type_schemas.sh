@@ -13,9 +13,9 @@ else
 fi
 cd "${BASEDIR}/.." || exit 1
 
-cd monitoring
-make image
-cd ..
+#cd monitoring
+#make image
+#cd ..
 
 action=${1:?The action must be specified as --check or --generate}
 

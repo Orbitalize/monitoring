@@ -12,10 +12,10 @@ else
 fi
 cd "${BASEDIR}/../../.." || exit 1
 
-(
-cd monitoring || exit 1
-make image
-)
+#(
+#cd monitoring || exit 1
+#make image
+#)
 
 CONFIG_LOCATION="monitoring/uss_qualifier/config_run_locally.json"
 CONFIG='--config config_run_locally.json'

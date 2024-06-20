@@ -13,10 +13,11 @@ else
 fi
 cd "${BASEDIR}/../.." || exit 1
 
-(
-cd monitoring || exit 1
-make image
-)
+# TODO: temporarly disabled for CI import artifact
+#(
+#cd monitoring || exit 1
+#make image
+#)
 
 CORE_SERVICE_CONTAINER="local_infra-dss-1"
 OAUTH_CONTAINER="local_infra-oauth-1"
