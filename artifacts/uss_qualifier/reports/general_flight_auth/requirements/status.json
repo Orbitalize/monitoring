@@ -1,9 +1,9 @@
 {
   "test_run_information": {
-    "test_run_id": "c5621dd2636d997d16c4cb2371276fdb1c0666813f6cbb0cb12d9a367bdbab86",
-    "start_time": "2024-06-19 14:50:06 UTC",
-    "end_time": "2024-06-19 14:50:07 UTC",
-    "baseline": "a4f8624c7d6020d969de41a9895eef38cd0c3c4914ec2a5f77ae9687089c7c4e",
+    "test_run_id": "3fc41bf321a194ef3215ebcf99d1fe90935773549a543146d05b4c42c2e6aec7",
+    "start_time": "2024-10-18 06:20:23 UTC",
+    "end_time": "2024-10-18 06:20:23 UTC",
+    "baseline": "7790827f763fde420be762e1786cfd117cb6b2996dc263ad10803fbe29b3c276",
     "environment": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
   },
   "participant_verifications": {
@@ -11,5 +11,6 @@
       "status": "Pass",
       "system_version": null
     }
-  }
+  },
+  "artifact_configuration": "requirements"
 }

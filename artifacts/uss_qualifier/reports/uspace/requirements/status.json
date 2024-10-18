@@ -1,19 +1,20 @@
 {
   "test_run_information": {
-    "test_run_id": "0aa9f559a88012037382ed93eed608c9bc2436e7c16195a5ee07b894a8df3650",
-    "start_time": "2024-06-19 14:50:19 UTC",
-    "end_time": "2024-06-19 14:54:35 UTC",
-    "baseline": "cfb329f4acdb23140bf34a532ce4e196e223aa8cbd5d50ad1329e612f8d2cce5",
-    "environment": "0e4e6ac799d24e1c53d1f04e5457956c8534e2457f5d0073b8dec57da6f9be4c"
+    "test_run_id": "b5da330e67843e0db1de4302612fe38708de0e44090ef4ebe3bd2b05757aafdf",
+    "start_time": "2024-10-18 06:19:50 UTC",
+    "end_time": "2024-10-18 06:24:03 UTC",
+    "baseline": "b5158d0dee4420de52ed8129623d1c2c03b0e5cd004938ed0ac2ed8244cdb8fe",
+    "environment": "a0f182ab1629efef05a42e075e5a673479fd2bb372c3799d6fbb0ce18f58628b"
   },
   "participant_verifications": {
     "uss1": {
       "status": "Incomplete",
-      "system_version": "Orbitalize/monitoring/v0.0.0-3b3c5cd"
+      "system_version": "Orbitalize/monitoring/v0.0.0-c4f8adc"
     },
     "uss2": {
       "status": "Incomplete",
-      "system_version": "Orbitalize/monitoring/v0.0.0-3b3c5cd"
+      "system_version": "Orbitalize/monitoring/v0.0.0-c4f8adc"
     }
-  }
+  },
+  "artifact_configuration": "requirements"
 }

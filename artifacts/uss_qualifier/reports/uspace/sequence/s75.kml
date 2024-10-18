@@ -118,14 +118,17 @@
       </PolyStyle>
     </Style>
     <Folder>
-      <name>ASTM NetRID SP clients misbehavior handling</name>
+      <name>ASTM NetRID DSS: Submitted ISA Validations</name>
       <Folder>
-        <name>Unauthenticated requests</name>
+        <name>Setup</name>
         <Folder>
-          <name>Injection</name>
+          <name>Ensure clean workspace</name>
         </Folder>
+      </Folder>
+      <Folder>
+        <name>ISA Validation</name>
         <Folder>
-          <name>Unauthenticated requests</name>
+          <name>ISA Validation</name>
         </Folder>
       </Folder>
       <Folder>

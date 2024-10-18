@@ -118,26 +118,26 @@
       </PolyStyle>
     </Style>
     <Folder>
-      <name>ASTM F3411-22a NetRID aggregate checks</name>
+      <name>ASTM NetRID DSS: ISA Subscription Interactions</name>
       <Folder>
-        <name>Performance of Display Providers requests</name>
+        <name>Setup</name>
         <Folder>
-          <name>Performance of /display_data requests</name>
-        </Folder>
-        <Folder>
-          <name>Performance of /display_data/&lt;flight_id&gt; requests</name>
+          <name>Ensure clean workspace</name>
         </Folder>
       </Folder>
       <Folder>
-        <name>Performance of Service Providers requests</name>
+        <name>ISA Subscription Interactions</name>
         <Folder>
-          <name>Performance of /flights?view requests</name>
+          <name>New Subscription within ISA</name>
+        </Folder>
+        <Folder>
+          <name>New subscription within ISA is mutated to ISA boundary</name>
         </Folder>
       </Folder>
       <Folder>
-        <name>Verify https is in use</name>
+        <name/>
         <Folder>
-          <name>Verify https is in use</name>
+          <name>Cleanup</name>
         </Folder>
       </Folder>
     </Folder>

@@ -106,8 +106,16 @@
 </head>
 <body>
 <div>
-    <h2><a href="https://github.com/interuss/monitoring/blob/3b3c5cddc107273126cf18180935db3ea4bc7349/monitoring/uss_qualifier/scenarios/dev/noop.md">NoOp</a></h2>
+    <h2><a href="https://github.com/interuss/monitoring/blob/c4f8adc7c5f8a53391a3c3609e6ed05a767b3194/monitoring/uss_qualifier/scenarios/dev/noop.md">NoOp</a></h2>
   <h3>scenarios.dev.NoOp</h3>
+  <div id="resources_configuration_section" class="collapseable">
+    <div class="node_key" onclick="showHide(document.getElementById('resources_configuration_section'))"><h4>Resources</h4></div>
+    <div class="node_value">
+      <ul id="resource_origin_list">
+          <li><a href="https://github.com/interuss/monitoring/blob/c4f8adc7c5f8a53391a3c3609e6ed05a767b3194/monitoring/uss_qualifier/scenarios/dev/noop.md#noop_config"><code>noop_config</code></a> provided by <a href="./index.html#resources-configuration">noop_config in top-level resource pool</a></li>
+      </ul>
+    </div>
+  </div>
     <h4>
       <a href="./s1.kml">KML visualization</a>
     </h4>
@@ -120,22 +128,22 @@
 
             <tr id="e3">
                 <td rowspan="2"><span class="sticky_cell_value">
-                    <a href="https://github.com/interuss/monitoring/blob/3b3c5cddc107273126cf18180935db3ea4bc7349/monitoring/uss_qualifier/scenarios/dev/noop.md#sleep-test-case">Sleep</a>
+                    <a href="https://github.com/interuss/monitoring/blob/c4f8adc7c5f8a53391a3c3609e6ed05a767b3194/monitoring/uss_qualifier/scenarios/dev/noop.md#sleep-test-case">Sleep</a>
                 </span></td>
                 <td rowspan="2"><span class="sticky_cell_value">
-                    <a href="https://github.com/interuss/monitoring/blob/3b3c5cddc107273126cf18180935db3ea4bc7349/monitoring/uss_qualifier/scenarios/dev/noop.md#sleep-test-step">Sleep</a>
+                    <a href="https://github.com/interuss/monitoring/blob/c4f8adc7c5f8a53391a3c3609e6ed05a767b3194/monitoring/uss_qualifier/scenarios/dev/noop.md#sleep-test-step">Sleep</a>
                 </span></td>
               <td><a href="#e3">3</a></td>
                 <td>&#x1F4D3;</td>
                 <td colspan="1">
-                  <code>Start time</code>: Starting at 2024-06-19T14:50:16.349324Z, sleeping for 5s...
+                  <code>Start time</code>: Starting at 2024-10-18T06:19:52.549981+00:00Z, sleeping for 5s...
                 </td>
             </tr>
             <tr id="e4">
               <td><a href="#e4">4</a></td>
                 <td>&#x1F4D3;</td>
                 <td colspan="1">
-                  <code>End time</code>: Ending at 2024-06-19T14:50:21.349867Z.
+                  <code>End time</code>: Ending at 2024-10-18T06:19:57.550574+00:00Z.
                 </td>
             </tr>
   </table>
@@ -170,6 +178,7 @@
       }
     }
 
+      addShowHide(document.getElementById("resource_origin_list"));
   </script>
 
 </body>

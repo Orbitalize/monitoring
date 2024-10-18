@@ -118,389 +118,71 @@
       </PolyStyle>
     </Style>
     <Folder>
-      <name>ASTM NetRID nominal behavior</name>
+      <name>ASTM NetRID DSS: Simple ISA</name>
       <Folder>
-        <name>Nominal flight</name>
+        <name>Setup</name>
         <Folder>
-          <name>Injection</name>
+          <name>Ensure clean workspace</name>
         </Folder>
+      </Folder>
+      <Folder>
+        <name>Create and check ISA</name>
         <Folder>
-          <name>Service Provider polling</name>
+          <name>Create ISA</name>
         </Folder>
         <Folder>
-          <name>Observer polling</name>
+          <name>Get ISA by ID</name>
         </Folder>
+      </Folder>
+      <Folder>
+        <name>Update and search ISA</name>
         <Folder>
-          <name>Service Provider polling</name>
+          <name>Update ISA</name>
         </Folder>
         <Folder>
-          <name>Observer polling</name>
+          <name>Get ISA by ID</name>
         </Folder>
         <Folder>
-          <name>Service Provider polling</name>
+          <name>Search by earliest time (included)</name>
         </Folder>
         <Folder>
-          <name>Observer polling</name>
+          <name>Search by earliest time (excluded)</name>
         </Folder>
         <Folder>
-          <name>Service Provider polling</name>
+          <name>Search by latest time (included)</name>
         </Folder>
         <Folder>
-          <name>Observer polling</name>
+          <name>Search by latest time (excluded)</name>
         </Folder>
         <Folder>
-          <name>Service Provider polling</name>
+          <name>Search by area only</name>
         </Folder>
         <Folder>
-          <name>Observer polling</name>
+          <name>Search with invalid params</name>
         </Folder>
         <Folder>
-          <name>Service Provider polling</name>
+          <name>Search by huge area</name>
         </Folder>
         <Folder>
-          <name>Observer polling</name>
+          <name>Search ISA with loop</name>
         </Folder>
+      </Folder>
+      <Folder>
+        <name>Delete ISA</name>
         <Folder>
-          <name>Service Provider polling</name>
+          <name>Delete with wrong version</name>
         </Folder>
         <Folder>
-          <name>Observer polling</name>
+          <name>Delete with empty version</name>
         </Folder>
         <Folder>
-          <name>Service Provider polling</name>
+          <name>Delete ISA</name>
         </Folder>
         <Folder>
-          <name>Observer polling</name>
+          <name>Get deleted ISA by ID</name>
         </Folder>
         <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
-        </Folder>
-        <Folder>
-          <name>Service Provider polling</name>
-        </Folder>
-        <Folder>
-          <name>Observer polling</name>
+          <name>Search ISA</name>
         </Folder>
       </Folder>
       <Folder>

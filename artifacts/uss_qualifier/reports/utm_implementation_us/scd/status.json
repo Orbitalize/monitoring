@@ -1,0 +1,20 @@
+{
+  "test_run_information": {
+    "test_run_id": "2516bd7f7c1615b5d5c2ce330f0ee64af7ba1fec7cd387ccbe09fe512793b800",
+    "start_time": "2024-10-18 06:19:59 UTC",
+    "end_time": "2024-10-18 06:20:43 UTC",
+    "baseline": "269314e2c4f2d1160829ae0d27b92bea0004b1ebe563c0592ab050429c3f3425",
+    "environment": "4872cfd55c12481a9aa9c13d6f8be57dcc234449b34904a0c7031723157f1394"
+  },
+  "participant_verifications": {
+    "uss1": {
+      "status": "Incomplete",
+      "system_version": "Orbitalize/monitoring/v0.0.0-c4f8adc"
+    },
+    "uss2": {
+      "status": "Incomplete",
+      "system_version": "Orbitalize/monitoring/v0.0.0-c4f8adc"
+    }
+  },
+  "artifact_configuration": "scd"
+}

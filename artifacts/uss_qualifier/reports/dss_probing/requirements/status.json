@@ -1,10 +1,10 @@
 {
   "test_run_information": {
-    "test_run_id": "54c89f32ac59a4bfaf60f61c09cc6798726ac8656bf9080543dcce3dc3907c40",
-    "start_time": "2024-06-19 14:50:23 UTC",
-    "end_time": "2024-06-19 14:53:06 UTC",
-    "baseline": "321f54a593503465712f54ac25f2691c124bf8b71ca5af372ee34c17300f5dee",
-    "environment": "64c0338e4f6d02f8b3df3ad2a541d6b0b195a334158eb74a71dad118d6cef60a"
+    "test_run_id": "6b803af39bc08a546fa5a2237c717afba7a9ed5a439f1090d5e23874c18fe9ae",
+    "start_time": "2024-10-18 06:20:19 UTC",
+    "end_time": "2024-10-18 06:23:01 UTC",
+    "baseline": "bec5638c870e0b1dd827010e301d413e6264c877d52d783a3b843bbd75a482a9",
+    "environment": "03ef179ff1c07748f590e40439add7679016d72b292337d0265b565d6b53ab2a"
   },
   "participant_verifications": {
     "uss1": {
@@ -15,5 +15,6 @@
       "status": "Incomplete",
       "system_version": null
     }
-  }
+  },
+  "artifact_configuration": "requirements"
 }

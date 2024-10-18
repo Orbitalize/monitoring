@@ -118,38 +118,53 @@
       </PolyStyle>
     </Style>
     <Folder>
-      <name>ASTM SCD DSS: USS Availability Synchronization</name>
+      <name>ASTM SCD DSS: Subscription Synchronization</name>
       <Folder>
         <name>Setup</name>
         <Folder>
-          <name>Ensure test USS has Unknown availability</name>
+          <name>Ensure clean workspace</name>
         </Folder>
       </Folder>
       <Folder>
-        <name>USS Availability synchronization</name>
+        <name>Subscription Synchronization</name>
         <Folder>
-          <name>Update USS availability on primary DSS to Normal</name>
+          <name>Create subscription validation</name>
         </Folder>
         <Folder>
-          <name>Check Normal USS availability broadcast</name>
+          <name>Query newly created subscription</name>
         </Folder>
         <Folder>
-          <name>Update USS Availability on primary DSS to Down</name>
+          <name>Mutate subscription broadcast</name>
         </Folder>
         <Folder>
-          <name>Check Down USS availability broadcast</name>
+          <name>Query updated subscription</name>
         </Folder>
         <Folder>
-          <name>Update USS availability on primary DSS to Unknown</name>
+          <name>Create subscription with different credentials</name>
         </Folder>
         <Folder>
-          <name>Check Unknown USS availability broadcast</name>
+          <name>Verify manager synchronization</name>
         </Folder>
-      </Folder>
-      <Folder>
-        <name>Unknown USS state is reported as Unknown</name>
         <Folder>
-          <name>Query all DSS instances with an unknown USS identifier</name>
+          <name>Mutate subscription on secondaries</name>
+        </Folder>
+        <Folder>
+          <name>Verify mutation on all secondaries</name>
+        </Folder>
+        <Folder>
+          <name>Mutate subscription on secondaries</name>
+        </Folder>
+        <Folder>
+          <name>Verify mutation on all secondaries</name>
+        </Folder>
+        <Folder>
+          <name>Delete subscription on primary</name>
+        </Folder>
+        <Folder>
+          <name>Query deleted subscription</name>
+        </Folder>
+        <Folder>
+          <name>Delete subscriptions on secondaries</name>
         </Folder>
       </Folder>
       <Folder>

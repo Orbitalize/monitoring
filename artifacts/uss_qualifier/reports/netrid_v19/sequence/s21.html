@@ -106,8 +106,15 @@
 </head>
 <body>
 <div>
-    <h2><a href="https://github.com/interuss/monitoring/blob/3b3c5cddc107273126cf18180935db3ea4bc7349/monitoring/uss_qualifier/scenarios/astm/netrid/v19/operator_interactions.md">ASTM NetRID: Operator interactions</a></h2>
+    <h2><a href="https://github.com/interuss/monitoring/blob/c4f8adc7c5f8a53391a3c3609e6ed05a767b3194/monitoring/uss_qualifier/scenarios/astm/netrid/v19/operator_interactions.md">ASTM NetRID: Operator interactions</a></h2>
   <h3>scenarios.astm.netrid.v19.OperatorInteractions</h3>
+  <div id="resources_configuration_section" class="collapseable">
+    <div class="node_key" onclick="showHide(document.getElementById('resources_configuration_section'))"><h4>Resources</h4></div>
+    <div class="node_value">
+      <ul id="resource_origin_list">
+      </ul>
+    </div>
+  </div>
     <h4>
       <a href="./s21.kml">KML visualization</a>
     </h4>
@@ -150,6 +157,7 @@
       }
     }
 
+      addShowHide(document.getElementById("resource_origin_list"));
   </script>
 
 </body>

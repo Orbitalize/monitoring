@@ -118,7 +118,7 @@
       </PolyStyle>
     </Style>
     <Folder>
-      <name>ASTM SCD DSS: Subscription and entity deletion interaction</name>
+      <name>ASTM SCD DSS: Implicit Subscription handling</name>
       <Folder>
         <name>Setup</name>
         <Folder>
@@ -126,21 +126,57 @@
         </Folder>
       </Folder>
       <Folder>
-        <name>Subscription deletion is reflected on all DSS instances</name>
+        <name>Single OIR implicit subscription is removed upon OIR deletion</name>
         <Folder>
-          <name>Create a subscription at every DSS in sequence</name>
+          <name>Create an OIR with implicit subscription</name>
         </Folder>
         <Folder>
-          <name>Delete a subscription at every DSS in sequence</name>
+          <name>Delete the OIR with implicit subscription</name>
         </Folder>
       </Folder>
       <Folder>
-        <name>OIR creation and modification does not trigger relevant notifications after subscription deletion</name>
+        <name>Implicit subscriptions always properly cover their OIR</name>
         <Folder>
-          <name>Create an OIR at every DSS in sequence</name>
+          <name>Create an OIR with implicit subscription</name>
         </Folder>
         <Folder>
-          <name>Modify an OIR at every DSS in sequence</name>
+          <name>Create an overlapping OIR without any subscription</name>
+        </Folder>
+        <Folder>
+          <name>Mutate OIR with implicit subscription to not overlap anymore</name>
+        </Folder>
+        <Folder>
+          <name>Create an OIR overlapping with the second OIR but not the first</name>
+        </Folder>
+      </Folder>
+      <Folder>
+        <name>Implicit subscriptions are properly deleted when required by OIR mutation</name>
+        <Folder>
+          <name>Ensure clean workspace</name>
+        </Folder>
+        <Folder>
+          <name>Create two OIRs with implicit subscription</name>
+        </Folder>
+        <Folder>
+          <name>Create a subscription</name>
+        </Folder>
+        <Folder>
+          <name>Update OIR with implicit subscription to use explicit subscription</name>
+        </Folder>
+        <Folder>
+          <name>Update OIR with implicit subscription to use no subscription</name>
+        </Folder>
+      </Folder>
+      <Folder>
+        <name>Implicit subscriptions are expanded as needed</name>
+        <Folder>
+          <name>Ensure clean workspace</name>
+        </Folder>
+        <Folder>
+          <name>Create an OIR with implicit subscription</name>
+        </Folder>
+        <Folder>
+          <name>Expand the OIR while keeping the same implicit subscription</name>
         </Folder>
       </Folder>
       <Folder>

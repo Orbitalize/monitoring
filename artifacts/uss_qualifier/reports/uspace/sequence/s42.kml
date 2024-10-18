@@ -118,27 +118,27 @@
       </PolyStyle>
     </Style>
     <Folder>
-      <name>Nominal planning: not permitted conflict with equal priority</name>
+      <name>Validation of operational intents</name>
       <Folder>
-        <name>Prerequisites check</name>
+        <name>Attempt to plan invalid flights</name>
         <Folder>
-          <name>Verify area is clear</name>
+          <name>Attempt to plan Too Far Away Flight</name>
           <Folder>
-            <name>E3: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
+            <name>E2: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
             <Placemark>
               <name>area_of_interest</name>
               <styleUrl>#QueryArea</styleUrl>
               <description><![CDATA[(no operational intent references found)]]></description>
               <TimeSpan>
-                <begin>2024-06-19T14:50:16.428015+00:00</begin>
-                <end>2024-06-19T16:20:17.428015+00:00</end>
+                <begin>2024-11-19T06:20:14.218790+00:00</begin>
+                <end>2024-11-19T07:05:14.218790+00:00</end>
               </TimeSpan>
               <MultiGeometry>
                 <Polygon>
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,526.271598776309 7.477199999999999,46.975300000000004,526.271598776309 7.477950000000001,46.975300000000004,526.271598776309 7.477950000000001,46.97455,526.271598776309</coordinates>
+                      <coordinates>7.4771,46.9748,556.3215416381361 7.4771,46.97522,556.3215416381361 7.477700000000001,46.97522,556.3215416381361 7.477700000000001,46.9748,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -146,7 +146,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,606.321598776309 7.477199999999999,46.975300000000004,606.321598776309 7.477950000000001,46.975300000000004,606.321598776309 7.477950000000001,46.97455,606.321598776309</coordinates>
+                      <coordinates>7.4771,46.9748,586.3215416381361 7.4771,46.97522,586.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.9748,586.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -154,7 +154,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,526.271598776309 7.477199999999999,46.97455,606.321598776309 7.477199999999999,46.975300000000004,606.321598776309 7.477199999999999,46.975300000000004,526.271598776309</coordinates>
+                      <coordinates>7.4771,46.9748,556.3215416381361 7.4771,46.9748,586.3215416381361 7.4771,46.97522,586.3215416381361 7.4771,46.97522,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -162,7 +162,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.975300000000004,526.271598776309 7.477199999999999,46.975300000000004,606.321598776309 7.477950000000001,46.975300000000004,606.321598776309 7.477950000000001,46.975300000000004,526.271598776309</coordinates>
+                      <coordinates>7.4771,46.97522,556.3215416381361 7.4771,46.97522,586.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.97522,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -170,7 +170,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477950000000001,46.975300000000004,526.271598776309 7.477950000000001,46.975300000000004,606.321598776309 7.477950000000001,46.97455,606.321598776309 7.477950000000001,46.97455,526.271598776309</coordinates>
+                      <coordinates>7.477700000000001,46.97522,556.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.9748,586.3215416381361 7.477700000000001,46.9748,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -178,7 +178,196 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,526.271598776309 7.477950000000001,46.97455,606.321598776309 7.477199999999999,46.97455,606.321598776309 7.477199999999999,46.97455,526.271598776309</coordinates>
+                      <coordinates>7.477700000000001,46.9748,556.3215416381361 7.477700000000001,46.9748,586.3215416381361 7.4771,46.9748,586.3215416381361 7.4771,46.9748,556.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+              </MultiGeometry>
+            </Placemark>
+          </Folder>
+          <Folder>
+            <name>E7: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
+            <Placemark>
+              <name>area_of_interest</name>
+              <styleUrl>#QueryArea</styleUrl>
+              <description><![CDATA[(no operational intent references found)]]></description>
+              <TimeSpan>
+                <begin>2024-11-19T06:20:14.218790+00:00</begin>
+                <end>2024-11-19T07:05:14.218790+00:00</end>
+              </TimeSpan>
+              <MultiGeometry>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.4771,46.9748,556.3215416381361 7.4771,46.97522,556.3215416381361 7.477700000000001,46.97522,556.3215416381361 7.477700000000001,46.9748,556.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.4771,46.9748,586.3215416381361 7.4771,46.97522,586.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.9748,586.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.4771,46.9748,556.3215416381361 7.4771,46.9748,586.3215416381361 7.4771,46.97522,586.3215416381361 7.4771,46.97522,556.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.4771,46.97522,556.3215416381361 7.4771,46.97522,586.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.97522,556.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.477700000000001,46.97522,556.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.9748,586.3215416381361 7.477700000000001,46.9748,556.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.477700000000001,46.9748,556.3215416381361 7.477700000000001,46.9748,586.3215416381361 7.4771,46.9748,586.3215416381361 7.4771,46.9748,556.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+              </MultiGeometry>
+            </Placemark>
+          </Folder>
+        </Folder>
+        <Folder>
+          <name>Attempt to plan Recently Ended Flight</name>
+          <Folder>
+            <name>E10: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
+            <Placemark>
+              <name>area_of_interest</name>
+              <styleUrl>#QueryArea</styleUrl>
+              <description><![CDATA[(no operational intent references found)]]></description>
+              <TimeSpan>
+                <begin>2024-10-18T06:19:14.256818+00:00</begin>
+                <end>2024-10-18T06:20:09.256818+00:00</end>
+              </TimeSpan>
+              <MultiGeometry>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.4771,46.9748,556.3215416381361 7.4771,46.97522,556.3215416381361 7.477700000000001,46.97522,556.3215416381361 7.477700000000001,46.9748,556.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.4771,46.9748,586.3215416381361 7.4771,46.97522,586.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.9748,586.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.4771,46.9748,556.3215416381361 7.4771,46.9748,586.3215416381361 7.4771,46.97522,586.3215416381361 7.4771,46.97522,556.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.4771,46.97522,556.3215416381361 7.4771,46.97522,586.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.97522,556.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.477700000000001,46.97522,556.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.9748,586.3215416381361 7.477700000000001,46.9748,556.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.477700000000001,46.9748,556.3215416381361 7.477700000000001,46.9748,586.3215416381361 7.4771,46.9748,586.3215416381361 7.4771,46.9748,556.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+              </MultiGeometry>
+            </Placemark>
+          </Folder>
+          <Folder>
+            <name>E15: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
+            <Placemark>
+              <name>area_of_interest</name>
+              <styleUrl>#QueryArea</styleUrl>
+              <description><![CDATA[(no operational intent references found)]]></description>
+              <TimeSpan>
+                <begin>2024-10-18T06:19:14.256818+00:00</begin>
+                <end>2024-10-18T06:20:09.256818+00:00</end>
+              </TimeSpan>
+              <MultiGeometry>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.4771,46.9748,556.3215416381361 7.4771,46.97522,556.3215416381361 7.477700000000001,46.97522,556.3215416381361 7.477700000000001,46.9748,556.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.4771,46.9748,586.3215416381361 7.4771,46.97522,586.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.9748,586.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.4771,46.9748,556.3215416381361 7.4771,46.9748,586.3215416381361 7.4771,46.97522,586.3215416381361 7.4771,46.97522,556.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.4771,46.97522,556.3215416381361 7.4771,46.97522,586.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.97522,556.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.477700000000001,46.97522,556.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.9748,586.3215416381361 7.477700000000001,46.9748,556.3215416381361</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+                <Polygon>
+                  <altitudeMode>absolute</altitudeMode>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>7.477700000000001,46.9748,556.3215416381361 7.477700000000001,46.9748,586.3215416381361 7.4771,46.9748,586.3215416381361 7.4771,46.9748,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -188,25 +377,25 @@
         </Folder>
       </Folder>
       <Folder>
-        <name>Attempt to plan flight into conflict</name>
+        <name>Validate transition to Ended state after cancellation</name>
         <Folder>
-          <name>Plan Flight 2</name>
+          <name>Plan Valid Flight</name>
           <Folder>
-            <name>E6: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
+            <name>E18: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
             <Placemark>
               <name>area_of_interest</name>
               <styleUrl>#QueryArea</styleUrl>
               <description><![CDATA[(no operational intent references found)]]></description>
               <TimeSpan>
-                <begin>2024-06-19T14:50:53.818727+00:00</begin>
-                <end>2024-06-19T15:35:54.818727+00:00</end>
+                <begin>2024-10-18T06:20:13.218790+00:00</begin>
+                <end>2024-10-18T07:05:13.218790+00:00</end>
               </TimeSpan>
               <MultiGeometry>
                 <Polygon>
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,556.4214433597552 7.477199999999999,46.975300000000004,556.4214433597552 7.477600000000001,46.975300000000004,556.4214433597552 7.477600000000001,46.97455,556.4214433597552</coordinates>
+                      <coordinates>7.4771,46.9748,556.3215416381361 7.4771,46.97522,556.3215416381361 7.477700000000001,46.97522,556.3215416381361 7.477700000000001,46.9748,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -214,7 +403,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,584.3214433597552 7.477199999999999,46.975300000000004,584.3214433597552 7.477600000000001,46.975300000000004,584.3214433597552 7.477600000000001,46.97455,584.3214433597552</coordinates>
+                      <coordinates>7.4771,46.9748,586.3215416381361 7.4771,46.97522,586.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.9748,586.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -222,7 +411,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,556.4214433597552 7.477199999999999,46.97455,584.3214433597552 7.477199999999999,46.975300000000004,584.3214433597552 7.477199999999999,46.975300000000004,556.4214433597552</coordinates>
+                      <coordinates>7.4771,46.9748,556.3215416381361 7.4771,46.9748,586.3215416381361 7.4771,46.97522,586.3215416381361 7.4771,46.97522,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -230,7 +419,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.975300000000004,556.4214433597552 7.477199999999999,46.975300000000004,584.3214433597552 7.477600000000001,46.975300000000004,584.3214433597552 7.477600000000001,46.975300000000004,556.4214433597552</coordinates>
+                      <coordinates>7.4771,46.97522,556.3215416381361 7.4771,46.97522,586.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.97522,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -238,7 +427,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477600000000001,46.975300000000004,556.4214433597552 7.477600000000001,46.975300000000004,584.3214433597552 7.477600000000001,46.97455,584.3214433597552 7.477600000000001,46.97455,556.4214433597552</coordinates>
+                      <coordinates>7.477700000000001,46.97522,556.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.9748,586.3215416381361 7.477700000000001,46.9748,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -246,7 +435,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477600000000001,46.97455,556.4214433597552 7.477600000000001,46.97455,584.3214433597552 7.477199999999999,46.97455,584.3214433597552 7.477199999999999,46.97455,556.4214433597552</coordinates>
+                      <coordinates>7.477700000000001,46.9748,556.3215416381361 7.477700000000001,46.9748,586.3215416381361 7.4771,46.9748,586.3215416381361 7.4771,46.9748,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -254,21 +443,21 @@
             </Placemark>
           </Folder>
           <Folder>
-            <name>E11: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
+            <name>E23: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
             <Placemark>
               <name>area_of_interest</name>
               <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Accepted f7bdf14a-5922-47dc-9159-01f75bab6b67[1]</li></ul>]]></description>
+              <description><![CDATA[<ul><li>uss2's Accepted ec157195-e2bf-4ca4-b856-b38d10ae8161[1]</li></ul>]]></description>
               <TimeSpan>
-                <begin>2024-06-19T14:50:53.818727+00:00</begin>
-                <end>2024-06-19T15:35:54.818727+00:00</end>
+                <begin>2024-10-18T06:20:13.218790+00:00</begin>
+                <end>2024-10-18T07:05:13.218790+00:00</end>
               </TimeSpan>
               <MultiGeometry>
                 <Polygon>
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,556.4214433597552 7.477199999999999,46.975300000000004,556.4214433597552 7.477600000000001,46.975300000000004,556.4214433597552 7.477600000000001,46.97455,556.4214433597552</coordinates>
+                      <coordinates>7.4771,46.9748,556.3215416381361 7.4771,46.97522,556.3215416381361 7.477700000000001,46.97522,556.3215416381361 7.477700000000001,46.9748,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -276,7 +465,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,584.3214433597552 7.477199999999999,46.975300000000004,584.3214433597552 7.477600000000001,46.975300000000004,584.3214433597552 7.477600000000001,46.97455,584.3214433597552</coordinates>
+                      <coordinates>7.4771,46.9748,586.3215416381361 7.4771,46.97522,586.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.9748,586.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -284,7 +473,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,556.4214433597552 7.477199999999999,46.97455,584.3214433597552 7.477199999999999,46.975300000000004,584.3214433597552 7.477199999999999,46.975300000000004,556.4214433597552</coordinates>
+                      <coordinates>7.4771,46.9748,556.3215416381361 7.4771,46.9748,586.3215416381361 7.4771,46.97522,586.3215416381361 7.4771,46.97522,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -292,7 +481,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.975300000000004,556.4214433597552 7.477199999999999,46.975300000000004,584.3214433597552 7.477600000000001,46.975300000000004,584.3214433597552 7.477600000000001,46.975300000000004,556.4214433597552</coordinates>
+                      <coordinates>7.4771,46.97522,556.3215416381361 7.4771,46.97522,586.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.97522,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -300,7 +489,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477600000000001,46.975300000000004,556.4214433597552 7.477600000000001,46.975300000000004,584.3214433597552 7.477600000000001,46.97455,584.3214433597552 7.477600000000001,46.97455,556.4214433597552</coordinates>
+                      <coordinates>7.477700000000001,46.97522,556.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.9748,586.3215416381361 7.477700000000001,46.9748,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -308,7 +497,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477600000000001,46.97455,556.4214433597552 7.477600000000001,46.97455,584.3214433597552 7.477199999999999,46.97455,584.3214433597552 7.477199999999999,46.97455,556.4214433597552</coordinates>
+                      <coordinates>7.477700000000001,46.9748,556.3215416381361 7.477700000000001,46.9748,586.3215416381361 7.4771,46.9748,586.3215416381361 7.4771,46.9748,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -316,22 +505,22 @@
             </Placemark>
           </Folder>
           <Folder>
-            <name>E15: uss2 astm.f3548.v21.uss.getOperationalIntentDetails</name>
+            <name>E27: uss2 astm.f3548.v21.uss.getOperationalIntentDetails</name>
             <Folder>
-              <name>uss2's P0 Accepted f7bdf14a-5922-47dc-9159-01f75bab6b67[1] @ WMp60273-CB6nf6cAD2L8Afyk858xPzgRphAYPNuDMY_</name>
+              <name>uss2's P0 Accepted ec157195-e2bf-4ca4-b856-b38d10ae8161[1] @ l5.pUjPaNELc8P7FaTv0H8BDEaVpoVZkLUt3ADxqMmo_</name>
               <Placemark>
                 <name>Nominal volume 0</name>
                 <styleUrl>#F3548v21Accepted</styleUrl>
                 <TimeSpan>
-                  <begin>2024-06-19T14:50:53.818727+00:00</begin>
-                  <end>2024-06-19T15:35:54.818727+00:00</end>
+                  <begin>2024-10-18T06:20:13.218790+00:00</begin>
+                  <end>2024-10-18T07:05:13.218790+00:00</end>
                 </TimeSpan>
                 <MultiGeometry>
                   <Polygon>
                     <altitudeMode>absolute</altitudeMode>
                     <outerBoundaryIs>
                       <LinearRing>
-                        <coordinates>7.4772,46.975,556.4214722710801 7.4774,46.97455,556.4214722710801 7.477600000000001,46.97495,556.4214722710801 7.4774,46.975300000000004,556.4214722710801</coordinates>
+                        <coordinates>7.4774,46.9748,556.3216225304598 7.4771,46.97522,556.3216225304598 7.4777000000000005,46.97522,556.3216225304598</coordinates>
                       </LinearRing>
                     </outerBoundaryIs>
                   </Polygon>
@@ -339,7 +528,7 @@
                     <altitudeMode>absolute</altitudeMode>
                     <outerBoundaryIs>
                       <LinearRing>
-                        <coordinates>7.4772,46.975,584.3214722710801 7.4774,46.97455,584.3214722710801 7.477600000000001,46.97495,584.3214722710801 7.4774,46.975300000000004,584.3214722710801</coordinates>
+                        <coordinates>7.4774,46.9748,586.3216225304598 7.4771,46.97522,586.3216225304598 7.4777000000000005,46.97522,586.3216225304598</coordinates>
                       </LinearRing>
                     </outerBoundaryIs>
                   </Polygon>
@@ -347,7 +536,7 @@
                     <altitudeMode>absolute</altitudeMode>
                     <outerBoundaryIs>
                       <LinearRing>
-                        <coordinates>7.4772,46.975,556.4214722710801 7.4772,46.975,584.3214722710801 7.4774,46.97455,584.3214722710801 7.4774,46.97455,556.4214722710801</coordinates>
+                        <coordinates>7.4774,46.9748,556.3216225304598 7.4774,46.9748,586.3216225304598 7.4771,46.97522,586.3216225304598 7.4771,46.97522,556.3216225304598</coordinates>
                       </LinearRing>
                     </outerBoundaryIs>
                   </Polygon>
@@ -355,7 +544,7 @@
                     <altitudeMode>absolute</altitudeMode>
                     <outerBoundaryIs>
                       <LinearRing>
-                        <coordinates>7.4774,46.97455,556.4214722710801 7.4774,46.97455,584.3214722710801 7.477600000000001,46.97495,584.3214722710801 7.477600000000001,46.97495,556.4214722710801</coordinates>
+                        <coordinates>7.4771,46.97522,556.3216225304598 7.4771,46.97522,586.3216225304598 7.4777000000000005,46.97522,586.3216225304598 7.4777000000000005,46.97522,556.3216225304598</coordinates>
                       </LinearRing>
                     </outerBoundaryIs>
                   </Polygon>
@@ -363,15 +552,7 @@
                     <altitudeMode>absolute</altitudeMode>
                     <outerBoundaryIs>
                       <LinearRing>
-                        <coordinates>7.477600000000001,46.97495,556.4214722710801 7.477600000000001,46.97495,584.3214722710801 7.4774,46.975300000000004,584.3214722710801 7.4774,46.975300000000004,556.4214722710801</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4774,46.975300000000004,556.4214722710801 7.4774,46.975300000000004,584.3214722710801 7.4772,46.975,584.3214722710801 7.4772,46.975,556.4214722710801</coordinates>
+                        <coordinates>7.4777000000000005,46.97522,556.3216225304598 7.4777000000000005,46.97522,586.3216225304598 7.4774,46.9748,586.3216225304598 7.4774,46.9748,556.3216225304598</coordinates>
                       </LinearRing>
                     </outerBoundaryIs>
                   </Polygon>
@@ -381,23 +562,23 @@
           </Folder>
         </Folder>
         <Folder>
-          <name>Activate Flight 2</name>
+          <name>Remove Valid Flight</name>
           <Folder>
-            <name>E21: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
+            <name>E33: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
             <Placemark>
               <name>area_of_interest</name>
               <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Accepted f7bdf14a-5922-47dc-9159-01f75bab6b67[1]</li></ul>]]></description>
+              <description><![CDATA[<ul><li>uss2's Accepted ec157195-e2bf-4ca4-b856-b38d10ae8161[1]</li></ul>]]></description>
               <TimeSpan>
-                <begin>2024-06-19T14:50:53.975632+00:00</begin>
-                <end>2024-06-19T15:35:54.975632+00:00</end>
+                <begin>2024-10-18T06:20:13.218790+00:00</begin>
+                <end>2024-10-18T07:05:13.218790+00:00</end>
               </TimeSpan>
               <MultiGeometry>
                 <Polygon>
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,556.4314433597552 7.477199999999999,46.975300000000004,556.4314433597552 7.477600000000001,46.975300000000004,556.4314433597552 7.477600000000001,46.97455,556.4314433597552</coordinates>
+                      <coordinates>7.4771,46.9748,556.3215416381361 7.4771,46.97522,556.3215416381361 7.477700000000001,46.97522,556.3215416381361 7.477700000000001,46.9748,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -405,7 +586,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,584.3214433597552 7.477199999999999,46.975300000000004,584.3214433597552 7.477600000000001,46.975300000000004,584.3214433597552 7.477600000000001,46.97455,584.3214433597552</coordinates>
+                      <coordinates>7.4771,46.9748,586.3215416381361 7.4771,46.97522,586.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.9748,586.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -413,7 +594,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,556.4314433597552 7.477199999999999,46.97455,584.3214433597552 7.477199999999999,46.975300000000004,584.3214433597552 7.477199999999999,46.975300000000004,556.4314433597552</coordinates>
+                      <coordinates>7.4771,46.9748,556.3215416381361 7.4771,46.9748,586.3215416381361 7.4771,46.97522,586.3215416381361 7.4771,46.97522,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -421,7 +602,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.975300000000004,556.4314433597552 7.477199999999999,46.975300000000004,584.3214433597552 7.477600000000001,46.975300000000004,584.3214433597552 7.477600000000001,46.975300000000004,556.4314433597552</coordinates>
+                      <coordinates>7.4771,46.97522,556.3215416381361 7.4771,46.97522,586.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.97522,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -429,7 +610,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477600000000001,46.975300000000004,556.4314433597552 7.477600000000001,46.975300000000004,584.3214433597552 7.477600000000001,46.97455,584.3214433597552 7.477600000000001,46.97455,556.4314433597552</coordinates>
+                      <coordinates>7.477700000000001,46.97522,556.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.9748,586.3215416381361 7.477700000000001,46.9748,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -437,1382 +618,29 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477600000000001,46.97455,556.4314433597552 7.477600000000001,46.97455,584.3214433597552 7.477199999999999,46.97455,584.3214433597552 7.477199999999999,46.97455,556.4314433597552</coordinates>
+                      <coordinates>7.477700000000001,46.9748,556.3215416381361 7.477700000000001,46.9748,586.3215416381361 7.4771,46.9748,586.3215416381361 7.4771,46.9748,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
               </MultiGeometry>
             </Placemark>
           </Folder>
-          <Folder>
-            <name>E26: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Activated f7bdf14a-5922-47dc-9159-01f75bab6b67[2]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:53.975632+00:00</begin>
-                <end>2024-06-19T15:35:54.975632+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,556.4314433597552 7.477199999999999,46.975300000000004,556.4314433597552 7.477600000000001,46.975300000000004,556.4314433597552 7.477600000000001,46.97455,556.4314433597552</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,584.3214433597552 7.477199999999999,46.975300000000004,584.3214433597552 7.477600000000001,46.975300000000004,584.3214433597552 7.477600000000001,46.97455,584.3214433597552</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,556.4314433597552 7.477199999999999,46.97455,584.3214433597552 7.477199999999999,46.975300000000004,584.3214433597552 7.477199999999999,46.975300000000004,556.4314433597552</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477199999999999,46.975300000000004,556.4314433597552 7.477199999999999,46.975300000000004,584.3214433597552 7.477600000000001,46.975300000000004,584.3214433597552 7.477600000000001,46.975300000000004,556.4314433597552</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477600000000001,46.975300000000004,556.4314433597552 7.477600000000001,46.975300000000004,584.3214433597552 7.477600000000001,46.97455,584.3214433597552 7.477600000000001,46.97455,556.4314433597552</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477600000000001,46.97455,556.4314433597552 7.477600000000001,46.97455,584.3214433597552 7.477199999999999,46.97455,584.3214433597552 7.477199999999999,46.97455,556.4314433597552</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-          <Folder>
-            <name>E31: uss2 astm.f3548.v21.uss.getOperationalIntentDetails</name>
-            <Folder>
-              <name>uss2's P0 Activated f7bdf14a-5922-47dc-9159-01f75bab6b67[2] @ Kp5sUwP8rN41FV2c06sIuDT7N1QgjWOF8ofuyitVATM_</name>
-              <Placemark>
-                <name>Nominal volume 0</name>
-                <styleUrl>#F3548v21Activated</styleUrl>
-                <TimeSpan>
-                  <begin>2024-06-19T14:50:53.975632+00:00</begin>
-                  <end>2024-06-19T15:35:54.975632+00:00</end>
-                </TimeSpan>
-                <MultiGeometry>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4772,46.975,556.4314722710801 7.4774,46.97455,556.4314722710801 7.477600000000001,46.97495,556.4314722710801 7.4774,46.975300000000004,556.4314722710801</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4772,46.975,584.3214722710801 7.4774,46.97455,584.3214722710801 7.477600000000001,46.97495,584.3214722710801 7.4774,46.975300000000004,584.3214722710801</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4772,46.975,556.4314722710801 7.4772,46.975,584.3214722710801 7.4774,46.97455,584.3214722710801 7.4774,46.97455,556.4314722710801</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4774,46.97455,556.4314722710801 7.4774,46.97455,584.3214722710801 7.477600000000001,46.97495,584.3214722710801 7.477600000000001,46.97495,556.4314722710801</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.477600000000001,46.97495,556.4314722710801 7.477600000000001,46.97495,584.3214722710801 7.4774,46.975300000000004,584.3214722710801 7.4774,46.975300000000004,556.4314722710801</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4774,46.975300000000004,556.4314722710801 7.4774,46.975300000000004,584.3214722710801 7.4772,46.975,584.3214722710801 7.4772,46.975,556.4314722710801</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                </MultiGeometry>
-              </Placemark>
-            </Folder>
-          </Folder>
-        </Folder>
-        <Folder>
-          <name>Attempt to plan Flight 1</name>
           <Folder>
             <name>E37: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
             <Placemark>
               <name>area_of_interest</name>
               <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Activated f7bdf14a-5922-47dc-9159-01f75bab6b67[2]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:54.163626+00:00</begin>
-                <end>2024-06-19T15:35:55.163626+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,556.3313893166907 7.4772500000000015,46.974900000000005,556.3313893166907 7.477950000000001,46.974900000000005,556.3313893166907 7.477950000000001,46.97455,556.3313893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.97455,586.3213893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,556.3313893166907 7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.4772500000000015,46.974900000000005,556.3313893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.974900000000005,556.3313893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,556.3313893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.974900000000005,556.3313893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.97455,586.3213893166907 7.477950000000001,46.97455,556.3313893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,556.3313893166907 7.477950000000001,46.97455,586.3213893166907 7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.97455,556.3313893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-          <Folder>
-            <name>E42: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Activated f7bdf14a-5922-47dc-9159-01f75bab6b67[2]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:54.163626+00:00</begin>
-                <end>2024-06-19T15:35:55.163626+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,556.3313893166907 7.4772500000000015,46.974900000000005,556.3313893166907 7.477950000000001,46.974900000000005,556.3313893166907 7.477950000000001,46.97455,556.3313893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.97455,586.3213893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,556.3313893166907 7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.4772500000000015,46.974900000000005,556.3313893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.974900000000005,556.3313893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,556.3313893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.974900000000005,556.3313893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.97455,586.3213893166907 7.477950000000001,46.97455,556.3313893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,556.3313893166907 7.477950000000001,46.97455,586.3213893166907 7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.97455,556.3313893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-        </Folder>
-      </Folder>
-      <Folder>
-        <name>Attempt to activate flight into conflict</name>
-        <Folder>
-          <name>Attempt to directly activate conflicting Flight 1</name>
-          <Folder>
-            <name>E45: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Activated f7bdf14a-5922-47dc-9159-01f75bab6b67[2]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:54.253757+00:00</begin>
-                <end>2024-06-19T15:35:55.253757+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,556.3413893166907 7.4772500000000015,46.974900000000005,556.3413893166907 7.477950000000001,46.974900000000005,556.3413893166907 7.477950000000001,46.97455,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.97455,586.3213893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,556.3413893166907 7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.4772500000000015,46.974900000000005,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.974900000000005,556.3413893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.974900000000005,556.3413893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.97455,586.3213893166907 7.477950000000001,46.97455,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,556.3413893166907 7.477950000000001,46.97455,586.3213893166907 7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.97455,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-          <Folder>
-            <name>E50: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Activated f7bdf14a-5922-47dc-9159-01f75bab6b67[2]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:54.253757+00:00</begin>
-                <end>2024-06-19T15:35:55.253757+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,556.3413893166907 7.4772500000000015,46.974900000000005,556.3413893166907 7.477950000000001,46.974900000000005,556.3413893166907 7.477950000000001,46.97455,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.97455,586.3213893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,556.3413893166907 7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.4772500000000015,46.974900000000005,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.974900000000005,556.3413893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.974900000000005,556.3413893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.97455,586.3213893166907 7.477950000000001,46.97455,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,556.3413893166907 7.477950000000001,46.97455,586.3213893166907 7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.97455,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-        </Folder>
-      </Folder>
-      <Folder>
-        <name>Attempt to modify planned flight into conflict</name>
-        <Folder>
-          <name>Plan Flight 1c</name>
-          <Folder>
-            <name>E53: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Activated f7bdf14a-5922-47dc-9159-01f75bab6b67[2]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:54.342448+00:00</begin>
-                <end>2024-06-19T15:35:55.342448+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477700000000001,46.97455,551.2815888045192 7.477700000000001,46.974900000000005,551.2815888045192 7.477950000000001,46.974900000000005,551.2815888045192 7.477950000000001,46.97455,551.2815888045192</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477700000000001,46.97455,591.3215888045191 7.477700000000001,46.974900000000005,591.3215888045191 7.477950000000001,46.974900000000005,591.3215888045191 7.477950000000001,46.97455,591.3215888045191</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477700000000001,46.97455,551.2815888045192 7.477700000000001,46.97455,591.3215888045191 7.477700000000001,46.974900000000005,591.3215888045191 7.477700000000001,46.974900000000005,551.2815888045192</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477700000000001,46.974900000000005,551.2815888045192 7.477700000000001,46.974900000000005,591.3215888045191 7.477950000000001,46.974900000000005,591.3215888045191 7.477950000000001,46.974900000000005,551.2815888045192</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.974900000000005,551.2815888045192 7.477950000000001,46.974900000000005,591.3215888045191 7.477950000000001,46.97455,591.3215888045191 7.477950000000001,46.97455,551.2815888045192</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,551.2815888045192 7.477950000000001,46.97455,591.3215888045191 7.477700000000001,46.97455,591.3215888045191 7.477700000000001,46.97455,551.2815888045192</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-          <Folder>
-            <name>E59: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Accepted 410188ee-6798-4441-bddb-c974b2e6e5e6[1]</li><li>uss2's Activated f7bdf14a-5922-47dc-9159-01f75bab6b67[2]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:54.342448+00:00</begin>
-                <end>2024-06-19T15:35:55.342448+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477700000000001,46.97455,551.2815888045192 7.477700000000001,46.974900000000005,551.2815888045192 7.477950000000001,46.974900000000005,551.2815888045192 7.477950000000001,46.97455,551.2815888045192</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477700000000001,46.97455,591.3215888045191 7.477700000000001,46.974900000000005,591.3215888045191 7.477950000000001,46.974900000000005,591.3215888045191 7.477950000000001,46.97455,591.3215888045191</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477700000000001,46.97455,551.2815888045192 7.477700000000001,46.97455,591.3215888045191 7.477700000000001,46.974900000000005,591.3215888045191 7.477700000000001,46.974900000000005,551.2815888045192</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477700000000001,46.974900000000005,551.2815888045192 7.477700000000001,46.974900000000005,591.3215888045191 7.477950000000001,46.974900000000005,591.3215888045191 7.477950000000001,46.974900000000005,551.2815888045192</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.974900000000005,551.2815888045192 7.477950000000001,46.974900000000005,591.3215888045191 7.477950000000001,46.97455,591.3215888045191 7.477950000000001,46.97455,551.2815888045192</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,551.2815888045192 7.477950000000001,46.97455,591.3215888045191 7.477700000000001,46.97455,591.3215888045191 7.477700000000001,46.97455,551.2815888045192</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-          <Folder>
-            <name>E63: uss2 astm.f3548.v21.uss.getOperationalIntentDetails</name>
-            <Folder>
-              <name>uss2's P0 Accepted 410188ee-6798-4441-bddb-c974b2e6e5e6[1] @ Db77ZcTYMm80MswVhtSDpik7le8ET7KzA570ZEdHVII_</name>
-              <Placemark>
-                <name>Nominal volume 0</name>
-                <styleUrl>#F3548v21Accepted</styleUrl>
-                <TimeSpan>
-                  <begin>2024-06-19T14:50:54.342448+00:00</begin>
-                  <end>2024-06-19T15:35:55.342448+00:00</end>
-                </TimeSpan>
-                <MultiGeometry>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4777000000000005,46.9746,551.2815922252929 7.4777000000000005,46.974900000000005,551.2815922252929 7.4779,46.974900000000005,551.2815922252929 7.47795,46.97455,551.2815922252929</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4777000000000005,46.9746,591.3215922252929 7.4777000000000005,46.974900000000005,591.3215922252929 7.4779,46.974900000000005,591.3215922252929 7.47795,46.97455,591.3215922252929</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4777000000000005,46.9746,551.2815922252929 7.4777000000000005,46.9746,591.3215922252929 7.4777000000000005,46.974900000000005,591.3215922252929 7.4777000000000005,46.974900000000005,551.2815922252929</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4777000000000005,46.974900000000005,551.2815922252929 7.4777000000000005,46.974900000000005,591.3215922252929 7.4779,46.974900000000005,591.3215922252929 7.4779,46.974900000000005,551.2815922252929</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4779,46.974900000000005,551.2815922252929 7.4779,46.974900000000005,591.3215922252929 7.47795,46.97455,591.3215922252929 7.47795,46.97455,551.2815922252929</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.47795,46.97455,551.2815922252929 7.47795,46.97455,591.3215922252929 7.4777000000000005,46.9746,591.3215922252929 7.4777000000000005,46.9746,551.2815922252929</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                </MultiGeometry>
-              </Placemark>
-            </Folder>
-          </Folder>
-        </Folder>
-        <Folder>
-          <name>Attempt to modify planned Flight 1c into conflict</name>
-          <Folder>
-            <name>E69: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Accepted 410188ee-6798-4441-bddb-c974b2e6e5e6[1]</li><li>uss2's Activated f7bdf14a-5922-47dc-9159-01f75bab6b67[2]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:54.342448+00:00</begin>
-                <end>2024-06-19T15:35:55.531724+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,551.2813893166907 7.4772500000000015,46.974900000000005,551.2813893166907 7.477950000000001,46.974900000000005,551.2813893166907 7.477950000000001,46.97455,551.2813893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,591.3213893166907 7.4772500000000015,46.974900000000005,591.3213893166907 7.477950000000001,46.974900000000005,591.3213893166907 7.477950000000001,46.97455,591.3213893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,551.2813893166907 7.4772500000000015,46.97455,591.3213893166907 7.4772500000000015,46.974900000000005,591.3213893166907 7.4772500000000015,46.974900000000005,551.2813893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.974900000000005,551.2813893166907 7.4772500000000015,46.974900000000005,591.3213893166907 7.477950000000001,46.974900000000005,591.3213893166907 7.477950000000001,46.974900000000005,551.2813893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.974900000000005,551.2813893166907 7.477950000000001,46.974900000000005,591.3213893166907 7.477950000000001,46.97455,591.3213893166907 7.477950000000001,46.97455,551.2813893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,551.2813893166907 7.477950000000001,46.97455,591.3213893166907 7.4772500000000015,46.97455,591.3213893166907 7.4772500000000015,46.97455,551.2813893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-          <Folder>
-            <name>E74: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Accepted 410188ee-6798-4441-bddb-c974b2e6e5e6[1]</li><li>uss2's Activated f7bdf14a-5922-47dc-9159-01f75bab6b67[2]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:54.342448+00:00</begin>
-                <end>2024-06-19T15:35:55.531724+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,551.2813893166907 7.4772500000000015,46.974900000000005,551.2813893166907 7.477950000000001,46.974900000000005,551.2813893166907 7.477950000000001,46.97455,551.2813893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,591.3213893166907 7.4772500000000015,46.974900000000005,591.3213893166907 7.477950000000001,46.974900000000005,591.3213893166907 7.477950000000001,46.97455,591.3213893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,551.2813893166907 7.4772500000000015,46.97455,591.3213893166907 7.4772500000000015,46.974900000000005,591.3213893166907 7.4772500000000015,46.974900000000005,551.2813893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.974900000000005,551.2813893166907 7.4772500000000015,46.974900000000005,591.3213893166907 7.477950000000001,46.974900000000005,591.3213893166907 7.477950000000001,46.974900000000005,551.2813893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.974900000000005,551.2813893166907 7.477950000000001,46.974900000000005,591.3213893166907 7.477950000000001,46.97455,591.3213893166907 7.477950000000001,46.97455,551.2813893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,551.2813893166907 7.477950000000001,46.97455,591.3213893166907 7.4772500000000015,46.97455,591.3213893166907 7.4772500000000015,46.97455,551.2813893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-          <Folder>
-            <name>E78: uss2 astm.f3548.v21.uss.getOperationalIntentDetails</name>
-            <Folder>
-              <name>uss2's P0 Accepted 410188ee-6798-4441-bddb-c974b2e6e5e6[1] @ Db77ZcTYMm80MswVhtSDpik7le8ET7KzA570ZEdHVII_</name>
-              <Placemark>
-                <name>Nominal volume 0</name>
-                <styleUrl>#F3548v21Accepted</styleUrl>
-                <TimeSpan>
-                  <begin>2024-06-19T14:50:54.342448+00:00</begin>
-                  <end>2024-06-19T15:35:55.342448+00:00</end>
-                </TimeSpan>
-                <MultiGeometry>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4777000000000005,46.9746,551.2815922252929 7.4777000000000005,46.974900000000005,551.2815922252929 7.4779,46.974900000000005,551.2815922252929 7.47795,46.97455,551.2815922252929</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4777000000000005,46.9746,591.3215922252929 7.4777000000000005,46.974900000000005,591.3215922252929 7.4779,46.974900000000005,591.3215922252929 7.47795,46.97455,591.3215922252929</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4777000000000005,46.9746,551.2815922252929 7.4777000000000005,46.9746,591.3215922252929 7.4777000000000005,46.974900000000005,591.3215922252929 7.4777000000000005,46.974900000000005,551.2815922252929</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4777000000000005,46.974900000000005,551.2815922252929 7.4777000000000005,46.974900000000005,591.3215922252929 7.4779,46.974900000000005,591.3215922252929 7.4779,46.974900000000005,551.2815922252929</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4779,46.974900000000005,551.2815922252929 7.4779,46.974900000000005,591.3215922252929 7.47795,46.97455,591.3215922252929 7.47795,46.97455,551.2815922252929</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.47795,46.97455,551.2815922252929 7.47795,46.97455,591.3215922252929 7.4777000000000005,46.9746,591.3215922252929 7.4777000000000005,46.9746,551.2815922252929</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                </MultiGeometry>
-              </Placemark>
-            </Folder>
-          </Folder>
-        </Folder>
-      </Folder>
-      <Folder>
-        <name>Attempt to modify activated flight into conflict</name>
-        <Folder>
-          <name>Activate Flight 1c</name>
-          <Folder>
-            <name>E84: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Accepted 410188ee-6798-4441-bddb-c974b2e6e5e6[1]</li><li>uss2's Activated f7bdf14a-5922-47dc-9159-01f75bab6b67[2]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:54.677806+00:00</begin>
-                <end>2024-06-19T15:35:55.677806+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477700000000001,46.97455,556.3818206717945 7.477700000000001,46.975300000000004,556.3818206717945 7.477950000000001,46.975300000000004,556.3818206717945 7.477950000000001,46.97455,556.3818206717945</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477700000000001,46.97455,591.3218206717945 7.477700000000001,46.975300000000004,591.3218206717945 7.477950000000001,46.975300000000004,591.3218206717945 7.477950000000001,46.97455,591.3218206717945</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477700000000001,46.97455,556.3818206717945 7.477700000000001,46.97455,591.3218206717945 7.477700000000001,46.975300000000004,591.3218206717945 7.477700000000001,46.975300000000004,556.3818206717945</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477700000000001,46.975300000000004,556.3818206717945 7.477700000000001,46.975300000000004,591.3218206717945 7.477950000000001,46.975300000000004,591.3218206717945 7.477950000000001,46.975300000000004,556.3818206717945</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.975300000000004,556.3818206717945 7.477950000000001,46.975300000000004,591.3218206717945 7.477950000000001,46.97455,591.3218206717945 7.477950000000001,46.97455,556.3818206717945</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,556.3818206717945 7.477950000000001,46.97455,591.3218206717945 7.477700000000001,46.97455,591.3218206717945 7.477700000000001,46.97455,556.3818206717945</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-          <Folder>
-            <name>E89: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Activated 410188ee-6798-4441-bddb-c974b2e6e5e6[2]</li><li>uss2's Activated f7bdf14a-5922-47dc-9159-01f75bab6b67[2]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:54.677806+00:00</begin>
-                <end>2024-06-19T15:35:55.677806+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477700000000001,46.97455,556.3818206717945 7.477700000000001,46.975300000000004,556.3818206717945 7.477950000000001,46.975300000000004,556.3818206717945 7.477950000000001,46.97455,556.3818206717945</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477700000000001,46.97455,591.3218206717945 7.477700000000001,46.975300000000004,591.3218206717945 7.477950000000001,46.975300000000004,591.3218206717945 7.477950000000001,46.97455,591.3218206717945</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477700000000001,46.97455,556.3818206717945 7.477700000000001,46.97455,591.3218206717945 7.477700000000001,46.975300000000004,591.3218206717945 7.477700000000001,46.975300000000004,556.3818206717945</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477700000000001,46.975300000000004,556.3818206717945 7.477700000000001,46.975300000000004,591.3218206717945 7.477950000000001,46.975300000000004,591.3218206717945 7.477950000000001,46.975300000000004,556.3818206717945</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.975300000000004,556.3818206717945 7.477950000000001,46.975300000000004,591.3218206717945 7.477950000000001,46.97455,591.3218206717945 7.477950000000001,46.97455,556.3818206717945</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,556.3818206717945 7.477950000000001,46.97455,591.3218206717945 7.477700000000001,46.97455,591.3218206717945 7.477700000000001,46.97455,556.3818206717945</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-          <Folder>
-            <name>E94: uss2 astm.f3548.v21.uss.getOperationalIntentDetails</name>
-            <Folder>
-              <name>uss2's P0 Activated 410188ee-6798-4441-bddb-c974b2e6e5e6[2] @ 71ngLsYEKJcOs31cpuP8IAS0QDZOFOVjeV7.4PwxTp0_</name>
-              <Placemark>
-                <name>Nominal volume 0</name>
-                <styleUrl>#F3548v21Activated</styleUrl>
-                <TimeSpan>
-                  <begin>2024-06-19T14:50:54.677806+00:00</begin>
-                  <end>2024-06-19T15:35:55.677806+00:00</end>
-                </TimeSpan>
-                <MultiGeometry>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4777000000000005,46.9746,556.3817081826726 7.4777000000000005,46.975300000000004,556.3817081826726 7.4779,46.974900000000005,556.3817081826726 7.47795,46.97455,556.3817081826726</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4777000000000005,46.9746,591.3217081826726 7.4777000000000005,46.975300000000004,591.3217081826726 7.4779,46.974900000000005,591.3217081826726 7.47795,46.97455,591.3217081826726</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4777000000000005,46.9746,556.3817081826726 7.4777000000000005,46.9746,591.3217081826726 7.4777000000000005,46.975300000000004,591.3217081826726 7.4777000000000005,46.975300000000004,556.3817081826726</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4777000000000005,46.975300000000004,556.3817081826726 7.4777000000000005,46.975300000000004,591.3217081826726 7.4779,46.974900000000005,591.3217081826726 7.4779,46.974900000000005,556.3817081826726</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4779,46.974900000000005,556.3817081826726 7.4779,46.974900000000005,591.3217081826726 7.47795,46.97455,591.3217081826726 7.47795,46.97455,556.3817081826726</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.47795,46.97455,556.3817081826726 7.47795,46.97455,591.3217081826726 7.4777000000000005,46.9746,591.3217081826726 7.4777000000000005,46.9746,556.3817081826726</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                </MultiGeometry>
-              </Placemark>
-            </Folder>
-          </Folder>
-        </Folder>
-        <Folder>
-          <name>Attempt to modify activated Flight 1c into conflict</name>
-          <Folder>
-            <name>E100: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Activated 410188ee-6798-4441-bddb-c974b2e6e5e6[2]</li><li>uss2's Activated f7bdf14a-5922-47dc-9159-01f75bab6b67[2]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:54.677806+00:00</begin>
-                <end>2024-06-19T15:35:55.901379+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,556.3416209726433 7.4772500000000015,46.975300000000004,556.3416209726433 7.477950000000001,46.975300000000004,556.3416209726433 7.477950000000001,46.97455,556.3416209726433</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,591.3216209726434 7.4772500000000015,46.975300000000004,591.3216209726434 7.477950000000001,46.975300000000004,591.3216209726434 7.477950000000001,46.97455,591.3216209726434</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,556.3416209726433 7.4772500000000015,46.97455,591.3216209726434 7.4772500000000015,46.975300000000004,591.3216209726434 7.4772500000000015,46.975300000000004,556.3416209726433</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.975300000000004,556.3416209726433 7.4772500000000015,46.975300000000004,591.3216209726434 7.477950000000001,46.975300000000004,591.3216209726434 7.477950000000001,46.975300000000004,556.3416209726433</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.975300000000004,556.3416209726433 7.477950000000001,46.975300000000004,591.3216209726434 7.477950000000001,46.97455,591.3216209726434 7.477950000000001,46.97455,556.3416209726433</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,556.3416209726433 7.477950000000001,46.97455,591.3216209726434 7.4772500000000015,46.97455,591.3216209726434 7.4772500000000015,46.97455,556.3416209726433</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-          <Folder>
-            <name>E105: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Activated 410188ee-6798-4441-bddb-c974b2e6e5e6[2]</li><li>uss2's Activated f7bdf14a-5922-47dc-9159-01f75bab6b67[2]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:54.677806+00:00</begin>
-                <end>2024-06-19T15:35:55.901379+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,556.3416209726433 7.4772500000000015,46.975300000000004,556.3416209726433 7.477950000000001,46.975300000000004,556.3416209726433 7.477950000000001,46.97455,556.3416209726433</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,591.3216209726434 7.4772500000000015,46.975300000000004,591.3216209726434 7.477950000000001,46.975300000000004,591.3216209726434 7.477950000000001,46.97455,591.3216209726434</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,556.3416209726433 7.4772500000000015,46.97455,591.3216209726434 7.4772500000000015,46.975300000000004,591.3216209726434 7.4772500000000015,46.975300000000004,556.3416209726433</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.975300000000004,556.3416209726433 7.4772500000000015,46.975300000000004,591.3216209726434 7.477950000000001,46.975300000000004,591.3216209726434 7.477950000000001,46.975300000000004,556.3416209726433</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.975300000000004,556.3416209726433 7.477950000000001,46.975300000000004,591.3216209726434 7.477950000000001,46.97455,591.3216209726434 7.477950000000001,46.97455,556.3416209726433</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,556.3416209726433 7.477950000000001,46.97455,591.3216209726434 7.4772500000000015,46.97455,591.3216209726434 7.4772500000000015,46.97455,556.3416209726433</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-          <Folder>
-            <name>E110: uss2 astm.f3548.v21.uss.getOperationalIntentDetails</name>
-            <Folder>
-              <name>uss2's P0 Activated 410188ee-6798-4441-bddb-c974b2e6e5e6[2] @ 71ngLsYEKJcOs31cpuP8IAS0QDZOFOVjeV7.4PwxTp0_</name>
-              <Placemark>
-                <name>Nominal volume 0</name>
-                <styleUrl>#F3548v21Activated</styleUrl>
-                <TimeSpan>
-                  <begin>2024-06-19T14:50:54.677806+00:00</begin>
-                  <end>2024-06-19T15:35:55.677806+00:00</end>
-                </TimeSpan>
-                <MultiGeometry>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4777000000000005,46.9746,556.3817081826726 7.4777000000000005,46.975300000000004,556.3817081826726 7.4779,46.974900000000005,556.3817081826726 7.47795,46.97455,556.3817081826726</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4777000000000005,46.9746,591.3217081826726 7.4777000000000005,46.975300000000004,591.3217081826726 7.4779,46.974900000000005,591.3217081826726 7.47795,46.97455,591.3217081826726</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4777000000000005,46.9746,556.3817081826726 7.4777000000000005,46.9746,591.3217081826726 7.4777000000000005,46.975300000000004,591.3217081826726 7.4777000000000005,46.975300000000004,556.3817081826726</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4777000000000005,46.975300000000004,556.3817081826726 7.4777000000000005,46.975300000000004,591.3217081826726 7.4779,46.974900000000005,591.3217081826726 7.4779,46.974900000000005,556.3817081826726</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4779,46.974900000000005,556.3817081826726 7.4779,46.974900000000005,591.3217081826726 7.47795,46.97455,591.3217081826726 7.47795,46.97455,556.3817081826726</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.47795,46.97455,556.3817081826726 7.47795,46.97455,591.3217081826726 7.4777000000000005,46.9746,591.3217081826726 7.4777000000000005,46.9746,556.3817081826726</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                </MultiGeometry>
-              </Placemark>
-            </Folder>
-          </Folder>
-        </Folder>
-        <Folder>
-          <name>Delete Flight 2</name>
-        </Folder>
-      </Folder>
-      <Folder>
-        <name>Modify activated flight with pre-existing conflict</name>
-        <Folder>
-          <name>Activate Flight 1</name>
-          <Folder>
-            <name>E118: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Activated 410188ee-6798-4441-bddb-c974b2e6e5e6[2]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:55.106241+00:00</begin>
-                <end>2024-06-19T15:35:56.106241+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,556.3413893166907 7.4772500000000015,46.974900000000005,556.3413893166907 7.477950000000001,46.974900000000005,556.3413893166907 7.477950000000001,46.97455,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.97455,586.3213893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,556.3413893166907 7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.4772500000000015,46.974900000000005,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.974900000000005,556.3413893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.974900000000005,556.3413893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.97455,586.3213893166907 7.477950000000001,46.97455,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,556.3413893166907 7.477950000000001,46.97455,586.3213893166907 7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.97455,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-          <Folder>
-            <name>E123: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Activated 410188ee-6798-4441-bddb-c974b2e6e5e6[3]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:55.106241+00:00</begin>
-                <end>2024-06-19T15:35:56.106241+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,556.3413893166907 7.4772500000000015,46.974900000000005,556.3413893166907 7.477950000000001,46.974900000000005,556.3413893166907 7.477950000000001,46.97455,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.97455,586.3213893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,556.3413893166907 7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.4772500000000015,46.974900000000005,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.4772500000000015,46.974900000000005,556.3413893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.974900000000005,556.3413893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.97455,586.3213893166907 7.477950000000001,46.97455,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,556.3413893166907 7.477950000000001,46.97455,586.3213893166907 7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.97455,556.3413893166907</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-          <Folder>
-            <name>E128: uss2 astm.f3548.v21.uss.getOperationalIntentDetails</name>
-            <Folder>
-              <name>uss2's P0 Activated 410188ee-6798-4441-bddb-c974b2e6e5e6[3] @ rp8Z4Msj-jey1hDJFjqA6a.6htL020rYNWiMti.oHqA_</name>
-              <Placemark>
-                <name>Nominal volume 0</name>
-                <styleUrl>#F3548v21Activated</styleUrl>
-                <TimeSpan>
-                  <begin>2024-06-19T14:50:55.106241+00:00</begin>
-                  <end>2024-06-19T15:35:56.106241+00:00</end>
-                </TimeSpan>
-                <MultiGeometry>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.477250000000001,46.9746,556.3413927174643 7.477250000000001,46.974900000000005,556.3413927174643 7.4779,46.974900000000005,556.3413927174643 7.47795,46.97455,556.3413927174643</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.477250000000001,46.9746,586.3213927174643 7.477250000000001,46.974900000000005,586.3213927174643 7.4779,46.974900000000005,586.3213927174643 7.47795,46.97455,586.3213927174643</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.477250000000001,46.9746,556.3413927174643 7.477250000000001,46.9746,586.3213927174643 7.477250000000001,46.974900000000005,586.3213927174643 7.477250000000001,46.974900000000005,556.3413927174643</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.477250000000001,46.974900000000005,556.3413927174643 7.477250000000001,46.974900000000005,586.3213927174643 7.4779,46.974900000000005,586.3213927174643 7.4779,46.974900000000005,556.3413927174643</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4779,46.974900000000005,556.3413927174643 7.4779,46.974900000000005,586.3213927174643 7.47795,46.97455,586.3213927174643 7.47795,46.97455,556.3413927174643</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.47795,46.97455,556.3413927174643 7.47795,46.97455,586.3213927174643 7.477250000000001,46.9746,586.3213927174643 7.477250000000001,46.9746,556.3413927174643</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                </MultiGeometry>
-              </Placemark>
-            </Folder>
-          </Folder>
-        </Folder>
-        <Folder>
-          <name>Plan Flight 2m</name>
-          <Folder>
-            <name>E134: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
               <description><![CDATA[(no operational intent references found)]]></description>
               <TimeSpan>
-                <begin>2024-06-19T14:50:55.283767+00:00</begin>
-                <end>2024-06-19T15:35:56.283767+00:00</end>
+                <begin>2024-10-18T06:20:13.218790+00:00</begin>
+                <end>2024-10-18T07:05:13.218790+00:00</end>
               </TimeSpan>
               <MultiGeometry>
                 <Polygon>
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.97495000000001,601.4517634245921 7.477199999999999,46.975300000000004,601.4517634245921 7.477800000000001,46.975300000000004,601.4517634245921 7.477800000000001,46.97495000000001,601.4517634245921</coordinates>
+                      <coordinates>7.4771,46.9748,556.3215416381361 7.4771,46.97522,556.3215416381361 7.477700000000001,46.97522,556.3215416381361 7.477700000000001,46.9748,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -1820,7 +648,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.97495000000001,606.3217634245921 7.477199999999999,46.975300000000004,606.3217634245921 7.477800000000001,46.975300000000004,606.3217634245921 7.477800000000001,46.97495000000001,606.3217634245921</coordinates>
+                      <coordinates>7.4771,46.9748,586.3215416381361 7.4771,46.97522,586.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.9748,586.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -1828,7 +656,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.97495000000001,601.4517634245921 7.477199999999999,46.97495000000001,606.3217634245921 7.477199999999999,46.975300000000004,606.3217634245921 7.477199999999999,46.975300000000004,601.4517634245921</coordinates>
+                      <coordinates>7.4771,46.9748,556.3215416381361 7.4771,46.9748,586.3215416381361 7.4771,46.97522,586.3215416381361 7.4771,46.97522,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -1836,7 +664,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477199999999999,46.975300000000004,601.4517634245921 7.477199999999999,46.975300000000004,606.3217634245921 7.477800000000001,46.975300000000004,606.3217634245921 7.477800000000001,46.975300000000004,601.4517634245921</coordinates>
+                      <coordinates>7.4771,46.97522,556.3215416381361 7.4771,46.97522,586.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.97522,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -1844,7 +672,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477800000000001,46.975300000000004,601.4517634245921 7.477800000000001,46.975300000000004,606.3217634245921 7.477800000000001,46.97495000000001,606.3217634245921 7.477800000000001,46.97495000000001,601.4517634245921</coordinates>
+                      <coordinates>7.477700000000001,46.97522,556.3215416381361 7.477700000000001,46.97522,586.3215416381361 7.477700000000001,46.9748,586.3215416381361 7.477700000000001,46.9748,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -1852,341 +680,38 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477800000000001,46.97495000000001,601.4517634245921 7.477800000000001,46.97495000000001,606.3217634245921 7.477199999999999,46.97495000000001,606.3217634245921 7.477199999999999,46.97495000000001,601.4517634245921</coordinates>
+                      <coordinates>7.477700000000001,46.9748,556.3215416381361 7.477700000000001,46.9748,586.3215416381361 7.4771,46.9748,586.3215416381361 7.4771,46.9748,556.3215416381361</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
               </MultiGeometry>
             </Placemark>
-          </Folder>
-          <Folder>
-            <name>E139: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Accepted cd7fbe11-77f6-429c-80a2-9175f9163474[1]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:55.283767+00:00</begin>
-                <end>2024-06-19T15:35:56.283767+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477199999999999,46.97495000000001,601.4517634245921 7.477199999999999,46.975300000000004,601.4517634245921 7.477800000000001,46.975300000000004,601.4517634245921 7.477800000000001,46.97495000000001,601.4517634245921</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477199999999999,46.97495000000001,606.3217634245921 7.477199999999999,46.975300000000004,606.3217634245921 7.477800000000001,46.975300000000004,606.3217634245921 7.477800000000001,46.97495000000001,606.3217634245921</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477199999999999,46.97495000000001,601.4517634245921 7.477199999999999,46.97495000000001,606.3217634245921 7.477199999999999,46.975300000000004,606.3217634245921 7.477199999999999,46.975300000000004,601.4517634245921</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477199999999999,46.975300000000004,601.4517634245921 7.477199999999999,46.975300000000004,606.3217634245921 7.477800000000001,46.975300000000004,606.3217634245921 7.477800000000001,46.975300000000004,601.4517634245921</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477800000000001,46.975300000000004,601.4517634245921 7.477800000000001,46.975300000000004,606.3217634245921 7.477800000000001,46.97495000000001,606.3217634245921 7.477800000000001,46.97495000000001,601.4517634245921</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477800000000001,46.97495000000001,601.4517634245921 7.477800000000001,46.97495000000001,606.3217634245921 7.477199999999999,46.97495000000001,606.3217634245921 7.477199999999999,46.97495000000001,601.4517634245921</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-          <Folder>
-            <name>E143: uss2 astm.f3548.v21.uss.getOperationalIntentDetails</name>
-            <Folder>
-              <name>uss2's P0 Accepted cd7fbe11-77f6-429c-80a2-9175f9163474[1] @ HfBw4lwd5L1FFVY3E4V-nkg6NrGDwQFfzNAzseEjYFM_</name>
-              <Placemark>
-                <name>Nominal volume 0</name>
-                <styleUrl>#F3548v21Accepted</styleUrl>
-                <TimeSpan>
-                  <begin>2024-06-19T14:50:55.283767+00:00</begin>
-                  <end>2024-06-19T15:35:56.283767+00:00</end>
-                </TimeSpan>
-                <MultiGeometry>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4772,46.975,601.4516856460558 7.4778,46.97495,601.4516856460558 7.4774,46.975300000000004,601.4516856460558</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4772,46.975,606.3216856460558 7.4778,46.97495,606.3216856460558 7.4774,46.975300000000004,606.3216856460558</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4772,46.975,601.4516856460558 7.4772,46.975,606.3216856460558 7.4778,46.97495,606.3216856460558 7.4778,46.97495,601.4516856460558</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4778,46.97495,601.4516856460558 7.4778,46.97495,606.3216856460558 7.4774,46.975300000000004,606.3216856460558 7.4774,46.975300000000004,601.4516856460558</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4774,46.975300000000004,601.4516856460558 7.4774,46.975300000000004,606.3216856460558 7.4772,46.975,606.3216856460558 7.4772,46.975,601.4516856460558</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                </MultiGeometry>
-              </Placemark>
-            </Folder>
           </Folder>
         </Folder>
+      </Folder>
+      <Folder>
+        <name>Validate precision of intersection computations</name>
         <Folder>
-          <name>Declare Flight 2 non-conforming</name>
-          <Folder>
-            <name>E149: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Activated 410188ee-6798-4441-bddb-c974b2e6e5e6[3]</li><li>uss2's Accepted cd7fbe11-77f6-429c-80a2-9175f9163474[1]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:55.283767+00:00</begin>
-                <end>2024-06-19T15:35:56.464647+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,556.4415321782598 7.477199999999999,46.975300000000004,556.4415321782598 7.477800000000001,46.975300000000004,556.4415321782598 7.477800000000001,46.97455,556.4415321782598</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,606.3215321782598 7.477199999999999,46.975300000000004,606.3215321782598 7.477800000000001,46.975300000000004,606.3215321782598 7.477800000000001,46.97455,606.3215321782598</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,556.4415321782598 7.477199999999999,46.97455,606.3215321782598 7.477199999999999,46.975300000000004,606.3215321782598 7.477199999999999,46.975300000000004,556.4415321782598</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477199999999999,46.975300000000004,556.4415321782598 7.477199999999999,46.975300000000004,606.3215321782598 7.477800000000001,46.975300000000004,606.3215321782598 7.477800000000001,46.975300000000004,556.4415321782598</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477800000000001,46.975300000000004,556.4415321782598 7.477800000000001,46.975300000000004,606.3215321782598 7.477800000000001,46.97455,606.3215321782598 7.477800000000001,46.97455,556.4415321782598</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477800000000001,46.97455,556.4415321782598 7.477800000000001,46.97455,606.3215321782598 7.477199999999999,46.97455,606.3215321782598 7.477199999999999,46.97455,556.4415321782598</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-          <Folder>
-            <name>E154: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
-            <Placemark>
-              <name>area_of_interest</name>
-              <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Activated 410188ee-6798-4441-bddb-c974b2e6e5e6[3]</li><li>uss2's Nonconforming cd7fbe11-77f6-429c-80a2-9175f9163474[2]</li></ul>]]></description>
-              <TimeSpan>
-                <begin>2024-06-19T14:50:55.283767+00:00</begin>
-                <end>2024-06-19T15:35:56.464647+00:00</end>
-              </TimeSpan>
-              <MultiGeometry>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,556.4415321782598 7.477199999999999,46.975300000000004,556.4415321782598 7.477800000000001,46.975300000000004,556.4415321782598 7.477800000000001,46.97455,556.4415321782598</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,606.3215321782598 7.477199999999999,46.975300000000004,606.3215321782598 7.477800000000001,46.975300000000004,606.3215321782598 7.477800000000001,46.97455,606.3215321782598</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477199999999999,46.97455,556.4415321782598 7.477199999999999,46.97455,606.3215321782598 7.477199999999999,46.975300000000004,606.3215321782598 7.477199999999999,46.975300000000004,556.4415321782598</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477199999999999,46.975300000000004,556.4415321782598 7.477199999999999,46.975300000000004,606.3215321782598 7.477800000000001,46.975300000000004,606.3215321782598 7.477800000000001,46.975300000000004,556.4415321782598</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477800000000001,46.975300000000004,556.4415321782598 7.477800000000001,46.975300000000004,606.3215321782598 7.477800000000001,46.97455,606.3215321782598 7.477800000000001,46.97455,556.4415321782598</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-                <Polygon>
-                  <altitudeMode>absolute</altitudeMode>
-                  <outerBoundaryIs>
-                    <LinearRing>
-                      <coordinates>7.477800000000001,46.97455,556.4415321782598 7.477800000000001,46.97455,606.3215321782598 7.477199999999999,46.97455,606.3215321782598 7.477199999999999,46.97455,556.4415321782598</coordinates>
-                    </LinearRing>
-                  </outerBoundaryIs>
-                </Polygon>
-              </MultiGeometry>
-            </Placemark>
-          </Folder>
-          <Folder>
-            <name>E158: uss2 astm.f3548.v21.uss.getOperationalIntentDetails</name>
-            <Folder>
-              <name>uss2's P0 Nonconforming cd7fbe11-77f6-429c-80a2-9175f9163474[2] @ Ie6mPLv3Q1GHOCeT6fmgoZHbbTlzIVpQ2tbsdoDoQOU_</name>
-              <Placemark>
-                <name>Off-nominal volume 0</name>
-                <styleUrl>#F3548v21Nonconforming</styleUrl>
-                <TimeSpan>
-                  <begin>2024-06-19T14:50:55.464647+00:00</begin>
-                  <end>2024-06-19T15:35:56.464647+00:00</end>
-                </TimeSpan>
-                <MultiGeometry>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4772,46.975,556.4414722710801 7.4774,46.97455,556.4414722710801 7.477600000000001,46.97495,556.4414722710801 7.4774,46.975300000000004,556.4414722710801</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4772,46.975,584.3214722710801 7.4774,46.97455,584.3214722710801 7.477600000000001,46.97495,584.3214722710801 7.4774,46.975300000000004,584.3214722710801</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4772,46.975,556.4414722710801 7.4772,46.975,584.3214722710801 7.4774,46.97455,584.3214722710801 7.4774,46.97455,556.4414722710801</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4774,46.97455,556.4414722710801 7.4774,46.97455,584.3214722710801 7.477600000000001,46.97495,584.3214722710801 7.477600000000001,46.97495,556.4414722710801</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.477600000000001,46.97495,556.4414722710801 7.477600000000001,46.97495,584.3214722710801 7.4774,46.975300000000004,584.3214722710801 7.4774,46.975300000000004,556.4414722710801</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4774,46.975300000000004,556.4414722710801 7.4774,46.975300000000004,584.3214722710801 7.4772,46.975,584.3214722710801 7.4772,46.975,556.4414722710801</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                </MultiGeometry>
-              </Placemark>
-            </Folder>
-          </Folder>
+          <name>Plan Valid Flight</name>
         </Folder>
         <Folder>
-          <name>Attempt to modify activated Flight 1 in conflict with nonconforming Flight 2</name>
+          <name>Attempt to plan Tiny Overlap Conflict Flight</name>
           <Folder>
-            <name>E166: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
+            <name>E43: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
             <Placemark>
               <name>area_of_interest</name>
               <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Activated 410188ee-6798-4441-bddb-c974b2e6e5e6[3]</li><li>uss2's Nonconforming cd7fbe11-77f6-429c-80a2-9175f9163474[2]</li></ul>]]></description>
+              <description><![CDATA[<ul><li>uss2's Accepted d47b55e3-ea49-4c28-8979-8b073cdca05f[1]</li></ul>]]></description>
               <TimeSpan>
-                <begin>2024-06-19T14:50:55.106241+00:00</begin>
-                <end>2024-06-19T15:35:56.638169+00:00</end>
+                <begin>2024-10-18T06:20:13.218790+00:00</begin>
+                <end>2024-10-18T07:05:13.218790+00:00</end>
               </TimeSpan>
               <MultiGeometry>
                 <Polygon>
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,526.2713893166907 7.4772500000000015,46.974900000000005,526.2713893166907 7.477950000000001,46.974900000000005,526.2713893166907 7.477950000000001,46.97455,526.2713893166907</coordinates>
+                      <coordinates>7.4771,46.974380000000004,556.3210555301231 7.4771,46.9748001,556.3210555301231 7.477700000000001,46.9748001,556.3210555301231 7.477700000000001,46.974380000000004,556.3210555301231</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -2194,7 +719,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.97455,586.3213893166907</coordinates>
+                      <coordinates>7.4771,46.974380000000004,586.3210555301231 7.4771,46.9748001,586.3210555301231 7.477700000000001,46.9748001,586.3210555301231 7.477700000000001,46.974380000000004,586.3210555301231</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -2202,7 +727,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,526.2713893166907 7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.4772500000000015,46.974900000000005,526.2713893166907</coordinates>
+                      <coordinates>7.4771,46.974380000000004,556.3210555301231 7.4771,46.974380000000004,586.3210555301231 7.4771,46.9748001,586.3210555301231 7.4771,46.9748001,556.3210555301231</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -2210,7 +735,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.4772500000000015,46.974900000000005,526.2713893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,526.2713893166907</coordinates>
+                      <coordinates>7.4771,46.9748001,556.3210555301231 7.4771,46.9748001,586.3210555301231 7.477700000000001,46.9748001,586.3210555301231 7.477700000000001,46.9748001,556.3210555301231</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -2218,7 +743,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477950000000001,46.974900000000005,526.2713893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.97455,586.3213893166907 7.477950000000001,46.97455,526.2713893166907</coordinates>
+                      <coordinates>7.477700000000001,46.9748001,556.3210555301231 7.477700000000001,46.9748001,586.3210555301231 7.477700000000001,46.974380000000004,586.3210555301231 7.477700000000001,46.974380000000004,556.3210555301231</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -2226,7 +751,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,526.2713893166907 7.477950000000001,46.97455,586.3213893166907 7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.97455,526.2713893166907</coordinates>
+                      <coordinates>7.477700000000001,46.974380000000004,556.3210555301231 7.477700000000001,46.974380000000004,586.3210555301231 7.4771,46.974380000000004,586.3210555301231 7.4771,46.974380000000004,556.3210555301231</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -2234,21 +759,21 @@
             </Placemark>
           </Folder>
           <Folder>
-            <name>E171: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
+            <name>E48: uss1 astm.f3548.v21.dss.queryOperationalIntentReferences</name>
             <Placemark>
               <name>area_of_interest</name>
               <styleUrl>#QueryArea</styleUrl>
-              <description><![CDATA[<ul><li>uss2's Activated 410188ee-6798-4441-bddb-c974b2e6e5e6[3]</li><li>uss2's Nonconforming cd7fbe11-77f6-429c-80a2-9175f9163474[2]</li></ul>]]></description>
+              <description><![CDATA[<ul><li>uss2's Accepted d47b55e3-ea49-4c28-8979-8b073cdca05f[1]</li></ul>]]></description>
               <TimeSpan>
-                <begin>2024-06-19T14:50:55.106241+00:00</begin>
-                <end>2024-06-19T15:35:56.638169+00:00</end>
+                <begin>2024-10-18T06:20:13.218790+00:00</begin>
+                <end>2024-10-18T07:05:13.218790+00:00</end>
               </TimeSpan>
               <MultiGeometry>
                 <Polygon>
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,526.2713893166907 7.4772500000000015,46.974900000000005,526.2713893166907 7.477950000000001,46.974900000000005,526.2713893166907 7.477950000000001,46.97455,526.2713893166907</coordinates>
+                      <coordinates>7.4771,46.974380000000004,556.3210555301231 7.4771,46.9748001,556.3210555301231 7.477700000000001,46.9748001,556.3210555301231 7.477700000000001,46.974380000000004,556.3210555301231</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -2256,7 +781,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.97455,586.3213893166907</coordinates>
+                      <coordinates>7.4771,46.974380000000004,586.3210555301231 7.4771,46.9748001,586.3210555301231 7.477700000000001,46.9748001,586.3210555301231 7.477700000000001,46.974380000000004,586.3210555301231</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -2264,7 +789,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.4772500000000015,46.97455,526.2713893166907 7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.4772500000000015,46.974900000000005,526.2713893166907</coordinates>
+                      <coordinates>7.4771,46.974380000000004,556.3210555301231 7.4771,46.974380000000004,586.3210555301231 7.4771,46.9748001,586.3210555301231 7.4771,46.9748001,556.3210555301231</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -2272,7 +797,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.4772500000000015,46.974900000000005,526.2713893166907 7.4772500000000015,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.974900000000005,526.2713893166907</coordinates>
+                      <coordinates>7.4771,46.9748001,556.3210555301231 7.4771,46.9748001,586.3210555301231 7.477700000000001,46.9748001,586.3210555301231 7.477700000000001,46.9748001,556.3210555301231</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -2280,7 +805,7 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477950000000001,46.974900000000005,526.2713893166907 7.477950000000001,46.974900000000005,586.3213893166907 7.477950000000001,46.97455,586.3213893166907 7.477950000000001,46.97455,526.2713893166907</coordinates>
+                      <coordinates>7.477700000000001,46.9748001,556.3210555301231 7.477700000000001,46.9748001,586.3210555301231 7.477700000000001,46.974380000000004,586.3210555301231 7.477700000000001,46.974380000000004,556.3210555301231</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
@@ -2288,76 +813,12 @@
                   <altitudeMode>absolute</altitudeMode>
                   <outerBoundaryIs>
                     <LinearRing>
-                      <coordinates>7.477950000000001,46.97455,526.2713893166907 7.477950000000001,46.97455,586.3213893166907 7.4772500000000015,46.97455,586.3213893166907 7.4772500000000015,46.97455,526.2713893166907</coordinates>
+                      <coordinates>7.477700000000001,46.974380000000004,556.3210555301231 7.477700000000001,46.974380000000004,586.3210555301231 7.4771,46.974380000000004,586.3210555301231 7.4771,46.974380000000004,556.3210555301231</coordinates>
                     </LinearRing>
                   </outerBoundaryIs>
                 </Polygon>
               </MultiGeometry>
             </Placemark>
-          </Folder>
-          <Folder>
-            <name>E176: uss2 astm.f3548.v21.uss.getOperationalIntentDetails</name>
-            <Folder>
-              <name>uss2's P0 Activated 410188ee-6798-4441-bddb-c974b2e6e5e6[3] @ rp8Z4Msj-jey1hDJFjqA6a.6htL020rYNWiMti.oHqA_</name>
-              <Placemark>
-                <name>Nominal volume 0</name>
-                <styleUrl>#F3548v21Activated</styleUrl>
-                <TimeSpan>
-                  <begin>2024-06-19T14:50:55.106241+00:00</begin>
-                  <end>2024-06-19T15:35:56.106241+00:00</end>
-                </TimeSpan>
-                <MultiGeometry>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.477250000000001,46.9746,556.3413927174643 7.477250000000001,46.974900000000005,556.3413927174643 7.4779,46.974900000000005,556.3413927174643 7.47795,46.97455,556.3413927174643</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.477250000000001,46.9746,586.3213927174643 7.477250000000001,46.974900000000005,586.3213927174643 7.4779,46.974900000000005,586.3213927174643 7.47795,46.97455,586.3213927174643</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.477250000000001,46.9746,556.3413927174643 7.477250000000001,46.9746,586.3213927174643 7.477250000000001,46.974900000000005,586.3213927174643 7.477250000000001,46.974900000000005,556.3413927174643</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.477250000000001,46.974900000000005,556.3413927174643 7.477250000000001,46.974900000000005,586.3213927174643 7.4779,46.974900000000005,586.3213927174643 7.4779,46.974900000000005,556.3413927174643</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.4779,46.974900000000005,556.3413927174643 7.4779,46.974900000000005,586.3213927174643 7.47795,46.97455,586.3213927174643 7.47795,46.97455,556.3413927174643</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                  <Polygon>
-                    <altitudeMode>absolute</altitudeMode>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>7.47795,46.97455,556.3413927174643 7.47795,46.97455,586.3213927174643 7.477250000000001,46.9746,586.3213927174643 7.477250000000001,46.9746,556.3413927174643</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                </MultiGeometry>
-              </Placemark>
-            </Folder>
           </Folder>
         </Folder>
       </Folder>

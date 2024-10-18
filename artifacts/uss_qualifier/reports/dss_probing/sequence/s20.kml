@@ -118,44 +118,32 @@
       </PolyStyle>
     </Style>
     <Folder>
-      <name>ASTM SCD DSS: Operational Intent Reference Key Validation</name>
+      <name>ASTM SCD DSS: Constraint Reference Simple</name>
       <Folder>
         <name>Setup</name>
         <Folder>
           <name>Ensure clean workspace</name>
         </Folder>
-      </Folder>
-      <Folder>
-        <name>Key validation on creation</name>
         <Folder>
-          <name>Create first OIR</name>
-        </Folder>
-        <Folder>
-          <name>Create second non-overlapping OIR</name>
-        </Folder>
-        <Folder>
-          <name>Attempt OIR creation overlapping with first OIR</name>
-        </Folder>
-        <Folder>
-          <name>Attempt OIR creation overlapping with second OIR</name>
-        </Folder>
-        <Folder>
-          <name>Attempt OIR creation overlapping with both OIRs</name>
-        </Folder>
-        <Folder>
-          <name>Attempt valid OIR creation overlapping with both OIRs</name>
+          <name>Create a constraint reference</name>
         </Folder>
       </Folder>
       <Folder>
-        <name>Key validation on mutation</name>
+        <name>Deletion requires correct OVN</name>
         <Folder>
-          <name>Attempt mutation with both OVNs missing</name>
+          <name>Attempt deletion with missing OVN</name>
         </Folder>
         <Folder>
-          <name>Attempt mutation with first OVN missing</name>
+          <name>Attempt deletion with incorrect OVN</name>
+        </Folder>
+      </Folder>
+      <Folder>
+        <name>Mutation requires correct OVN</name>
+        <Folder>
+          <name>Attempt mutation with missing OVN</name>
         </Folder>
         <Folder>
-          <name>Attempt mutation to overlap with the first OIR</name>
+          <name>Attempt mutation with incorrect OVN</name>
         </Folder>
       </Folder>
       <Folder>
