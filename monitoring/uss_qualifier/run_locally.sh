@@ -12,10 +12,11 @@ else
 fi
 cd "${BASEDIR}/../.." || exit 1
 
-(
-cd monitoring || exit 1
-make image
-)
+# TODO: temporarly disabled for CI import artifact
+#(
+#cd monitoring || exit 1
+#make image
+#)
 
 CONFIG_NAME="${1:-ALL}"
 

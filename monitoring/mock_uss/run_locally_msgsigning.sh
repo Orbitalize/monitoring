@@ -12,10 +12,10 @@ else
 fi
 cd "${BASEDIR}/../.." || exit 1
 
-(
-cd monitoring || exit 1
-make image
-)
+#(
+#cd monitoring || exit 1
+#make image
+#)
 
 AUTH="DummyOAuth(http://host.docker.internal:8085/token,uss1)"
 DSS="http://host.docker.internal:8082"

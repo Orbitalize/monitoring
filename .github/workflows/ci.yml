@@ -5,33 +5,71 @@ on:
     branches:
     - main
 jobs:
+  build-monitoring:
+    runs-on: ubuntu-latest
+    name: Build interuss/monitoring docker image
+    steps:
+      - name: Job information
+        run: |
+          echo "Job information"
+          echo "Trigger: ${{ github.event_name }}"
+          echo "Host: ${{ runner.os }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref }}"
+          docker images
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Build and export interuss/monitoring docker image
+        run: |
+          cd monitoring
+          make image
+          docker save --output /tmp/monitoring-docker-image.tar interuss/monitoring
+      - name: Upload interuss/monitoring docker image as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: monitoring-docker-image
+          path: /tmp/monitoring-docker-image.tar
+
   hygiene-tests:
     name: Repository hygiene
+    needs: build-monitoring
     runs-on: ubuntu-latest
     steps:
-    - name: Job information
-      run: |
-        echo "Job information"
-        echo "Trigger: ${{ github.event_name }}"
-        echo "Host: ${{ runner.os }}"
-        echo "Repository: ${{ github.repository }}"
-        echo "Branch: ${{ github.ref }}"
-        docker images
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        submodules: true
-    - name: Python lint
-      run: make python-lint
-    - name: Automated hygiene verification
-      run: make check-hygiene
-    - name: uss_qualifier documentation validation
-      run: make validate-uss-qualifier-docs
-    - name: Shell lint
-      run: make shell-lint
+      - name: Job information
+        run: |
+          echo "Job information"
+          echo "Trigger: ${{ github.event_name }}"
+          echo "Host: ${{ runner.os }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref }}"
+          docker images
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Download interuss/monitoring docker image as artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: monitoring-docker-image
+          path: /tmp
+      - name: Import interuss/monitoring docker image
+        run: |
+          docker load --input /tmp/monitoring-docker-image.tar
+          docker image ls -a
+      - name: Python lint
+        run: make python-lint
+      - name: Automated hygiene verification
+        run: make check-hygiene
+      - name: uss_qualifier documentation validation
+        run: make validate-uss-qualifier-docs
+      - name: Shell lint
+        run: make shell-lint
 
   mock_uss-test:
     name: mock_uss tests
+    needs: build-monitoring
     uses: ./.github/workflows/monitoring-test.yml
     with:
       name: mock_uss
@@ -41,6 +79,7 @@ jobs:
 
   uss_qualifier-noop-test:
     name: uss_qualifier configurations.dev.noop tests
+    needs: build-monitoring
     uses: ./.github/workflows/monitoring-test.yml
     with:
       name: uss_qualifier-noop-test
@@ -52,6 +91,7 @@ jobs:
 
   uss_qualifier-geoawareness_cis-test:
     name: uss_qualifier configurations.dev.geoawareness_cis tests
+    needs: build-monitoring
     uses: ./.github/workflows/monitoring-test.yml
     with:
       name: uss_qualifier-geoawareness_cis-test
@@ -63,6 +103,7 @@ jobs:
 
   uss_qualifier-generate_rid_test_data-test:
     name: uss_qualifier configurations.dev.generate_rid_test_data tests
+    needs: build-monitoring
     uses: ./.github/workflows/monitoring-test.yml
     with:
       name: uss_qualifier-generate_rid_test_data-test
@@ -74,6 +115,7 @@ jobs:
 
   uss_qualifier-geospatial_comprehension-test:
     name: uss_qualifier configurations.dev.geospatial_comprehension tests
+    needs: build-monitoring
     uses: ./.github/workflows/monitoring-test.yml
     with:
       name: uss_qualifier-geospatial_comprehension-test
@@ -85,6 +127,7 @@ jobs:
 
   uss_qualifier-general_flight_auth-test:
     name: uss_qualifier configurations.dev.general_flight_auth tests
+    needs: build-monitoring
     uses: ./.github/workflows/monitoring-test.yml
     with:
       name: uss_qualifier-general_flight_auth-test
@@ -96,6 +139,7 @@ jobs:
 
   uss_qualifier-message_signing-test:
     name: uss_qualifier configurations.dev.message_signing tests
+    needs: build-monitoring
     uses: ./.github/workflows/monitoring-test.yml
     with:
       name: uss_qualifier-message_signing-test
@@ -107,6 +151,7 @@ jobs:
 
   uss_qualifier-dss_probing-test:
     name: uss_qualifier configurations.dev.dss_probing tests
+    needs: build-monitoring
     uses: ./.github/workflows/monitoring-test.yml
     with:
       name: uss_qualifier-dss_probing-test
@@ -118,6 +163,7 @@ jobs:
 
   uss_qualifier-f3548_self_contained-test:
     name: uss_qualifier configurations.dev.f3548_self_contained tests
+    needs: build-monitoring
     uses: ./.github/workflows/monitoring-test.yml
     with:
       name: uss_qualifier-f3548_self_contained-test
@@ -140,6 +186,7 @@ jobs:
 
   uss_qualifier-netrid_v22a-test:
     name: uss_qualifier configurations.dev.netrid_v22a tests
+    needs: build-monitoring
     uses: ./.github/workflows/monitoring-test.yml
     with:
       name: uss_qualifier-netrid_v22a-test
@@ -151,6 +198,7 @@ jobs:
 
   uss_qualifier-netrid_v19-test:
     name: uss_qualifier configurations.dev.netrid_v19 tests
+    needs: build-monitoring
     uses: ./.github/workflows/monitoring-test.yml
     with:
       name: uss_qualifier-netrid_v19-test
@@ -162,6 +210,7 @@ jobs:
 
   uss_qualifier-uspace-test:
     name: uss_qualifier configurations.dev.uspace tests
+    needs: build-monitoring
     uses: ./.github/workflows/monitoring-test.yml
     with:
       name: uss_qualifier-uspace-test
@@ -173,6 +222,7 @@ jobs:
 
   prober-test:
     name: prober tests
+    needs: build-monitoring
     uses: ./.github/workflows/monitoring-test.yml
     with:
       name: prober

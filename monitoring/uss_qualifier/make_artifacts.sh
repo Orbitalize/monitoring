@@ -21,10 +21,10 @@ else
 fi
 cd "${BASEDIR}/../.." || exit 1
 
-(
-cd monitoring || exit 1
-make image
-)
+#(
+#cd monitoring || exit 1
+#make image
+#)
 
 REPORT_NAME="${1}"
 echo "Reading report(s) from: ${REPORT_NAME}"
