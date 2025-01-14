@@ -32,6 +32,10 @@ If specified, uss_qualifier will act as a Display Provider and check a DSS insta
 
 In this step, uss_qualifier injects a single nominal flight into each SP under test, usually with a start time in the future.  Each SP is expected to queue the provided telemetry and later simulate that telemetry coming from an aircraft at the designated timestamps.
 
+#### Subscription to DSS check
+
+TODO
+
 #### Successful injection check
 
 Per **[interuss.automated_testing.rid.injection.UpsertTestSuccess](../../../../requirements/interuss/automated_testing/rid/injection.md)**, the injection attempt of the valid flight should succeed for every NetRID Service Provider under test.

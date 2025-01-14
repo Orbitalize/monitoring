@@ -3,6 +3,7 @@ import json
 import os
 
 import flask
+from loguru import logger
 
 from monitoring.mock_uss import webapp, require_config_value
 from monitoring.mock_uss.interaction_logging.config import KEY_INTERACTIONS_LOG_DIR
@@ -19,6 +20,8 @@ require_config_value(KEY_INTERACTIONS_LOG_DIR)
 # and the CI is unhappy about them in filenames.
 LOGGED_INTERACTION_FILENAME_TIMESTAMP_FORMAT = "%Y-%m-%dT%H-%M-%S.%fZ"
 
+
+logger.warning("Interaction logging enabled")
 
 def log_interaction(direction: QueryDirection, query: Query) -> None:
     """Logs the REST calls between Mock USS to SUT
@@ -60,6 +63,8 @@ class InteractionLoggingHook(QueryHook):
             QueryType.F3411v22aUSSPostIdentificationServiceArea,
         }:
             log_interaction(QueryDirection.Outgoing, query)
+        else:
+            logger.warning(f"Ignoring query to: {query.url}")
 
 
 query_hooks.append(InteractionLoggingHook())
@@ -84,4 +89,6 @@ def interaction_log_after_request(response):
     ):
         query = describe_flask_query(flask.request, response, elapsed_s)
         log_interaction(QueryDirection.Incoming, query)
+    else:
+        logger.warning(f"Ignoring response from: {flask.request.url}")
     return response

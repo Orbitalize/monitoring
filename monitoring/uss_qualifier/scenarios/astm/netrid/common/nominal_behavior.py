@@ -1,10 +1,14 @@
+from datetime import timedelta
 from typing import List, Optional
 
+from future.backports.datetime import datetime
+from loguru import logger
 from requests.exceptions import RequestException
 from s2sphere import LatLngRect
 
 from monitoring.monitorlib.errors import stacktrace_string
 from monitoring.monitorlib.rid import RIDVersion
+from monitoring.prober.infrastructure import register_resource_type
 from monitoring.uss_qualifier.common_data_definitions import Severity
 from monitoring.uss_qualifier.resources.astm.f3411.dss import DSSInstancesResource
 from monitoring.uss_qualifier.resources.netrid import (
@@ -17,6 +21,7 @@ from monitoring.uss_qualifier.scenarios.astm.netrid import (
     display_data_evaluator,
     injection,
 )
+from monitoring.uss_qualifier.scenarios.astm.netrid.dss_wrapper import DSSWrapper
 from monitoring.uss_qualifier.scenarios.astm.netrid.injected_flight_collection import (
     InjectedFlightCollection,
 )
@@ -32,6 +37,9 @@ from monitoring.uss_qualifier.suites.suite import ExecutionContext
 
 
 class NominalBehavior(GenericTestScenario):
+
+    SUB_TYPE = register_resource_type(399, "Subscription")
+
     _flights_data: FlightDataResource
     _service_providers: NetRIDServiceProviders
     _observers: NetRIDObserversResource
@@ -55,6 +63,7 @@ class NominalBehavior(GenericTestScenario):
         self._evaluation_configuration = evaluation_configuration
         self._dss_pool = dss_pool
         self._injected_tests = []
+        self._sub_id = 'fc341df1-1aa2-461e-b7cd-b3e59a244867'
 
     @property
     def _rid_version(self) -> RIDVersion:
@@ -76,6 +85,36 @@ class NominalBehavior(GenericTestScenario):
         self.end_test_scenario()
 
     def _inject_flights(self):
+        # Before injecting the test flights, we have each observer subscribe to the relevant area
+        dss_wrapper = DSSWrapper(self, self._dss_pool.dss_instances[0])
+        # Get all bounding rects for flights
+        flight_rects = [f.get_rect() for f in self._flights_data.get_test_flights()]
+        flight_union: Optional[LatLngRect] = None
+        for fr in flight_rects:
+            if flight_union is None:
+                flight_union = fr
+            else:
+                flight_union = flight_union.union(fr)
+        with self.check("Subscription to DSS", [dss_wrapper.participant_id]) as check:
+            cs = dss_wrapper.put_sub(
+                check,
+                [flight_union.get_vertex(k) for k in range(4)],
+                0,
+                3000,
+                datetime.now(),
+                datetime.now() + timedelta(hours=1),
+                'http://v19.riddp.uss3.localutm',
+                self._sub_id,
+                None,
+            )
+            if not cs.success:
+                check.record_failed(
+                    summary="Error while trying to subscribe to DSS",
+                    severity=Severity.Medium,
+                )
+                return
+
+
         (self._injected_flights, self._injected_tests) = injection.inject_flights(
             self, self._flights_data, self._service_providers
         )
