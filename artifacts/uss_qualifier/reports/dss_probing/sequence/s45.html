@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>s45 - ASTM NetRID DSS: Submitted ISA Validations</title>
+  <title>s45 - ASTM NetRID DSS: Token Validation</title>
 <style>
   body {
     margin: 0;
@@ -106,16 +106,15 @@
 </head>
 <body>
 <div>
-    <h2><a href="https://github.com/interuss/monitoring/blob/c4f8adc7c5f8a53391a3c3609e6ed05a767b3194/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/isa_validation.md">ASTM NetRID DSS: Submitted ISA Validations</a></h2>
-  <h3>scenarios.astm.netrid.v19.dss.ISAValidation</h3>
+    <h2><a href="https://github.com/interuss/monitoring/blob/3f6b88adf336cfe7654bf258776bc525e9f9626f/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/token_validation.md">ASTM NetRID DSS: Token Validation</a></h2>
+  <h3>scenarios.astm.netrid.v19.dss.TokenValidation</h3>
   <div id="resources_configuration_section" class="collapseable">
     <div class="node_key" onclick="showHide(document.getElementById('resources_configuration_section'))"><h4>Resources</h4></div>
     <div class="node_value">
       <ul id="resource_origin_list">
-          <li><a href="https://github.com/interuss/monitoring/blob/c4f8adc7c5f8a53391a3c3609e6ed05a767b3194/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/isa_validation.md#dss"><code>dss</code></a> provided by <a href="./index.html#resources-configuration">instance 1 in netrid_dss_instances_v19 in top-level resource pool</a></li>
-          <li><a href="https://github.com/interuss/monitoring/blob/c4f8adc7c5f8a53391a3c3609e6ed05a767b3194/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/isa_validation.md#id_generator"><code>id_generator</code></a> provided by <a href="./index.html#resources-configuration">id_generator in top-level resource pool</a></li>
-          <li><a href="https://github.com/interuss/monitoring/blob/c4f8adc7c5f8a53391a3c3609e6ed05a767b3194/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/isa_validation.md#isa"><code>isa</code></a> provided by <a href="./index.html#resources-configuration">kentland_service_area in top-level resource pool</a></li>
-          <li><a href="https://github.com/interuss/monitoring/blob/c4f8adc7c5f8a53391a3c3609e6ed05a767b3194/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/isa_validation.md#problematically_big_area"><code>problematically_big_area</code></a> provided by <a href="./index.html#resources-configuration">kentland_problematically_big_area in top-level resource pool</a></li>
+          <li><a href="https://github.com/interuss/monitoring/blob/3f6b88adf336cfe7654bf258776bc525e9f9626f/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/token_validation.md#dss"><code>dss</code></a> provided by <a href="./index.html#resources-configuration">instance 0 in netrid_dss_instances_v19 in top-level resource pool</a></li>
+          <li><a href="https://github.com/interuss/monitoring/blob/3f6b88adf336cfe7654bf258776bc525e9f9626f/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/token_validation.md#id_generator"><code>id_generator</code></a> provided by <a href="./index.html#resources-configuration">id_generator in top-level resource pool</a></li>
+          <li><a href="https://github.com/interuss/monitoring/blob/3f6b88adf336cfe7654bf258776bc525e9f9626f/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/token_validation.md#isa"><code>isa</code></a> provided by <a href="./index.html#resources-configuration">kentland_service_area in top-level resource pool</a></li>
       </ul>
     </div>
   </div>
@@ -128,16 +127,16 @@
       <th>Step</th>
       <th colspan="3">Event</th>
         <th>
-            uss2
+            uss1
         </th>
     </tr>
 
             <tr id="e1">
                 <td rowspan="2"><span class="sticky_cell_value">
-                    <a href="https://github.com/interuss/monitoring/blob/c4f8adc7c5f8a53391a3c3609e6ed05a767b3194/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/isa_validation.md#setup-test-case">Setup</a>
+                    <a href="https://github.com/interuss/monitoring/blob/3f6b88adf336cfe7654bf258776bc525e9f9626f/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/token_validation.md#setup-test-case">Setup</a>
                 </span></td>
                 <td rowspan="2"><span class="sticky_cell_value">
-                    <a href="https://github.com/interuss/monitoring/blob/c4f8adc7c5f8a53391a3c3609e6ed05a767b3194/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/isa_validation.md#ensure-clean-workspace-test-step">Ensure clean workspace</a>
+                    <a href="https://github.com/interuss/monitoring/blob/3f6b88adf336cfe7654bf258776bc525e9f9626f/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/token_validation.md#ensure-clean-workspace-test-step">Ensure clean workspace</a>
                 </span></td>
               <td><a href="#e1">1</a></td>
                 <td>&#x1F310;</td>
@@ -145,7 +144,7 @@
                     <div id="e1query">
       <ul>
       <li class="collapseable">
-        <div class="node_key">GET dss.uss2.localutm 404</div>:
+        <div class="node_key">GET dss.uss1.localutm 404</div>:
         <div class="node_value">      <ul>
       <li class="collapseable">
         <div class="node_key">request</div>:
@@ -157,12 +156,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">url</div>:
-        <div class="node_value">    http://dss.uss2.localutm/v1/dss/identification_service_areas/00000170-e36d-40be-8d38-beca6ca30000
+        <div class="node_value">    http://dss.uss1.localutm/v1/dss/identification_service_areas/0000015c-e36d-40be-8d38-beca6ca30000
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">initiated_at</div>:
-        <div class="node_value">    2024-10-18T06:21:15.603410Z
+        <div class="node_value">    2025-01-16T10:57:06.824473Z
 </div>
       </li>
       <li class="collapseable">
@@ -190,7 +189,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Authorization</div>:
-        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMi5sb2NhbHV0bSIsImV4cCI6MTcyOTIzNjA0MCwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy5yZWFkLmlkZW50aWZpY2F0aW9uX3NlcnZpY2VfYXJlYXMiLCJzdWIiOiJ1c3NfcXVhbGlmaWVyIn0.REDACTED
+        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMS5sb2NhbHV0bSIsImV4cCI6MTczNzAyODU5NiwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy5yZWFkLmlkZW50aWZpY2F0aW9uX3NlcnZpY2VfYXJlYXMiLCJzdWIiOiJ1c3NfcXVhbGlmaWVyIn0.REDACTED
 </div>
       </li>
   </ul>
@@ -229,7 +228,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Date</div>:
-        <div class="node_value">    Fri, 18 Oct 2024 06:21:15 GMT
+        <div class="node_value">    Thu, 16 Jan 2025 10:57:06 GMT
 </div>
       </li>
       <li class="not_collapseable">
@@ -243,12 +242,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">elapsed_s</div>:
-        <div class="node_value">    0.00121
+        <div class="node_value">    0.001184
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">reported</div>:
-        <div class="node_value">    2024-10-18T06:21:15.605143Z
+        <div class="node_value">    2025-01-16T10:57:06.826100Z
 </div>
       </li>
       <li class="collapseable">
@@ -256,7 +255,7 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">message</div>:
-        <div class="node_value">    ISA 00000170-e36d-40be-8d38-beca6ca30000 not found (E:5b8e89fa-6e54-405e-8480-a20c4da443f3)
+        <div class="node_value">    ISA 0000015c-e36d-40be-8d38-beca6ca30000 not found (E:ff064408-520f-472d-b5bb-cf5644d01cbd)
 </div>
       </li>
   </ul>
@@ -279,7 +278,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">participant_id</div>:
-        <div class="node_value">    uss2
+        <div class="node_value">    uss1
 </div>
       </li>
   </ul>
@@ -302,11 +301,11 @@
                     <td class="pass_result">&#x2705;</td>
             </tr>
             <tr id="e3">
-                <td rowspan="14"><span class="sticky_cell_value">
-                    <a href="https://github.com/interuss/monitoring/blob/c4f8adc7c5f8a53391a3c3609e6ed05a767b3194/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/isa_validation.md#isa-validation-test-case">ISA Validation</a>
+                <td rowspan="37"><span class="sticky_cell_value">
+                    <a href="https://github.com/interuss/monitoring/blob/3f6b88adf336cfe7654bf258776bc525e9f9626f/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/token_validation.md#token-validation-test-case">Token validation</a>
                 </span></td>
-                <td rowspan="14"><span class="sticky_cell_value">
-                    <a href="https://github.com/interuss/monitoring/blob/c4f8adc7c5f8a53391a3c3609e6ed05a767b3194/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/isa_validation.md#isa-validation-test-step">ISA Validation</a>
+                <td rowspan="37"><span class="sticky_cell_value">
+                    <a href="https://github.com/interuss/monitoring/blob/3f6b88adf336cfe7654bf258776bc525e9f9626f/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/token_validation.md#token-validation-test-step">Token validation</a>
                 </span></td>
               <td><a href="#e3">3</a></td>
                 <td>&#x1F310;</td>
@@ -314,7 +313,7 @@
                     <div id="e3query">
       <ul>
       <li class="collapseable">
-        <div class="node_key">PUT dss.uss2.localutm 400</div>:
+        <div class="node_key">PUT dss.uss1.localutm 403</div>:
         <div class="node_value">      <ul>
       <li class="collapseable">
         <div class="node_key">request</div>:
@@ -326,12 +325,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">url</div>:
-        <div class="node_value">    http://dss.uss2.localutm/v1/dss/identification_service_areas/00000170-e36d-40be-8d38-beca6ca30000
+        <div class="node_value">    http://dss.uss1.localutm/v1/dss/identification_service_areas/0000015c-e36d-40be-8d38-beca6ca30000
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">initiated_at</div>:
-        <div class="node_value">    2024-10-18T06:21:15.606316Z
+        <div class="node_value">    2025-01-16T10:57:06.827280Z
 </div>
       </li>
       <li class="collapseable">
@@ -359,7 +358,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Content-Length</div>:
-        <div class="node_value">    520
+        <div class="node_value">    540
 </div>
       </li>
       <li class="not_collapseable">
@@ -369,7 +368,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Authorization</div>:
-        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMi5sb2NhbHV0bSIsImV4cCI6MTcyOTIzNjA3NSwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy53cml0ZS5pZGVudGlmaWNhdGlvbl9zZXJ2aWNlX2FyZWFzIiwic3ViIjoidXNzX3F1YWxpZmllciJ9.REDACTED
+        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMS5sb2NhbHV0bSIsImV4cCI6MTczNzAyODU5NiwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy5yZWFkLmlkZW50aWZpY2F0aW9uX3NlcnZpY2VfYXJlYXMiLCJzdWIiOiJ1c3NfcXVhbGlmaWVyIn0.REDACTED
 </div>
       </li>
   </ul>
@@ -396,12 +395,12 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">lat</div>:
-        <div class="node_value">    38.0
+        <div class="node_value">    37.1853
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">lng</div>:
-        <div class="node_value">    -81.0
+        <div class="node_value">    -80.614
 </div>
       </li>
   </ul>
@@ -413,12 +412,12 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">lat</div>:
-        <div class="node_value">    37.0
+        <div class="node_value">    37.2148
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">lng</div>:
-        <div class="node_value">    -81.0
+        <div class="node_value">    -80.614
 </div>
       </li>
   </ul>
@@ -430,12 +429,12 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">lat</div>:
-        <div class="node_value">    37.0
+        <div class="node_value">    37.2148
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">lng</div>:
-        <div class="node_value">    -80.0
+        <div class="node_value">    -80.544
 </div>
       </li>
   </ul>
@@ -447,12 +446,12 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">lat</div>:
-        <div class="node_value">    38.0
+        <div class="node_value">    37.1853
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">lng</div>:
-        <div class="node_value">    -80.0
+        <div class="node_value">    -80.544
 </div>
       </li>
   </ul>
@@ -483,12 +482,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">time_start</div>:
-        <div class="node_value">    2024-10-18T06:21:16.603168Z
+        <div class="node_value">    2025-01-16T10:57:07.824255Z
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">time_end</div>:
-        <div class="node_value">    2024-10-18T07:21:16.603168Z
+        <div class="node_value">    2025-01-16T11:57:07.824255Z
 </div>
       </li>
   </ul>
@@ -502,7 +501,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">request_id</div>:
-        <div class="node_value">    0b20c793-acf4-4a06-8bb9-f3861a734f90
+        <div class="node_value">    13c8f7a5-95e3-49ad-a186-9562d9aa0cc9
 </div>
       </li>
   </ul>
@@ -523,7 +522,7 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">code</div>:
-        <div class="node_value">    400
+        <div class="node_value">    403
 </div>
       </li>
       <li class="collapseable">
@@ -536,12 +535,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Date</div>:
-        <div class="node_value">    Fri, 18 Oct 2024 06:21:15 GMT
+        <div class="node_value">    Thu, 16 Jan 2025 10:57:06 GMT
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">Content-Length</div>:
-        <div class="node_value">    70
+        <div class="node_value">    276
 </div>
       </li>
   </ul>
@@ -550,12 +549,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">elapsed_s</div>:
-        <div class="node_value">    0.000793
+        <div class="node_value">    0.00093
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">reported</div>:
-        <div class="node_value">    2024-10-18T06:21:15.607539Z
+        <div class="node_value">    2025-01-16T10:57:06.828694Z
 </div>
       </li>
       <li class="collapseable">
@@ -563,7 +562,7 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">message</div>:
-        <div class="node_value">    Area too large (E:4dcb360b-b204-4443-8279-7625f544dd1a)
+        <div class="node_value">    Access token missing scopes (AuthOption[0]: dss.write.identification_service_areas) while expecting [AuthFromAuthorizationAuthority: (dss.write.identification_service_areas)] and got dss.read.identification_service_areas (E:f60db6aa-d332-4e49-8a0f-29d5d8fdf605)
 </div>
       </li>
   </ul>
@@ -581,12 +580,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">query_type</div>:
-        <div class="node_value">    astm.f3411.v19.dss.updateIdentificationServiceArea
+        <div class="node_value">    astm.f3411.v19.dss.createIdentificationServiceArea
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">participant_id</div>:
-        <div class="node_value">    uss2
+        <div class="node_value">    uss1
 </div>
       </li>
   </ul>
@@ -604,7 +603,7 @@
               <td><a href="#e4">4</a></td>
                 <td>&#x2705;</td>
                 <td class="pass_result">
-                  ISA huge area
+                  Read scope cannot create an ISA
                 </td>
                     <td class="pass_result">&#x2705;</td>
             </tr>
@@ -615,7 +614,7 @@
                     <div id="e5query">
       <ul>
       <li class="collapseable">
-        <div class="node_key">PUT dss.uss2.localutm 400</div>:
+        <div class="node_key">PUT dss.uss1.localutm 401</div>:
         <div class="node_value">      <ul>
       <li class="collapseable">
         <div class="node_key">request</div>:
@@ -627,12 +626,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">url</div>:
-        <div class="node_value">    http://dss.uss2.localutm/v1/dss/identification_service_areas/00000170-e36d-40be-8d38-beca6ca30000
+        <div class="node_value">    http://dss.uss1.localutm/v1/dss/identification_service_areas/0000015c-e36d-40be-8d38-beca6ca30000
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">initiated_at</div>:
-        <div class="node_value">    2024-10-18T06:21:15.608309Z
+        <div class="node_value">    2025-01-16T10:57:06.829825Z
 </div>
       </li>
       <li class="collapseable">
@@ -660,17 +659,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Content-Length</div>:
-        <div class="node_value">    406
+        <div class="node_value">    540
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">Content-Type</div>:
         <div class="node_value">    application/json
-</div>
-      </li>
-      <li class="not_collapseable">
-        <div class="node_key">Authorization</div>:
-        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMi5sb2NhbHV0bSIsImV4cCI6MTcyOTIzNjA3NSwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy53cml0ZS5pZGVudGlmaWNhdGlvbl9zZXJ2aWNlX2FyZWFzIiwic3ViIjoidXNzX3F1YWxpZmllciJ9.REDACTED
 </div>
       </li>
   </ul>
@@ -692,6 +686,74 @@
       <li class="collapseable">
         <div class="node_key">vertices</div>:
         <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">item_1</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">lat</div>:
+        <div class="node_value">    37.1853
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">lng</div>:
+        <div class="node_value">    -80.614
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">item_2</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">lat</div>:
+        <div class="node_value">    37.2148
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">lng</div>:
+        <div class="node_value">    -80.614
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">item_3</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">lat</div>:
+        <div class="node_value">    37.2148
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">lng</div>:
+        <div class="node_value">    -80.544
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">item_4</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">lat</div>:
+        <div class="node_value">    37.1853
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">lng</div>:
+        <div class="node_value">    -80.544
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
   </ul>
 
 </div>
@@ -716,12 +778,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">time_start</div>:
-        <div class="node_value">    2024-10-18T06:21:16.603168Z
+        <div class="node_value">    2025-01-16T10:57:07.824255Z
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">time_end</div>:
-        <div class="node_value">    2024-10-18T07:21:16.603168Z
+        <div class="node_value">    2025-01-16T11:57:07.824255Z
 </div>
       </li>
   </ul>
@@ -735,7 +797,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">request_id</div>:
-        <div class="node_value">    634c2428-7e39-4afe-9633-69b2dd9302bb
+        <div class="node_value">    d6ebe0f9-584c-493a-8388-ff8ae80808dc
 </div>
       </li>
   </ul>
@@ -756,7 +818,7 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">code</div>:
-        <div class="node_value">    400
+        <div class="node_value">    401
 </div>
       </li>
       <li class="collapseable">
@@ -769,12 +831,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Date</div>:
-        <div class="node_value">    Fri, 18 Oct 2024 06:21:15 GMT
+        <div class="node_value">    Thu, 16 Jan 2025 10:57:06 GMT
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">Content-Length</div>:
-        <div class="node_value">    93
+        <div class="node_value">    76
 </div>
       </li>
   </ul>
@@ -783,12 +845,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">elapsed_s</div>:
-        <div class="node_value">    0.000694
+        <div class="node_value">    0.001545
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">reported</div>:
-        <div class="node_value">    2024-10-18T06:21:15.609455Z
+        <div class="node_value">    2025-01-16T10:57:06.831841Z
 </div>
       </li>
       <li class="collapseable">
@@ -796,7 +858,7 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">message</div>:
-        <div class="node_value">    Missing or malformed required extents (E:d62cbe92-ca92-4a5d-b31a-72084d4c0c17)
+        <div class="node_value">    Missing access token (E:3a818574-581a-46a1-8669-644b2fe4f9ee)
 </div>
       </li>
   </ul>
@@ -814,12 +876,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">query_type</div>:
-        <div class="node_value">    astm.f3411.v19.dss.updateIdentificationServiceArea
+        <div class="node_value">    astm.f3411.v19.dss.createIdentificationServiceArea
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">participant_id</div>:
-        <div class="node_value">    uss2
+        <div class="node_value">    uss1
 </div>
       </li>
   </ul>
@@ -837,7 +899,7 @@
               <td><a href="#e6">6</a></td>
                 <td>&#x2705;</td>
                 <td class="pass_result">
-                  ISA empty vertices
+                  Missing token prevents creating an ISA
                 </td>
                     <td class="pass_result">&#x2705;</td>
             </tr>
@@ -848,7 +910,7 @@
                     <div id="e7query">
       <ul>
       <li class="collapseable">
-        <div class="node_key">PUT dss.uss2.localutm 400</div>:
+        <div class="node_key">PUT dss.uss1.localutm 401</div>:
         <div class="node_value">      <ul>
       <li class="collapseable">
         <div class="node_key">request</div>:
@@ -860,12 +922,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">url</div>:
-        <div class="node_value">    http://dss.uss2.localutm/v1/dss/identification_service_areas/00000170-e36d-40be-8d38-beca6ca30000
+        <div class="node_value">    http://dss.uss1.localutm/v1/dss/identification_service_areas/0000015c-e36d-40be-8d38-beca6ca30000
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">initiated_at</div>:
-        <div class="node_value">    2024-10-18T06:21:15.610454Z
+        <div class="node_value">    2025-01-16T10:57:06.833415Z
 </div>
       </li>
       <li class="collapseable">
@@ -903,7 +965,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Authorization</div>:
-        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMi5sb2NhbHV0bSIsImV4cCI6MTcyOTIzNjA3NSwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy53cml0ZS5pZGVudGlmaWNhdGlvbl9zZXJ2aWNlX2FyZWFzIiwic3ViIjoidXNzX3F1YWxpZmllciJ9.REDACTED
+        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMS5sb2NhbHV0bSIsImNsaWVudF9pZCI6InVzc191bnNpZ25lZCIsImV4cCI6MTczNzAyODYyNiwiaXNzIjoiTm9BdXRoIiwianRpIjoiNDhiMzExZjctOWRmOS00ZWRlLWE4NzUtZmFiYmYyMWNjNzRmIiwibmJmIjoxNzM3MDI1MDI1LCJzY29wZSI6ImRzcy53cml0ZS5pZGVudGlmaWNhdGlvbl9zZXJ2aWNlX2FyZWFzIiwic3ViIjoidXNzX3Vuc2lnbmVkIn0.REDACTED
 </div>
       </li>
   </ul>
@@ -1017,12 +1079,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">time_start</div>:
-        <div class="node_value">    2024-10-18T06:11:15.609621Z
+        <div class="node_value">    2025-01-16T10:57:07.824255Z
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">time_end</div>:
-        <div class="node_value">    2024-10-18T07:11:15.609621Z
+        <div class="node_value">    2025-01-16T11:57:07.824255Z
 </div>
       </li>
   </ul>
@@ -1036,7 +1098,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">request_id</div>:
-        <div class="node_value">    01a2d1d4-d762-4d2b-a93f-07b5038b5d95
+        <div class="node_value">    93872743-8c27-480b-9fb8-f4071a501557
 </div>
       </li>
   </ul>
@@ -1057,7 +1119,7 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">code</div>:
-        <div class="node_value">    400
+        <div class="node_value">    401
 </div>
       </li>
       <li class="collapseable">
@@ -1070,12 +1132,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Date</div>:
-        <div class="node_value">    Fri, 18 Oct 2024 06:21:15 GMT
+        <div class="node_value">    Thu, 16 Jan 2025 10:57:06 GMT
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">Content-Length</div>:
-        <div class="node_value">    116
+        <div class="node_value">    86
 </div>
       </li>
   </ul>
@@ -1084,12 +1146,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">elapsed_s</div>:
-        <div class="node_value">    0.000785
+        <div class="node_value">    0.001426
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">reported</div>:
-        <div class="node_value">    2024-10-18T06:21:15.611665Z
+        <div class="node_value">    2025-01-16T10:57:06.836531Z
 </div>
       </li>
       <li class="collapseable">
@@ -1097,7 +1159,7 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">message</div>:
-        <div class="node_value">    IdentificationServiceArea time_start must not be in the past (E:14645e0a-bea5-4c54-a5e0-8cc8a03f8662)
+        <div class="node_value">    crypto/rsa: verification error (E:140d82a5-5a4a-4b6a-9bd7-16eb42a82982)
 </div>
       </li>
   </ul>
@@ -1115,12 +1177,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">query_type</div>:
-        <div class="node_value">    astm.f3411.v19.dss.updateIdentificationServiceArea
+        <div class="node_value">    astm.f3411.v19.dss.createIdentificationServiceArea
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">participant_id</div>:
-        <div class="node_value">    uss2
+        <div class="node_value">    uss1
 </div>
       </li>
   </ul>
@@ -1138,7 +1200,7 @@
               <td><a href="#e8">8</a></td>
                 <td>&#x2705;</td>
                 <td class="pass_result">
-                  ISA start time in the past
+                  Fake token prevents creating an ISA
                 </td>
                     <td class="pass_result">&#x2705;</td>
             </tr>
@@ -1149,7 +1211,7 @@
                     <div id="e9query">
       <ul>
       <li class="collapseable">
-        <div class="node_key">PUT dss.uss2.localutm 400</div>:
+        <div class="node_key">PUT dss.uss1.localutm 200</div>:
         <div class="node_value">      <ul>
       <li class="collapseable">
         <div class="node_key">request</div>:
@@ -1161,12 +1223,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">url</div>:
-        <div class="node_value">    http://dss.uss2.localutm/v1/dss/identification_service_areas/00000170-e36d-40be-8d38-beca6ca30000
+        <div class="node_value">    http://dss.uss1.localutm/v1/dss/identification_service_areas/0000015c-e36d-40be-8d38-beca6ca30000
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">initiated_at</div>:
-        <div class="node_value">    2024-10-18T06:21:15.612716Z
+        <div class="node_value">    2025-01-16T10:57:06.837669Z
 </div>
       </li>
       <li class="collapseable">
@@ -1204,7 +1266,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Authorization</div>:
-        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMi5sb2NhbHV0bSIsImV4cCI6MTcyOTIzNjA3NSwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy53cml0ZS5pZGVudGlmaWNhdGlvbl9zZXJ2aWNlX2FyZWFzIiwic3ViIjoidXNzX3F1YWxpZmllciJ9.REDACTED
+        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMS5sb2NhbHV0bSIsImV4cCI6MTczNzAyODYxMCwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy53cml0ZS5pZGVudGlmaWNhdGlvbl9zZXJ2aWNlX2FyZWFzIiwic3ViIjoidXNzX3F1YWxpZmllciJ9.REDACTED
 </div>
       </li>
   </ul>
@@ -1318,12 +1380,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">time_start</div>:
-        <div class="node_value">    2023-01-10T01:00:01.123456Z
+        <div class="node_value">    2025-01-16T10:57:07.824255Z
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">time_end</div>:
-        <div class="node_value">    2023-01-10T00:00:01.123456Z
+        <div class="node_value">    2025-01-16T11:57:07.824255Z
 </div>
       </li>
   </ul>
@@ -1337,7 +1399,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">request_id</div>:
-        <div class="node_value">    b6f09b9f-9ce3-4b0b-987f-6c45c0dd03fc
+        <div class="node_value">    1cbab18a-3d0e-41f8-b5a5-532aa090121c
 </div>
       </li>
   </ul>
@@ -1358,7 +1420,7 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">code</div>:
-        <div class="node_value">    400
+        <div class="node_value">    200
 </div>
       </li>
       <li class="collapseable">
@@ -1371,12 +1433,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Date</div>:
-        <div class="node_value">    Fri, 18 Oct 2024 06:21:15 GMT
+        <div class="node_value">    Thu, 16 Jan 2025 10:57:06 GMT
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">Content-Length</div>:
-        <div class="node_value">    116
+        <div class="node_value">    369
 </div>
       </li>
   </ul>
@@ -1385,20 +1447,59 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">elapsed_s</div>:
-        <div class="node_value">    0.000789
+        <div class="node_value">    0.008075
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">reported</div>:
-        <div class="node_value">    2024-10-18T06:21:15.613951Z
+        <div class="node_value">    2025-01-16T10:57:06.846323Z
 </div>
       </li>
       <li class="collapseable">
         <div class="node_key">json</div>:
         <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">subscribers</div>:
+        <div class="node_value">      <ul>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">service_area</div>:
+        <div class="node_value">      <ul>
       <li class="not_collapseable">
-        <div class="node_key">message</div>:
-        <div class="node_value">    IdentificationServiceArea time_start must not be in the past (E:9ab188fd-178f-4d88-a92b-c63468d27e2f)
+        <div class="node_key">flights_url</div>:
+        <div class="node_value">    https://testdummy.interuss.org/interuss/monitoring/uss_qualifier/configurations/dev/library/resources/kentland_service_area/v1/uss/flights
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">owner</div>:
+        <div class="node_value">    uss_qualifier
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">time_start</div>:
+        <div class="node_value">    2025-01-16T10:57:07.824255Z
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">time_end</div>:
+        <div class="node_value">    2025-01-16T11:57:07.824255Z
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">version</div>:
+        <div class="node_value">    1g6p71s5atv5o
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">id</div>:
+        <div class="node_value">    0000015c-e36d-40be-8d38-beca6ca30000
+</div>
+      </li>
+  </ul>
+
 </div>
       </li>
   </ul>
@@ -1421,7 +1522,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">participant_id</div>:
-        <div class="node_value">    uss2
+        <div class="node_value">    uss1
 </div>
       </li>
   </ul>
@@ -1439,18 +1540,90 @@
               <td><a href="#e10">10</a></td>
                 <td>&#x2705;</td>
                 <td class="pass_result">
-                  ISA start time after end time
+                  ISA response code
                 </td>
                     <td class="pass_result">&#x2705;</td>
             </tr>
             <tr id="e11">
               <td><a href="#e11">11</a></td>
+                <td>&#x2705;</td>
+                <td class="pass_result">
+                  ISA response format
+                </td>
+                    <td class="pass_result">&#x2705;</td>
+            </tr>
+            <tr id="e12">
+              <td><a href="#e12">12</a></td>
+                <td>&#x2705;</td>
+                <td class="pass_result">
+                  ISA ID matches
+                </td>
+                    <td class="pass_result">&#x2705;</td>
+            </tr>
+            <tr id="e13">
+              <td><a href="#e13">13</a></td>
+                <td>&#x2705;</td>
+                <td class="pass_result">
+                  ISA version format
+                </td>
+                    <td class="pass_result">&#x2705;</td>
+            </tr>
+            <tr id="e14">
+              <td><a href="#e14">14</a></td>
+                <td>&#x2705;</td>
+                <td class="pass_result">
+                  ISA start time matches
+                </td>
+                    <td class="pass_result">&#x2705;</td>
+            </tr>
+            <tr id="e15">
+              <td><a href="#e15">15</a></td>
+                <td>&#x2705;</td>
+                <td class="pass_result">
+                  ISA end time matches
+                </td>
+                    <td class="pass_result">&#x2705;</td>
+            </tr>
+            <tr id="e16">
+              <td><a href="#e16">16</a></td>
+                <td>&#x2705;</td>
+                <td class="pass_result">
+                  ISA URL matches
+                </td>
+                    <td class="pass_result">&#x2705;</td>
+            </tr>
+            <tr id="e17">
+              <td><a href="#e17">17</a></td>
+                <td>&#x2705;</td>
+                <td class="pass_result">
+                  Correct token and scope can create ISA
+                </td>
+                    <td class="pass_result">&#x2705;</td>
+            </tr>
+            <tr id="e18">
+              <td><a href="#e18">18</a></td>
+                <td>&#x2705;</td>
+                <td class="pass_result">
+                  Missing token prevents reading an ISA
+                </td>
+                    <td class="pass_result">&#x2705;</td>
+            </tr>
+            <tr id="e19">
+              <td><a href="#e19">19</a></td>
+                <td>&#x2705;</td>
+                <td class="pass_result">
+                  Fake token prevents reading an ISA
+                </td>
+                    <td class="pass_result">&#x2705;</td>
+            </tr>
+            <tr id="e20">
+              <td><a href="#e20">20</a></td>
                 <td>&#x1F310;</td>
                 <td>
-                    <div id="e11query">
+                    <div id="e20query">
       <ul>
       <li class="collapseable">
-        <div class="node_key">PUT dss.uss2.localutm 400</div>:
+        <div class="node_key">PUT dss.uss1.localutm 403</div>:
         <div class="node_value">      <ul>
       <li class="collapseable">
         <div class="node_key">request</div>:
@@ -1462,12 +1635,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">url</div>:
-        <div class="node_value">    http://dss.uss2.localutm/v1/dss/identification_service_areas/00000170-e36d-40be-8d38-beca6ca30000
+        <div class="node_value">    http://dss.uss1.localutm/v1/dss/identification_service_areas/0000015c-e36d-40be-8d38-beca6ca30000/1g6p71s5atv5o
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">initiated_at</div>:
-        <div class="node_value">    2024-10-18T06:21:15.614984Z
+        <div class="node_value">    2025-01-16T10:57:06.865324Z
 </div>
       </li>
       <li class="collapseable">
@@ -1495,7 +1668,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Content-Length</div>:
-        <div class="node_value">    552
+        <div class="node_value">    540
 </div>
       </li>
       <li class="not_collapseable">
@@ -1505,7 +1678,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Authorization</div>:
-        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMi5sb2NhbHV0bSIsImV4cCI6MTcyOTIzNjA3NSwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy53cml0ZS5pZGVudGlmaWNhdGlvbl9zZXJ2aWNlX2FyZWFzIiwic3ViIjoidXNzX3F1YWxpZmllciJ9.REDACTED
+        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMS5sb2NhbHV0bSIsImV4cCI6MTczNzAyODU5NiwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy5yZWFkLmlkZW50aWZpY2F0aW9uX3NlcnZpY2VfYXJlYXMiLCJzdWIiOiJ1c3NfcXVhbGlmaWVyIn0.REDACTED
 </div>
       </li>
   </ul>
@@ -1532,12 +1705,12 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">lat</div>:
-        <div class="node_value">    130.0
+        <div class="node_value">    37.1853
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">lng</div>:
-        <div class="node_value">    -23.0
+        <div class="node_value">    -80.614
 </div>
       </li>
   </ul>
@@ -1549,12 +1722,12 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">lat</div>:
-        <div class="node_value">    130.0
+        <div class="node_value">    37.2148
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">lng</div>:
-        <div class="node_value">    -24.000000000000004
+        <div class="node_value">    -80.614
 </div>
       </li>
   </ul>
@@ -1566,12 +1739,12 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">lat</div>:
-        <div class="node_value">    132.0
+        <div class="node_value">    37.2148
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">lng</div>:
-        <div class="node_value">    -24.000000000000004
+        <div class="node_value">    -80.544
 </div>
       </li>
   </ul>
@@ -1583,12 +1756,12 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">lat</div>:
-        <div class="node_value">    132.0
+        <div class="node_value">    37.1853
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">lng</div>:
-        <div class="node_value">    -23.0
+        <div class="node_value">    -80.544
 </div>
       </li>
   </ul>
@@ -1619,12 +1792,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">time_start</div>:
-        <div class="node_value">    2023-01-10T00:00:01.123456Z
+        <div class="node_value">    2025-01-16T10:57:07.824255Z
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">time_end</div>:
-        <div class="node_value">    2023-01-10T01:00:01.123456Z
+        <div class="node_value">    2025-01-16T11:57:07.824255Z
 </div>
       </li>
   </ul>
@@ -1638,7 +1811,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">request_id</div>:
-        <div class="node_value">    8d480bc3-41dd-4073-afb2-2b78db18aa41
+        <div class="node_value">    61cbe89e-0a6f-4bb3-a66d-8cf71f78b7d3
 </div>
       </li>
   </ul>
@@ -1659,7 +1832,7 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">code</div>:
-        <div class="node_value">    400
+        <div class="node_value">    403
 </div>
       </li>
       <li class="collapseable">
@@ -1672,12 +1845,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Date</div>:
-        <div class="node_value">    Fri, 18 Oct 2024 06:21:15 GMT
+        <div class="node_value">    Thu, 16 Jan 2025 10:57:06 GMT
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">Content-Length</div>:
-        <div class="node_value">    101
+        <div class="node_value">    276
 </div>
       </li>
   </ul>
@@ -1686,12 +1859,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">elapsed_s</div>:
-        <div class="node_value">    0.000722
+        <div class="node_value">    0.000954
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">reported</div>:
-        <div class="node_value">    2024-10-18T06:21:15.616140Z
+        <div class="node_value">    2025-01-16T10:57:06.866790Z
 </div>
       </li>
       <li class="collapseable">
@@ -1699,7 +1872,7 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">message</div>:
-        <div class="node_value">    Coordinates did not create a well-formed area (E:5e017c54-07e7-412e-bb55-ef74088a217c)
+        <div class="node_value">    Access token missing scopes (AuthOption[0]: dss.write.identification_service_areas) while expecting [AuthFromAuthorizationAuthority: (dss.write.identification_service_areas)] and got dss.read.identification_service_areas (E:45b33a2e-cf2a-4f58-ba1c-d08c4272cebb)
 </div>
       </li>
   </ul>
@@ -1722,7 +1895,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">participant_id</div>:
-        <div class="node_value">    uss2
+        <div class="node_value">    uss1
 </div>
       </li>
   </ul>
@@ -1736,22 +1909,22 @@
                 </td>
                     <td>&#x1F310;</td>
             </tr>
-            <tr id="e12">
-              <td><a href="#e12">12</a></td>
+            <tr id="e21">
+              <td><a href="#e21">21</a></td>
                 <td>&#x2705;</td>
                 <td class="pass_result">
-                  ISA vertices are valid
+                  Read scope cannot mutate an ISA
                 </td>
                     <td class="pass_result">&#x2705;</td>
             </tr>
-            <tr id="e13">
-              <td><a href="#e13">13</a></td>
+            <tr id="e22">
+              <td><a href="#e22">22</a></td>
                 <td>&#x1F310;</td>
                 <td>
-                    <div id="e13query">
+                    <div id="e22query">
       <ul>
       <li class="collapseable">
-        <div class="node_key">PUT dss.uss2.localutm 400</div>:
+        <div class="node_key">PUT dss.uss1.localutm 401</div>:
         <div class="node_value">      <ul>
       <li class="collapseable">
         <div class="node_key">request</div>:
@@ -1763,12 +1936,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">url</div>:
-        <div class="node_value">    http://dss.uss2.localutm/v1/dss/identification_service_areas/00000170-e36d-40be-8d38-beca6ca30000
+        <div class="node_value">    http://dss.uss1.localutm/v1/dss/identification_service_areas/0000015c-e36d-40be-8d38-beca6ca30000
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">initiated_at</div>:
-        <div class="node_value">    2024-10-18T06:21:15.616386Z
+        <div class="node_value">    2025-01-16T10:57:06.867890Z
 </div>
       </li>
       <li class="collapseable">
@@ -1796,17 +1969,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Content-Length</div>:
-        <div class="node_value">    375
+        <div class="node_value">    540
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">Content-Type</div>:
         <div class="node_value">    application/json
-</div>
-      </li>
-      <li class="not_collapseable">
-        <div class="node_key">Authorization</div>:
-        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMi5sb2NhbHV0bSIsImV4cCI6MTcyOTIzNjA3NSwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy53cml0ZS5pZGVudGlmaWNhdGlvbl9zZXJ2aWNlX2FyZWFzIiwic3ViIjoidXNzX3F1YWxpZmllciJ9.REDACTED
 </div>
       </li>
   </ul>
@@ -1822,6 +1990,88 @@
       <li class="collapseable">
         <div class="node_key">spatial_volume</div>:
         <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">footprint</div>:
+        <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">vertices</div>:
+        <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">item_1</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">lat</div>:
+        <div class="node_value">    37.1853
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">lng</div>:
+        <div class="node_value">    -80.614
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">item_2</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">lat</div>:
+        <div class="node_value">    37.2148
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">lng</div>:
+        <div class="node_value">    -80.614
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">item_3</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">lat</div>:
+        <div class="node_value">    37.2148
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">lng</div>:
+        <div class="node_value">    -80.544
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">item_4</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">lat</div>:
+        <div class="node_value">    37.1853
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">lng</div>:
+        <div class="node_value">    -80.544
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
       <li class="not_collapseable">
         <div class="node_key">altitude_lo</div>:
         <div class="node_value">    0.0
@@ -1838,12 +2088,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">time_start</div>:
-        <div class="node_value">    2024-10-18T06:21:16.603168Z
+        <div class="node_value">    2025-01-16T10:57:07.824255Z
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">time_end</div>:
-        <div class="node_value">    2024-10-18T07:21:16.603168Z
+        <div class="node_value">    2025-01-16T11:57:07.824255Z
 </div>
       </li>
   </ul>
@@ -1857,7 +2107,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">request_id</div>:
-        <div class="node_value">    0b20c793-acf4-4a06-8bb9-f3861a734f90
+        <div class="node_value">    d4a413af-f188-4881-808e-91fc6bb46bc2
 </div>
       </li>
   </ul>
@@ -1878,7 +2128,7 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">code</div>:
-        <div class="node_value">    400
+        <div class="node_value">    401
 </div>
       </li>
       <li class="collapseable">
@@ -1891,12 +2141,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Date</div>:
-        <div class="node_value">    Fri, 18 Oct 2024 06:21:15 GMT
+        <div class="node_value">    Thu, 16 Jan 2025 10:57:06 GMT
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">Content-Length</div>:
-        <div class="node_value">    93
+        <div class="node_value">    76
 </div>
       </li>
   </ul>
@@ -1905,12 +2155,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">elapsed_s</div>:
-        <div class="node_value">    0.000704
+        <div class="node_value">    0.000831
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">reported</div>:
-        <div class="node_value">    2024-10-18T06:21:15.617527Z
+        <div class="node_value">    2025-01-16T10:57:06.869155Z
 </div>
       </li>
       <li class="collapseable">
@@ -1918,7 +2168,7 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">message</div>:
-        <div class="node_value">    Missing or malformed required extents (E:6a81a46b-c619-42d2-9283-7fc79219d1f6)
+        <div class="node_value">    Missing access token (E:55060763-35b7-4527-89f3-eeaea1a84e76)
 </div>
       </li>
   </ul>
@@ -1941,7 +2191,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">participant_id</div>:
-        <div class="node_value">    uss2
+        <div class="node_value">    uss1
 </div>
       </li>
   </ul>
@@ -1955,22 +2205,22 @@
                 </td>
                     <td>&#x1F310;</td>
             </tr>
-            <tr id="e14">
-              <td><a href="#e14">14</a></td>
+            <tr id="e23">
+              <td><a href="#e23">23</a></td>
                 <td>&#x2705;</td>
                 <td class="pass_result">
-                  ISA missing outline
+                  Missing token prevents mutating an ISA
                 </td>
                     <td class="pass_result">&#x2705;</td>
             </tr>
-            <tr id="e15">
-              <td><a href="#e15">15</a></td>
+            <tr id="e24">
+              <td><a href="#e24">24</a></td>
                 <td>&#x1F310;</td>
                 <td>
-                    <div id="e15query">
+                    <div id="e24query">
       <ul>
       <li class="collapseable">
-        <div class="node_key">PUT dss.uss2.localutm 400</div>:
+        <div class="node_key">PUT dss.uss1.localutm 401</div>:
         <div class="node_value">      <ul>
       <li class="collapseable">
         <div class="node_key">request</div>:
@@ -1982,12 +2232,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">url</div>:
-        <div class="node_value">    http://dss.uss2.localutm/v1/dss/identification_service_areas/00000170-e36d-40be-8d38-beca6ca30000
+        <div class="node_value">    http://dss.uss1.localutm/v1/dss/identification_service_areas/0000015c-e36d-40be-8d38-beca6ca30000
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">initiated_at</div>:
-        <div class="node_value">    2024-10-18T06:21:15.617715Z
+        <div class="node_value">    2025-01-16T10:57:06.870196Z
 </div>
       </li>
       <li class="collapseable">
@@ -2015,7 +2265,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Content-Length</div>:
-        <div class="node_value">    312
+        <div class="node_value">    540
 </div>
       </li>
       <li class="not_collapseable">
@@ -2025,7 +2275,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Authorization</div>:
-        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMi5sb2NhbHV0bSIsImV4cCI6MTcyOTIzNjA3NSwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy53cml0ZS5pZGVudGlmaWNhdGlvbl9zZXJ2aWNlX2FyZWFzIiwic3ViIjoidXNzX3F1YWxpZmllciJ9.REDACTED
+        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMS5sb2NhbHV0bSIsImNsaWVudF9pZCI6InVzc191bnNpZ25lZCIsImV4cCI6MTczNzAyODYyNiwiaXNzIjoiTm9BdXRoIiwianRpIjoiNDhiMzExZjctOWRmOS00ZWRlLWE4NzUtZmFiYmYyMWNjNzRmIiwibmJmIjoxNzM3MDI1MDI1LCJzY29wZSI6ImRzcy53cml0ZS5pZGVudGlmaWNhdGlvbl9zZXJ2aWNlX2FyZWFzIiwic3ViIjoidXNzX3Vuc2lnbmVkIn0.REDACTED
 </div>
       </li>
   </ul>
@@ -2038,14 +2288,113 @@
       <li class="collapseable">
         <div class="node_key">extents</div>:
         <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">spatial_volume</div>:
+        <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">footprint</div>:
+        <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">vertices</div>:
+        <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">item_1</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">lat</div>:
+        <div class="node_value">    37.1853
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">lng</div>:
+        <div class="node_value">    -80.614
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">item_2</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">lat</div>:
+        <div class="node_value">    37.2148
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">lng</div>:
+        <div class="node_value">    -80.614
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">item_3</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">lat</div>:
+        <div class="node_value">    37.2148
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">lng</div>:
+        <div class="node_value">    -80.544
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">item_4</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">lat</div>:
+        <div class="node_value">    37.1853
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">lng</div>:
+        <div class="node_value">    -80.544
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">altitude_lo</div>:
+        <div class="node_value">    0.0
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">altitude_hi</div>:
+        <div class="node_value">    3048.0
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
       <li class="not_collapseable">
         <div class="node_key">time_start</div>:
-        <div class="node_value">    2024-10-18T06:21:16.603168Z
+        <div class="node_value">    2025-01-16T10:57:07.824255Z
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">time_end</div>:
-        <div class="node_value">    2024-10-18T07:21:16.603168Z
+        <div class="node_value">    2025-01-16T11:57:07.824255Z
 </div>
       </li>
   </ul>
@@ -2059,7 +2408,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">request_id</div>:
-        <div class="node_value">    0b20c793-acf4-4a06-8bb9-f3861a734f90
+        <div class="node_value">    9ea910e6-9424-4002-8325-166b6237cc42
 </div>
       </li>
   </ul>
@@ -2080,7 +2429,7 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">code</div>:
-        <div class="node_value">    400
+        <div class="node_value">    401
 </div>
       </li>
       <li class="collapseable">
@@ -2093,12 +2442,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Date</div>:
-        <div class="node_value">    Fri, 18 Oct 2024 06:21:15 GMT
+        <div class="node_value">    Thu, 16 Jan 2025 10:57:06 GMT
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">Content-Length</div>:
-        <div class="node_value">    93
+        <div class="node_value">    86
 </div>
       </li>
   </ul>
@@ -2107,12 +2456,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">elapsed_s</div>:
-        <div class="node_value">    0.000673
+        <div class="node_value">    0.00081
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">reported</div>:
-        <div class="node_value">    2024-10-18T06:21:15.618785Z
+        <div class="node_value">    2025-01-16T10:57:06.871447Z
 </div>
       </li>
       <li class="collapseable">
@@ -2120,7 +2469,7 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">message</div>:
-        <div class="node_value">    Missing or malformed required extents (E:65e2c1dd-5282-4308-aa4b-5059e6b407cd)
+        <div class="node_value">    crypto/rsa: verification error (E:a2705a7c-f045-48f1-b28b-763cf03c39ed)
 </div>
       </li>
   </ul>
@@ -2143,7 +2492,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">participant_id</div>:
-        <div class="node_value">    uss2
+        <div class="node_value">    uss1
 </div>
       </li>
   </ul>
@@ -2157,28 +2506,22 @@
                 </td>
                     <td>&#x1F310;</td>
             </tr>
-            <tr id="e16">
-              <td><a href="#e16">16</a></td>
+            <tr id="e25">
+              <td><a href="#e25">25</a></td>
                 <td>&#x2705;</td>
                 <td class="pass_result">
-                  ISA missing volume
+                  Fake token cannot mutate an ISA
                 </td>
                     <td class="pass_result">&#x2705;</td>
             </tr>
-            <tr id="e17">
-                <td rowspan="2"><span class="sticky_cell_value">
-                    <a href="#"></a>
-                </span></td>
-                <td rowspan="2"><span class="sticky_cell_value">
-                    <a href="https://github.com/interuss/monitoring/blob/c4f8adc7c5f8a53391a3c3609e6ed05a767b3194/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/isa_validation.md#cleanup">Cleanup</a>
-                </span></td>
-              <td><a href="#e17">17</a></td>
+            <tr id="e26">
+              <td><a href="#e26">26</a></td>
                 <td>&#x1F310;</td>
                 <td>
-                    <div id="e17query">
+                    <div id="e26query">
       <ul>
       <li class="collapseable">
-        <div class="node_key">GET dss.uss2.localutm 404</div>:
+        <div class="node_key">GET dss.uss1.localutm 200</div>:
         <div class="node_value">      <ul>
       <li class="collapseable">
         <div class="node_key">request</div>:
@@ -2190,12 +2533,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">url</div>:
-        <div class="node_value">    http://dss.uss2.localutm/v1/dss/identification_service_areas/00000170-e36d-40be-8d38-beca6ca30000
+        <div class="node_value">    http://dss.uss1.localutm/v1/dss/identification_service_areas?area=37.1853,-80.614,37.2148,-80.614,37.2148,-80.544,37.1853,-80.544&earliest_time=2025-01-16T10:57:07.824255Z&latest_time=2025-01-16T11:57:07.824255Z
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">initiated_at</div>:
-        <div class="node_value">    2024-10-18T06:21:15.619000Z
+        <div class="node_value">    2025-01-16T10:57:06.871715Z
 </div>
       </li>
       <li class="collapseable">
@@ -2223,7 +2566,1242 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Authorization</div>:
-        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMi5sb2NhbHV0bSIsImV4cCI6MTcyOTIzNjA0MCwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy5yZWFkLmlkZW50aWZpY2F0aW9uX3NlcnZpY2VfYXJlYXMiLCJzdWIiOiJ1c3NfcXVhbGlmaWVyIn0.REDACTED
+        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMS5sb2NhbHV0bSIsImV4cCI6MTczNzAyODU5NiwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy5yZWFkLmlkZW50aWZpY2F0aW9uX3NlcnZpY2VfYXJlYXMiLCJzdWIiOiJ1c3NfcXVhbGlmaWVyIn0.REDACTED
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">body</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">json</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">response</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">code</div>:
+        <div class="node_value">    200
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">headers</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Type</div>:
+        <div class="node_value">    application/json; charset=utf-8
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Date</div>:
+        <div class="node_value">    Thu, 16 Jan 2025 10:57:06 GMT
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Length</div>:
+        <div class="node_value">    355
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">elapsed_s</div>:
+        <div class="node_value">    0.002499
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">reported</div>:
+        <div class="node_value">    2025-01-16T10:57:06.874668Z
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">json</div>:
+        <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">service_areas</div>:
+        <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">item_1</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">flights_url</div>:
+        <div class="node_value">    https://testdummy.interuss.org/interuss/monitoring/uss_qualifier/configurations/dev/library/resources/kentland_service_area/v1/uss/flights
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">owner</div>:
+        <div class="node_value">    uss_qualifier
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">time_start</div>:
+        <div class="node_value">    2025-01-16T10:57:07.824255Z
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">time_end</div>:
+        <div class="node_value">    2025-01-16T11:57:07.824255Z
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">version</div>:
+        <div class="node_value">    1g6p71s5atv5o
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">id</div>:
+        <div class="node_value">    0000015c-e36d-40be-8d38-beca6ca30000
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">body</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">query_type</div>:
+        <div class="node_value">    astm.f3411.v19.dss.searchIdentificationServiceAreas
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">participant_id</div>:
+        <div class="node_value">    uss1
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+  </ul>
+
+  </div>
+
+                </td>
+                    <td>&#x1F310;</td>
+            </tr>
+            <tr id="e27">
+              <td><a href="#e27">27</a></td>
+                <td>&#x2705;</td>
+                <td class="pass_result">
+                  Proper token is allowed to search for ISAs
+                </td>
+                    <td class="pass_result">&#x2705;</td>
+            </tr>
+            <tr id="e28">
+              <td><a href="#e28">28</a></td>
+                <td>&#x1F310;</td>
+                <td>
+                    <div id="e28query">
+      <ul>
+      <li class="collapseable">
+        <div class="node_key">GET dss.uss1.localutm 401</div>:
+        <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">request</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">method</div>:
+        <div class="node_value">    GET
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">url</div>:
+        <div class="node_value">    http://dss.uss1.localutm/v1/dss/identification_service_areas?area=37.1853,-80.614,37.2148,-80.614,37.2148,-80.544,37.1853,-80.544&earliest_time=2025-01-16T10:57:07.824255Z&latest_time=2025-01-16T11:57:07.824255Z
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">initiated_at</div>:
+        <div class="node_value">    2025-01-16T10:57:06.875381Z
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">headers</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">User-Agent</div>:
+        <div class="node_value">    python-requests/2.31.0
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Accept-Encoding</div>:
+        <div class="node_value">    gzip, deflate, br
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Accept</div>:
+        <div class="node_value">    */*
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Connection</div>:
+        <div class="node_value">    keep-alive
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Authorization</div>:
+        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMS5sb2NhbHV0bSIsImNsaWVudF9pZCI6InVzc191bnNpZ25lZCIsImV4cCI6MTczNzAyODYyNiwiaXNzIjoiTm9BdXRoIiwianRpIjoiOGZlYWNiYjYtOGY4MS00OGI0LTk1ZWUtYmI2OWY5ZWE0YTMxIiwibmJmIjoxNzM3MDI1MDI1LCJzY29wZSI6ImRzcy5yZWFkLmlkZW50aWZpY2F0aW9uX3NlcnZpY2VfYXJlYXMiLCJzdWIiOiJ1c3NfdW5zaWduZWQifQ.REDACTED
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">body</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">json</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">response</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">code</div>:
+        <div class="node_value">    401
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">headers</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Type</div>:
+        <div class="node_value">    application/json; charset=utf-8
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Date</div>:
+        <div class="node_value">    Thu, 16 Jan 2025 10:57:06 GMT
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Length</div>:
+        <div class="node_value">    86
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">elapsed_s</div>:
+        <div class="node_value">    0.000767
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">reported</div>:
+        <div class="node_value">    2025-01-16T10:57:06.876580Z
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">json</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">message</div>:
+        <div class="node_value">    crypto/rsa: verification error (E:903fe0a3-8a1e-4924-a3c0-bc4e91aed592)
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">body</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">query_type</div>:
+        <div class="node_value">    astm.f3411.v19.dss.searchIdentificationServiceAreas
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">participant_id</div>:
+        <div class="node_value">    uss1
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+  </ul>
+
+  </div>
+
+                </td>
+                    <td>&#x1F310;</td>
+            </tr>
+            <tr id="e29">
+              <td><a href="#e29">29</a></td>
+                <td>&#x2705;</td>
+                <td class="pass_result">
+                  Fake token cannot search for ISAs
+                </td>
+                    <td class="pass_result">&#x2705;</td>
+            </tr>
+            <tr id="e30">
+              <td><a href="#e30">30</a></td>
+                <td>&#x1F310;</td>
+                <td>
+                    <div id="e30query">
+      <ul>
+      <li class="collapseable">
+        <div class="node_key">GET dss.uss1.localutm 401</div>:
+        <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">request</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">method</div>:
+        <div class="node_value">    GET
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">url</div>:
+        <div class="node_value">    http://dss.uss1.localutm/v1/dss/identification_service_areas?area=37.1853,-80.614,37.2148,-80.614,37.2148,-80.544,37.1853,-80.544&earliest_time=2025-01-16T10:57:07.824255Z&latest_time=2025-01-16T11:57:07.824255Z
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">initiated_at</div>:
+        <div class="node_value">    2025-01-16T10:57:06.876823Z
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">headers</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">User-Agent</div>:
+        <div class="node_value">    python-requests/2.31.0
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Accept-Encoding</div>:
+        <div class="node_value">    gzip, deflate, br
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Accept</div>:
+        <div class="node_value">    */*
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Connection</div>:
+        <div class="node_value">    keep-alive
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">body</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">json</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">response</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">code</div>:
+        <div class="node_value">    401
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">headers</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Type</div>:
+        <div class="node_value">    application/json; charset=utf-8
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Date</div>:
+        <div class="node_value">    Thu, 16 Jan 2025 10:57:06 GMT
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Length</div>:
+        <div class="node_value">    76
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">elapsed_s</div>:
+        <div class="node_value">    0.000689
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">reported</div>:
+        <div class="node_value">    2025-01-16T10:57:06.877935Z
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">json</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">message</div>:
+        <div class="node_value">    Missing access token (E:9e0051b0-d7ac-44f6-887b-a44953b8d932)
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">body</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">query_type</div>:
+        <div class="node_value">    astm.f3411.v19.dss.searchIdentificationServiceAreas
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">participant_id</div>:
+        <div class="node_value">    uss1
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+  </ul>
+
+  </div>
+
+                </td>
+                    <td>&#x1F310;</td>
+            </tr>
+            <tr id="e31">
+              <td><a href="#e31">31</a></td>
+                <td>&#x2705;</td>
+                <td class="pass_result">
+                  Missing token cannot search for ISAs
+                </td>
+                    <td class="pass_result">&#x2705;</td>
+            </tr>
+            <tr id="e32">
+              <td><a href="#e32">32</a></td>
+                <td>&#x1F310;</td>
+                <td>
+                    <div id="e32query">
+      <ul>
+      <li class="collapseable">
+        <div class="node_key">DELETE dss.uss1.localutm 403</div>:
+        <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">request</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">method</div>:
+        <div class="node_value">    DELETE
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">url</div>:
+        <div class="node_value">    http://dss.uss1.localutm/v1/dss/identification_service_areas/0000015c-e36d-40be-8d38-beca6ca30000/1g6p71s5atv5o
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">initiated_at</div>:
+        <div class="node_value">    2025-01-16T10:57:06.878173Z
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">headers</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">User-Agent</div>:
+        <div class="node_value">    python-requests/2.31.0
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Accept-Encoding</div>:
+        <div class="node_value">    gzip, deflate, br
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Accept</div>:
+        <div class="node_value">    */*
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Connection</div>:
+        <div class="node_value">    keep-alive
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Length</div>:
+        <div class="node_value">    0
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Authorization</div>:
+        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMS5sb2NhbHV0bSIsImV4cCI6MTczNzAyODU5NiwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy5yZWFkLmlkZW50aWZpY2F0aW9uX3NlcnZpY2VfYXJlYXMiLCJzdWIiOiJ1c3NfcXVhbGlmaWVyIn0.REDACTED
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">body</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">json</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">response</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">code</div>:
+        <div class="node_value">    403
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">headers</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Type</div>:
+        <div class="node_value">    application/json; charset=utf-8
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Date</div>:
+        <div class="node_value">    Thu, 16 Jan 2025 10:57:06 GMT
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Length</div>:
+        <div class="node_value">    276
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">elapsed_s</div>:
+        <div class="node_value">    0.000724
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">reported</div>:
+        <div class="node_value">    2025-01-16T10:57:06.879285Z
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">json</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">message</div>:
+        <div class="node_value">    Access token missing scopes (AuthOption[0]: dss.write.identification_service_areas) while expecting [AuthFromAuthorizationAuthority: (dss.write.identification_service_areas)] and got dss.read.identification_service_areas (E:538b121c-0200-4597-ae39-9d93dd42666c)
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">body</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">query_type</div>:
+        <div class="node_value">    astm.f3411.v19.dss.deleteIdentificationServiceArea
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">participant_id</div>:
+        <div class="node_value">    uss1
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+  </ul>
+
+  </div>
+
+                </td>
+                    <td>&#x1F310;</td>
+            </tr>
+            <tr id="e33">
+              <td><a href="#e33">33</a></td>
+                <td>&#x2705;</td>
+                <td class="pass_result">
+                  Read scope cannot delete an ISA
+                </td>
+                    <td class="pass_result">&#x2705;</td>
+            </tr>
+            <tr id="e34">
+              <td><a href="#e34">34</a></td>
+                <td>&#x1F310;</td>
+                <td>
+                    <div id="e34query">
+      <ul>
+      <li class="collapseable">
+        <div class="node_key">DELETE dss.uss1.localutm 401</div>:
+        <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">request</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">method</div>:
+        <div class="node_value">    DELETE
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">url</div>:
+        <div class="node_value">    http://dss.uss1.localutm/v1/dss/identification_service_areas/0000015c-e36d-40be-8d38-beca6ca30000/1g6p71s5atv5o
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">initiated_at</div>:
+        <div class="node_value">    2025-01-16T10:57:06.879536Z
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">headers</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">User-Agent</div>:
+        <div class="node_value">    python-requests/2.31.0
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Accept-Encoding</div>:
+        <div class="node_value">    gzip, deflate, br
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Accept</div>:
+        <div class="node_value">    */*
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Connection</div>:
+        <div class="node_value">    keep-alive
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Length</div>:
+        <div class="node_value">    0
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">body</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">json</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">response</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">code</div>:
+        <div class="node_value">    401
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">headers</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Type</div>:
+        <div class="node_value">    application/json; charset=utf-8
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Date</div>:
+        <div class="node_value">    Thu, 16 Jan 2025 10:57:06 GMT
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Length</div>:
+        <div class="node_value">    76
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">elapsed_s</div>:
+        <div class="node_value">    0.000646
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">reported</div>:
+        <div class="node_value">    2025-01-16T10:57:06.880534Z
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">json</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">message</div>:
+        <div class="node_value">    Missing access token (E:c67944e0-7b95-4280-a039-c9f79635a679)
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">body</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">query_type</div>:
+        <div class="node_value">    astm.f3411.v19.dss.deleteIdentificationServiceArea
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">participant_id</div>:
+        <div class="node_value">    uss1
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+  </ul>
+
+  </div>
+
+                </td>
+                    <td>&#x1F310;</td>
+            </tr>
+            <tr id="e35">
+              <td><a href="#e35">35</a></td>
+                <td>&#x2705;</td>
+                <td class="pass_result">
+                  Missing token prevents ISA deletion
+                </td>
+                    <td class="pass_result">&#x2705;</td>
+            </tr>
+            <tr id="e36">
+              <td><a href="#e36">36</a></td>
+                <td>&#x1F310;</td>
+                <td>
+                    <div id="e36query">
+      <ul>
+      <li class="collapseable">
+        <div class="node_key">DELETE dss.uss1.localutm 401</div>:
+        <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">request</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">method</div>:
+        <div class="node_value">    DELETE
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">url</div>:
+        <div class="node_value">    http://dss.uss1.localutm/v1/dss/identification_service_areas/0000015c-e36d-40be-8d38-beca6ca30000/1g6p71s5atv5o
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">initiated_at</div>:
+        <div class="node_value">    2025-01-16T10:57:06.880783Z
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">headers</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">User-Agent</div>:
+        <div class="node_value">    python-requests/2.31.0
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Accept-Encoding</div>:
+        <div class="node_value">    gzip, deflate, br
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Accept</div>:
+        <div class="node_value">    */*
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Connection</div>:
+        <div class="node_value">    keep-alive
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Length</div>:
+        <div class="node_value">    0
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Authorization</div>:
+        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMS5sb2NhbHV0bSIsImNsaWVudF9pZCI6InVzc191bnNpZ25lZCIsImV4cCI6MTczNzAyODYyNiwiaXNzIjoiTm9BdXRoIiwianRpIjoiNDhiMzExZjctOWRmOS00ZWRlLWE4NzUtZmFiYmYyMWNjNzRmIiwibmJmIjoxNzM3MDI1MDI1LCJzY29wZSI6ImRzcy53cml0ZS5pZGVudGlmaWNhdGlvbl9zZXJ2aWNlX2FyZWFzIiwic3ViIjoidXNzX3Vuc2lnbmVkIn0.REDACTED
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">body</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">json</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">response</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">code</div>:
+        <div class="node_value">    401
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">headers</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Type</div>:
+        <div class="node_value">    application/json; charset=utf-8
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Date</div>:
+        <div class="node_value">    Thu, 16 Jan 2025 10:57:06 GMT
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Length</div>:
+        <div class="node_value">    86
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">elapsed_s</div>:
+        <div class="node_value">    0.000654
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">reported</div>:
+        <div class="node_value">    2025-01-16T10:57:06.881847Z
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">json</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">message</div>:
+        <div class="node_value">    crypto/rsa: verification error (E:6b040a8f-9fab-4c8a-8f84-1c6573612d57)
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">body</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">query_type</div>:
+        <div class="node_value">    astm.f3411.v19.dss.deleteIdentificationServiceArea
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">participant_id</div>:
+        <div class="node_value">    uss1
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+  </ul>
+
+  </div>
+
+                </td>
+                    <td>&#x1F310;</td>
+            </tr>
+            <tr id="e37">
+              <td><a href="#e37">37</a></td>
+                <td>&#x2705;</td>
+                <td class="pass_result">
+                  Fake token cannot delete an ISA
+                </td>
+                    <td class="pass_result">&#x2705;</td>
+            </tr>
+            <tr id="e38">
+              <td><a href="#e38">38</a></td>
+                <td>&#x1F310;</td>
+                <td>
+                    <div id="e38query">
+      <ul>
+      <li class="collapseable">
+        <div class="node_key">DELETE dss.uss1.localutm 200</div>:
+        <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">request</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">method</div>:
+        <div class="node_value">    DELETE
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">url</div>:
+        <div class="node_value">    http://dss.uss1.localutm/v1/dss/identification_service_areas/0000015c-e36d-40be-8d38-beca6ca30000/1g6p71s5atv5o
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">initiated_at</div>:
+        <div class="node_value">    2025-01-16T10:57:06.882122Z
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">headers</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">User-Agent</div>:
+        <div class="node_value">    python-requests/2.31.0
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Accept-Encoding</div>:
+        <div class="node_value">    gzip, deflate, br
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Accept</div>:
+        <div class="node_value">    */*
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Connection</div>:
+        <div class="node_value">    keep-alive
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Length</div>:
+        <div class="node_value">    0
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Authorization</div>:
+        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMS5sb2NhbHV0bSIsImV4cCI6MTczNzAyODYxMCwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy53cml0ZS5pZGVudGlmaWNhdGlvbl9zZXJ2aWNlX2FyZWFzIiwic3ViIjoidXNzX3F1YWxpZmllciJ9.REDACTED
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">body</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">json</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">response</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">code</div>:
+        <div class="node_value">    200
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">headers</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Type</div>:
+        <div class="node_value">    application/json; charset=utf-8
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Date</div>:
+        <div class="node_value">    Thu, 16 Jan 2025 10:57:06 GMT
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Content-Length</div>:
+        <div class="node_value">    369
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">elapsed_s</div>:
+        <div class="node_value">    0.005995
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">reported</div>:
+        <div class="node_value">    2025-01-16T10:57:06.888565Z
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">json</div>:
+        <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">service_area</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">flights_url</div>:
+        <div class="node_value">    https://testdummy.interuss.org/interuss/monitoring/uss_qualifier/configurations/dev/library/resources/kentland_service_area/v1/uss/flights
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">owner</div>:
+        <div class="node_value">    uss_qualifier
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">time_start</div>:
+        <div class="node_value">    2025-01-16T10:57:07.824255Z
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">time_end</div>:
+        <div class="node_value">    2025-01-16T11:57:07.824255Z
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">version</div>:
+        <div class="node_value">    1g6p71s5atv5o
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">id</div>:
+        <div class="node_value">    0000015c-e36d-40be-8d38-beca6ca30000
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">subscribers</div>:
+        <div class="node_value">      <ul>
+  </ul>
+
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">body</div>:
+        <div class="node_value">    None
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">query_type</div>:
+        <div class="node_value">    astm.f3411.v19.dss.deleteIdentificationServiceArea
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">participant_id</div>:
+        <div class="node_value">    uss1
+</div>
+      </li>
+  </ul>
+
+</div>
+      </li>
+  </ul>
+
+  </div>
+
+                </td>
+                    <td>&#x1F310;</td>
+            </tr>
+            <tr id="e39">
+              <td><a href="#e39">39</a></td>
+                <td>&#x2705;</td>
+                <td class="pass_result">
+                  Correct token and scope can delete ISA
+                </td>
+                    <td class="pass_result">&#x2705;</td>
+            </tr>
+            <tr id="e40">
+                <td rowspan="2"><span class="sticky_cell_value">
+                    <a href="#"></a>
+                </span></td>
+                <td rowspan="2"><span class="sticky_cell_value">
+                    <a href="https://github.com/interuss/monitoring/blob/3f6b88adf336cfe7654bf258776bc525e9f9626f/monitoring/uss_qualifier/scenarios/astm/netrid/v19/dss/token_validation.md#cleanup">Cleanup</a>
+                </span></td>
+              <td><a href="#e40">40</a></td>
+                <td>&#x1F310;</td>
+                <td>
+                    <div id="e40query">
+      <ul>
+      <li class="collapseable">
+        <div class="node_key">GET dss.uss1.localutm 404</div>:
+        <div class="node_value">      <ul>
+      <li class="collapseable">
+        <div class="node_key">request</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">method</div>:
+        <div class="node_value">    GET
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">url</div>:
+        <div class="node_value">    http://dss.uss1.localutm/v1/dss/identification_service_areas/0000015c-e36d-40be-8d38-beca6ca30000
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">initiated_at</div>:
+        <div class="node_value">    2025-01-16T10:57:06.891695Z
+</div>
+      </li>
+      <li class="collapseable">
+        <div class="node_key">headers</div>:
+        <div class="node_value">      <ul>
+      <li class="not_collapseable">
+        <div class="node_key">User-Agent</div>:
+        <div class="node_value">    python-requests/2.31.0
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Accept-Encoding</div>:
+        <div class="node_value">    gzip, deflate, br
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Accept</div>:
+        <div class="node_value">    */*
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Connection</div>:
+        <div class="node_value">    keep-alive
+</div>
+      </li>
+      <li class="not_collapseable">
+        <div class="node_key">Authorization</div>:
+        <div class="node_value">    Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkc3MudXNzMS5sb2NhbHV0bSIsImV4cCI6MTczNzAyODU5NiwiaXNzIjoiZHVtbXkiLCJzY29wZSI6ImRzcy5yZWFkLmlkZW50aWZpY2F0aW9uX3NlcnZpY2VfYXJlYXMiLCJzdWIiOiJ1c3NfcXVhbGlmaWVyIn0.REDACTED
 </div>
       </li>
   </ul>
@@ -2262,7 +3840,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">Date</div>:
-        <div class="node_value">    Fri, 18 Oct 2024 06:21:15 GMT
+        <div class="node_value">    Thu, 16 Jan 2025 10:57:06 GMT
 </div>
       </li>
       <li class="not_collapseable">
@@ -2276,12 +3854,12 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">elapsed_s</div>:
-        <div class="node_value">    0.001103
+        <div class="node_value">    0.001482
 </div>
       </li>
       <li class="not_collapseable">
         <div class="node_key">reported</div>:
-        <div class="node_value">    2024-10-18T06:21:15.620507Z
+        <div class="node_value">    2025-01-16T10:57:06.893655Z
 </div>
       </li>
       <li class="collapseable">
@@ -2289,7 +3867,7 @@
         <div class="node_value">      <ul>
       <li class="not_collapseable">
         <div class="node_key">message</div>:
-        <div class="node_value">    ISA 00000170-e36d-40be-8d38-beca6ca30000 not found (E:c983a81b-826c-4c23-8271-1ef7adf20506)
+        <div class="node_value">    ISA 0000015c-e36d-40be-8d38-beca6ca30000 not found (E:07d2cf6e-c38f-41d8-a233-10e085d9b8b7)
 </div>
       </li>
   </ul>
@@ -2312,7 +3890,7 @@
       </li>
       <li class="not_collapseable">
         <div class="node_key">participant_id</div>:
-        <div class="node_value">    uss2
+        <div class="node_value">    uss1
 </div>
       </li>
   </ul>
@@ -2326,8 +3904,8 @@
                 </td>
                     <td>&#x1F310;</td>
             </tr>
-            <tr id="e18">
-              <td><a href="#e18">18</a></td>
+            <tr id="e41">
+              <td><a href="#e41">41</a></td>
                 <td>&#x2705;</td>
                 <td class="pass_result">
                   Successful ISA query
@@ -2372,10 +3950,17 @@
       addShowHide(document.getElementById("e5query"));
       addShowHide(document.getElementById("e7query"));
       addShowHide(document.getElementById("e9query"));
-      addShowHide(document.getElementById("e11query"));
-      addShowHide(document.getElementById("e13query"));
-      addShowHide(document.getElementById("e15query"));
-      addShowHide(document.getElementById("e17query"));
+      addShowHide(document.getElementById("e20query"));
+      addShowHide(document.getElementById("e22query"));
+      addShowHide(document.getElementById("e24query"));
+      addShowHide(document.getElementById("e26query"));
+      addShowHide(document.getElementById("e28query"));
+      addShowHide(document.getElementById("e30query"));
+      addShowHide(document.getElementById("e32query"));
+      addShowHide(document.getElementById("e34query"));
+      addShowHide(document.getElementById("e36query"));
+      addShowHide(document.getElementById("e38query"));
+      addShowHide(document.getElementById("e40query"));
   </script>
 
 </body>

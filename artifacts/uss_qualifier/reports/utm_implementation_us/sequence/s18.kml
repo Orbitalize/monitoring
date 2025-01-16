@@ -118,38 +118,11 @@
       </PolyStyle>
     </Style>
     <Folder>
-      <name>ASTM SCD DSS: Operational Intent Reference Simple</name>
+      <name>ASTM SCD DSS: Report</name>
       <Folder>
-        <name>Setup</name>
+        <name>DSS Report</name>
         <Folder>
-          <name>Ensure clean workspace</name>
-        </Folder>
-        <Folder>
-          <name>Create an operational intent reference</name>
-        </Folder>
-      </Folder>
-      <Folder>
-        <name>Deletion requires correct OVN</name>
-        <Folder>
-          <name>Attempt deletion with missing OVN</name>
-        </Folder>
-        <Folder>
-          <name>Attempt deletion with incorrect OVN</name>
-        </Folder>
-      </Folder>
-      <Folder>
-        <name>Mutation requires correct OVN</name>
-        <Folder>
-          <name>Attempt mutation with missing OVN</name>
-        </Folder>
-        <Folder>
-          <name>Attempt mutation with incorrect OVN</name>
-        </Folder>
-      </Folder>
-      <Folder>
-        <name/>
-        <Folder>
-          <name>Cleanup</name>
+          <name>Make valid DSS report</name>
         </Folder>
       </Folder>
     </Folder>
