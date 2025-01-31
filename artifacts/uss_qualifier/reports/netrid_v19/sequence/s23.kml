@@ -118,7 +118,31 @@
       </PolyStyle>
     </Style>
     <Folder>
-      <name>ASTM NetRID: Operator interactions</name>
+      <name>ASTM NetRID Service Provider notification behavior</name>
+      <Folder>
+        <name>Setup</name>
+        <Folder>
+          <name>Clean workspace</name>
+        </Folder>
+      </Folder>
+      <Folder>
+        <name>Service Provider notification behavior</name>
+        <Folder>
+          <name>Mock USS Subscription</name>
+        </Folder>
+        <Folder>
+          <name>Injection</name>
+        </Folder>
+        <Folder>
+          <name>Validate Mock USS received notification</name>
+        </Folder>
+      </Folder>
+      <Folder>
+        <name/>
+        <Folder>
+          <name>Cleanup</name>
+        </Folder>
+      </Folder>
     </Folder>
   </Document>
 </kml>
