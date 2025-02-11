@@ -14,6 +14,7 @@ from uas_standards.astm.f3411.v22a import constants
 from uas_standards.astm.f3411.v22a.api import (
     UASID,
     HorizontalAccuracy,
+    RIDHeightReference,
     RIDOperationalStatus,
     SpeedAccuracy,
     Time,
@@ -62,6 +63,8 @@ class RIDCommonDictionaryEvaluator(object):
         "_evaluate_vertical_speed",
         "_evaluate_speed",
         "_evaluate_track",
+        "_evaluate_height",
+        "_evaluate_height_type",
     ]
     details_evaluators = [
         "_evaluate_ua_classification",
@@ -140,11 +143,6 @@ class RIDCommonDictionaryEvaluator(object):
         self._evaluate_position(
             injected_telemetry.position,
             observed_flight.most_recent_position,
-            participants,
-        )
-        self._evaluate_height(
-            injected_telemetry.get("height"),
-            observed_flight.most_recent_position.get("height"),
             participants,
         )
 
@@ -531,66 +529,86 @@ class RIDCommonDictionaryEvaluator(object):
                 message=f"Unsupported version {self._rid_version}: skipping position evaluation",
             )
 
-    def _evaluate_height(
-        self,
-        height_inj: Optional[injection.RIDHeight],
-        height_obs: Optional[observation_api.RIDHeight],
-        participants: List[str],
-    ):
-        if self._rid_version == RIDVersion.f3411_22a:
-            if height_obs is not None:
-                with self._test_scenario.check(
-                    "Height consistency with Common Dictionary", participants
-                ) as check:
-                    if (
-                        height_obs.reference
-                        != observation_api.RIDHeightReference.TakeoffLocation
-                        and height_obs.reference
-                        != observation_api.RIDHeightReference.GroundLevel
-                    ):
-                        check.record_failed(
-                            f"Invalid height type: {height_obs.reference}",
-                            details=f"The height type reference shall be either {observation_api.RIDHeightReference.TakeoffLocation} or {observation_api.RIDHeightReference.GroundLevel}",
-                        )
+    def _evaluate_height(self, **generic_kwargs):
+        """
+        Evaluates Height. Exactly one of sp_observed or dp_observed must be provided.
+        See as well `common_dictionary_evaluator.md`.
 
-                with self._test_scenario.check(
-                    "Height is consistent with injected one", participants
-                ) as check:
-                    if not math.isclose(
-                        height_obs.distance, height_inj.distance, abs_tol=1.0
-                    ):
-                        check.record_failed(
-                            "Observed Height is inconsistent with injected one",
-                            details=f"Observed height: {height_obs} - injected: {height_inj}",
-                        )
+        Raises:
+            ValueError: if a test operation wasn't performed correctly by uss_qualifier.
+        """
 
-                with self._test_scenario.check(
-                    "Height Type consistency with Common Dictionary", participants
-                ) as check:
-                    if (
-                        height_obs.reference
-                        != observation_api.RIDHeightReference.TakeoffLocation
-                        and height_obs.reference
-                        != observation_api.RIDHeightReference.GroundLevel
-                    ):
-                        check.record_failed(
-                            f"Invalid height type: {height_obs.reference}",
-                            details=f"The height type reference shall be either {observation_api.RIDHeightReference.TakeoffLocation} or {observation_api.RIDHeightReference.GroundLevel}",
-                        )
-
-                with self._test_scenario.check(
-                    "Height Type is consistent with injected one", participants
-                ) as check:
-                    if height_obs.reference != height_inj.reference:
-                        check.record_failed(
-                            "Observed Height type is inconsistent with injected one",
-                            details=f"Observed height: {height_obs} - injected: {height_inj}",
-                        )
-        else:
+        if self._rid_version == RIDVersion.f3411_19 and generic_kwargs.get(
+            "dp_observed"
+        ):
             self._test_scenario.record_note(
                 key="skip_reason",
-                message=f"Unsupported version {self._rid_version}: skipping Height and Height Type evaluation",
+                message=f"Unsupported version {self._rid_version}: skipping height evaluation",
             )
+            return
+
+        def value_comparator(v1: Optional[float], v2: Optional[float]) -> bool:
+
+            if v1 is None or v2 is None:
+                return False
+
+            return abs(v1 - v2) < constants.MinHeightResolution
+
+        self._generic_evaluator(
+            "position.height.distance",
+            "raw.current_state.height.distance",
+            "most_recent_position.height.distance",
+            "Height",
+            None,
+            None,
+            False,
+            -1000,
+            value_comparator,
+            **generic_kwargs,
+        )
+
+    def _evaluate_height_type(self, **generic_kwargs):
+        """
+        Evaluates Height type. Exactly one of sp_observed or dp_observed must be provided.
+        See as well `common_dictionary_evaluator.md`.
+
+        Raises:
+            ValueError: if a test operation wasn't performed correctly by uss_qualifier.
+        """
+
+        if self._rid_version == RIDVersion.f3411_19 and generic_kwargs.get(
+            "dp_observed"
+        ):
+            self._test_scenario.record_note(
+                key="skip_reason",
+                message=f"Unsupported version {self._rid_version}: skipping height evaluation",
+            )
+            return
+
+        def value_validator(val: str) -> RIDHeightReference:
+            return RIDHeightReference(val)
+
+        def value_comparator(
+            v1: Optional[RIDHeightReference], v2: Optional[RIDHeightReference]
+        ) -> bool:
+
+            return v1 == v2
+
+        self._generic_evaluator(
+            "position.height.reference",
+            "raw.current_state.height.reference",
+            "most_recent_position.height.reference",
+            "Height type",
+            value_validator,
+            None,
+            False,
+            [
+                RIDHeightReference.TakeoffLocation,
+                RIDHeightReference.GroundLevel,
+            ],  # The type is not important if not injected
+            value_comparator,
+            **generic_kwargs,
+        )
 
     def _evaluate_operator_location(
         self,
@@ -1182,7 +1200,7 @@ class RIDCommonDictionaryEvaluator(object):
         value_validator: Optional[Callable[[T], T]],
         observed_value_validator: Optional[Callable[[PendingCheck, T], None]],
         injection_required_field: bool,
-        unknown_value: Optional[T],
+        unknown_value: Optional[T | List[T]],
         value_comparator: Callable[[Optional[T], Optional[T]], bool],
         injected: Union[
             injection.TestFlight,
@@ -1211,7 +1229,7 @@ class RIDCommonDictionaryEvaluator(object):
             value_validator: If not None, pass values through this function. You may raise ValueError to indicate errors.
             observed_value_validator: If not None, will be called with check and observed value, for additional verifications
             injection_required_field: Boolean to indicate we need to check the case where nothing has been injected (C6)
-            unknown_value: The default value that needs to be returned when nothing has been injected
+            unknown_value: The default value that needs to be returned when nothing has been injected. Should multiple ones be accepted, use a list there.
             value_comparator: Function that need to return True if both parameters are equal
             injected: injected data (flight, telemetry or details).
             sp_observed: flight (or details) observed through the SP API.
@@ -1231,7 +1249,7 @@ class RIDCommonDictionaryEvaluator(object):
                 if isinstance(val, dict) and k in val:
                     val = val[k]
                 else:
-                    val = getattr(val, k)
+                    val = getattr(val, k, None)
             return val
 
         injected_val: Optional[T] = dotted_get(injected, injected_field_name)
@@ -1301,7 +1319,10 @@ class RIDCommonDictionaryEvaluator(object):
                         f"Invalid {field_human_name} value injected. Injection is marked as required, but we injected a None value. This should have been caught by the injection api."
                     )
 
-                if observed_val != unknown_value:  # C6 / C10
+                if not isinstance(unknown_value, list):
+                    unknown_value = [unknown_value]
+
+                if observed_val not in unknown_value:  # C6 / C10
                     check.record_failed(
                         f"{field_human_name} is inconsistent, expected '{unknown_value}' since no value was injected",
                         details=f"USS returned the UA type {observed_val} yet no value was injected. Since '{field_human_name}' is a required field of SP API, the SP should map this to '{unknown_value}' and the DP should expose the same value.",
