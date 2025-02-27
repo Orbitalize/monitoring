@@ -1238,7 +1238,12 @@ class RIDCommonDictionaryEvaluator(object):
                 if isinstance(val, dict) and k in val:
                     val = val[k]
                 else:
-                    val = getattr(val, k, None)
+                    try:
+                        val = getattr(val, k, None)
+                    except (
+                        KeyError
+                    ):  # Handle ImplicitDict behaviour with undefined keys
+                        val = None
             return val
 
         injected_val: Optional[T] = dotted_get(injected, injected_field_name)
