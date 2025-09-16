@@ -131,6 +131,16 @@ per **[astm.f3548.v21.SCD0035](../../../../../requirements/astm/f3548/v21.md)**.
 #### [Validate Flight 1 not shared](../../validate_not_shared_operational_intent.md)
 Flight 1 should not have been shared with the interoperability ecosystem since it was rejected.
 
+## Plan at different times avoid conflict test case
+![Test case summary illustration](assets/attempt_to_plan_flight_into_conflict.svg)
+
+### Plan Flight 1 test step
+
+#### [Plan Flight 1](../../../../flight_planning/plan_flight_intent.md)
+Flight 1 should be successfully planned by the control USS, even if volumes conflicts with existing flight 2, since flight 1 is planned at a different time.
+
+#### [Validate Flight 1 sharing](../../validate_shared_operational_intent.md)
+
 ## Attempt to activate flight into conflict test case
 ![Test case summary illustration](assets/attempt_to_activate_flight_into_conflict.svg)
 

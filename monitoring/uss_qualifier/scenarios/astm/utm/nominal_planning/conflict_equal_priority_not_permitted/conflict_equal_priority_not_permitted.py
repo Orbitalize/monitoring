@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 import arrow
 from uas_standards.astm.f3548.v21.api import OperationalIntentReference
 from uas_standards.astm.f3548.v21.constants import (
@@ -178,8 +180,15 @@ class ConflictEqualPriorityNotPermitted(TestScenario):
                 self, efi.intent_id.replace("equal_prio_", ""), templates[efi.intent_id]
             )
 
-    def resolve_flight(self, flight_template: FlightInfoTemplate) -> FlightInfo:
-        self.times[TimeDuringTest.TimeOfEvaluation] = Time(arrow.utcnow().datetime)
+    def resolve_flight(
+        self, flight_template: FlightInfoTemplate, delta: timedelta | None = None
+    ) -> FlightInfo:
+        base_date = arrow.utcnow().datetime
+
+        if delta:
+            base_date += delta
+
+        self.times[TimeDuringTest.TimeOfEvaluation] = Time(base_date)
         return flight_template.resolve(self.times)
 
     def run(self, context: ExecutionContext):
@@ -212,6 +221,10 @@ class ConflictEqualPriorityNotPermitted(TestScenario):
 
         self.begin_test_case("Attempt to plan flight into conflict")
         self._attempt_plan_flight_conflict()
+        self.end_test_case()
+
+        self.begin_test_case("Plan at different times avoid conflict")
+        self._plan_flight_later_dont_conflict()
         self.end_test_case()
 
         self.begin_test_case("Attempt to activate flight into conflict")
@@ -286,6 +299,24 @@ class ConflictEqualPriorityNotPermitted(TestScenario):
                 flight1_planned,
             )
             validator.expect_not_shared()
+        self.end_test_step()
+
+    def _plan_flight_later_dont_conflict(self):
+        self.begin_test_step("Plan Flight 1")
+        flight1_planned = self.resolve_flight(self.flight1_planned, timedelta(days=1))
+
+        with OpIntentValidator(
+            self,
+            self.tested_uss,
+            self.dss,
+            flight1_planned,
+        ) as validator:
+            plan_flight(
+                self,
+                self.tested_uss,
+                flight1_planned,
+            )
+            validator.expect_shared(flight1_planned)
         self.end_test_step()
 
     def _attempt_activate_flight_conflict(self):
