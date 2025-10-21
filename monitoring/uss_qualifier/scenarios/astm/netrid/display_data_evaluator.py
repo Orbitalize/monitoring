@@ -463,8 +463,10 @@ class RIDObservationEvaluator:
                 [mapping.injected_flight.uss_participant_id],
             ) as check:
                 # query for flight details only once per flight
-                if mapping.observed_flight.id in self._retrieved_flight_details:
-                    continue
+                # TODO make sure we have at least one query _per flight and per observer_,
+                # otherwise when having multiple observers, we only ever query the first one.
+                # if mapping.observed_flight.id in self._retrieved_flight_details:
+                #    continue
 
                 details_obs, query = observer.observe_flight_details(
                     mapping.observed_flight.id
