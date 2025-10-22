@@ -3,6 +3,8 @@ from .datastore import (
 )
 from .datastore import (
     DatastoreDBNode as DatastoreDBNode,
+    YugabyteDBNode as YugabyteDBNode,
+    CockroachDBNode as CockroachDBNode,
 )
 from .datastore import (
     DatastoreDBNodeResource as DatastoreDBNodeResource,

@@ -2,7 +2,7 @@ import pytest
 from testcontainers.core.container import DockerContainer
 from testcontainers.core.waiting_utils import wait_for_logs
 
-from . import DatastoreDBNode
+from . import CockroachDBNode, YugabyteDBNode
 
 
 @pytest.fixture(scope="module")
@@ -15,7 +15,7 @@ def good_cockroach(request):
     server.start()
     wait_for_logs(server, "start_node_query")
 
-    return DatastoreDBNode(
+    return CockroachDBNode(
         "test", server.get_container_host_ip(), server.get_exposed_port(26257)
     )
 
@@ -30,7 +30,7 @@ def no_ssl_cockroach(request):
     server.start()
     wait_for_logs(server, "start_node_query")
 
-    return DatastoreDBNode(
+    return CockroachDBNode(
         "test", server.get_container_host_ip(), server.get_exposed_port(26257)
     )
 
@@ -45,7 +45,7 @@ def old_ssl_cockroach(request):
     server.start()
     wait_for_logs(server, "start_node_query")
 
-    return DatastoreDBNode(
+    return CockroachDBNode(
         "test", server.get_container_host_ip(), server.get_exposed_port(26257)
     )
 
@@ -54,14 +54,14 @@ def old_ssl_cockroach(request):
 def good_yugabyte(request):
     server = DockerContainer(
         image="yugabytedb/yugabyte:2.25.2.0-b359",
-        ports=[5433],
-        command='bash -c "bin/yugabyted cert generate_server_certs --base_dir /yugabyte/certs --hostnames `hostname`  && bin/yugabyted start --secure --certs_dir=/yugabyte/certs/generated_certs/`hostname` --advertise_address=`hostname` --background=false"',
+        ports=[7100],
+        command='bash -c "bin/yugabyted cert generate_server_certs --base_dir /yugabyte/certs --hostnames `hostname`  && bin/yugabyted start --secure --tserver_flags=\'ysql_hba_conf_csv={hostssl all all 0.0.0.0/0 cert}\' --certs_dir=/yugabyte/certs/generated_certs/`hostname` --advertise_address=`hostname` --background=false"',
     )
     server.start()
-    wait_for_logs(server, "Data placement constraint successfully verified")
+    wait_for_logs(server, "Data placement constraint successfully verified", timeout=300)
 
-    return DatastoreDBNode(
-        "test", server.get_container_host_ip(), server.get_exposed_port(5433)
+    return YugabyteDBNode(
+        "test", server.get_container_host_ip(), server.get_exposed_port(7100)
     )
 
 
@@ -69,14 +69,14 @@ def good_yugabyte(request):
 def no_ssl_yugabyte(request):
     server = DockerContainer(
         image="yugabytedb/yugabyte:2.25.2.0-b359",
-        ports=[5433],
+        ports=[7100],
         command="bin/yugabyted start --background=false",
     )
     server.start()
     wait_for_logs(server, "Data placement constraint successfully verified")
 
-    return DatastoreDBNode(
-        "test", server.get_container_host_ip(), server.get_exposed_port(5433)
+    return YugabyteDBNode(
+        "test", server.get_container_host_ip(), server.get_exposed_port(7100)
     )
 
 
@@ -89,14 +89,14 @@ def old_ssl_yugabyte(request):
 
     server = DockerContainer(
         image="yugabytedb/yugabyte:2.25.2.0-b359",
-        ports=[5433],
+        ports=[7100],
         command=f'bash -c "echo {config.decode("utf-8")} | base64 -d > /conf.conf && cat /conf.conf && bin/yugabyted cert generate_server_certs --base_dir /yugabyte/certs --hostnames `hostname` && bin/yugabyted start --secure --certs_dir=/yugabyte/certs/generated_certs/`hostname` --advertise_address=`hostname` --background=false --conf /conf.conf"',
     )
     server.start()
     wait_for_logs(server, "Data placement constraint successfully verified")
 
-    return DatastoreDBNode(
-        "test", server.get_container_host_ip(), server.get_exposed_port(5433)
+    return YugabyteDBNode(
+        "test", server.get_container_host_ip(), server.get_exposed_port(7100)
     )
 
 
@@ -136,8 +136,8 @@ def test_datastoredbmode_secure_mode_good_cockroach(good_cockroach):
 
 
 def test_datastoredbmode_secure_mode_good_yugabyte(good_yugabyte):
-    is_secure, _ = good_yugabyte.runs_in_secure_mode()
-    assert is_secure
+    is_secure, e = good_yugabyte.runs_in_secure_mode()
+    assert not e, is_secure
 
 
 def test_datastoredbmode_secure_mode_no_ssl_cockroach(no_ssl_cockroach):

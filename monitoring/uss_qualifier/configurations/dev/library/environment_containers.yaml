@@ -213,8 +213,9 @@ dss_datastore_cluster:
   specification:
     nodes:
       - participant_id: uss1
-        host: datastore.uss1.localutm
-        port: 26257
+        host: localhost
+        port: 9100
+        is_yugabyte: true
 
 # ===== mock_uss instances =====
 

@@ -72,8 +72,7 @@ fi
 # shellcheck disable=SC2086
 docker run ${docker_args} --name uss_qualifier \
   --rm \
-  --network interop_ecosystem_network \
-  --add-host=host.docker.internal:host-gateway \
+  --network=host \
   -u "$(id -u):$(id -g)" \
   -e PYTHONBUFFERED=1 \
   -e AUTH_SPEC=${AUTH_SPEC} \
