@@ -1,0 +1,20 @@
+{
+  "test_run_information": {
+    "test_run_id": "d8acf99647f93af6b19971cc55c3950c4c3e71c26077728ca15d48382e7b7e29",
+    "start_time": "2026-01-16 15:41:06 UTC",
+    "end_time": "2026-01-16 15:42:18 UTC",
+    "baseline": "254061083784420e33af05836c19de220691c3a2156bb691482b15ea21df28c3",
+    "environment": "c8d358099b30500dad79029f5294741bd8881b184af66ffbc7c6e1d38867e81f"
+  },
+  "participant_verifications": {
+    "uss1": {
+      "status": "Incomplete",
+      "system_version": "a8adabe-unknown"
+    },
+    "uss2": {
+      "status": "Pass",
+      "system_version": "a8adabe-unknown"
+    }
+  },
+  "artifact_configuration": "gate3"
+}

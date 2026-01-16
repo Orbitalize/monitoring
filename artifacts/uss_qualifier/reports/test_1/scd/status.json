@@ -1,0 +1,20 @@
+{
+  "test_run_information": {
+    "test_run_id": "c2a5443c866b3d144d3cc23c09ae794089e3f82ef7caa65a7afb2005c2e9911c",
+    "start_time": "2026-01-16 15:41:00 UTC",
+    "end_time": "2026-01-16 15:42:09 UTC",
+    "baseline": "b349e99cad43ed05b5592592a13a7f013c9ff6dd692af0f5c8108ae8fd996b3a",
+    "environment": "4fc6d92db64a56c8be6bf5d85c63c9ec508c5d768509209ec56ba065afb04d35"
+  },
+  "participant_verifications": {
+    "uss1": {
+      "status": "Incomplete",
+      "system_version": "a8adabe-unknown"
+    },
+    "uss2": {
+      "status": "Incomplete",
+      "system_version": "a8adabe-unknown"
+    }
+  },
+  "artifact_configuration": "scd"
+}

@@ -1,0 +1,20 @@
+{
+  "test_run_information": {
+    "test_run_id": "8be3e10464ff2420165ba4439d4b6b541feecc80eb681a9d45281dd6a2ff1814",
+    "start_time": "2026-01-16 15:41:15 UTC",
+    "end_time": "2026-01-16 15:45:28 UTC",
+    "baseline": "48f9642b56c884c8d5b574daeb4639d4708f6ce4a522b7ee953357617c5df880",
+    "environment": "2e27040af4957f12ba9b79f33400b951c83c21b5230bd151892edd7a3b14e363"
+  },
+  "participant_verifications": {
+    "uss1": {
+      "status": "Incomplete",
+      "system_version": null
+    },
+    "uss2": {
+      "status": "Incomplete",
+      "system_version": null
+    }
+  },
+  "artifact_configuration": "requirements"
+}
