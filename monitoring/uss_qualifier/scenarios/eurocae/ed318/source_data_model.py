@@ -1,6 +1,6 @@
 import json
 from typing import List
-from jsonschema import validate
+from jsonschema import validate, ValidationError
 
 from implicitdict import ImplicitDict, StringBasedDateTime
 
@@ -22,7 +22,7 @@ class SourceDataModelValidation(TestScenario):
         super().__init__()
         self.source_document = source_document
         self.source_schema = source_schema
-        
+
     def run(self, context: ExecutionContext):
         self.begin_test_scenario(context)
 
@@ -68,7 +68,7 @@ class SourceDataModelValidation(TestScenario):
             ) as check:
                 try:
                     validate(instance=data, schema=schema)
-                except ValueError as e:
+                except ValidationError as e:
                     check.record_failed(
                         summary="Invalid format error",
                         details=str(e),
