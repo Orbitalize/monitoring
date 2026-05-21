@@ -52,6 +52,7 @@ WORKDIR /app/monitoring
 
 # Add core content from repo
 ADD ./interfaces /app/interfaces
+ADD ./schemas /app/schemas
 ADD ./monitoring /app/monitoring
 
 # Add health check to the /app root and make it executable
