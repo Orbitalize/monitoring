@@ -66,6 +66,7 @@ exclude-newer = "P7D"
 target-version = "py313"
 extend-exclude = [
     "interfaces/*",
+    "schemas/ed318/*",
     "monitoring/prober/output/*",
     "monitoring/mock_uss/output/*",
     "monitoring/uss_qualifier/output/*",
@@ -89,6 +90,7 @@ exclude = [
   "**/__pycache__",
   "**/.*",
   "interfaces/*",
+  "schemas/ed318/*",
   "monitoring/prober/output/*",
   "monitoring/mock_uss/output/*",
   "monitoring/uss_qualifier/output/*",
