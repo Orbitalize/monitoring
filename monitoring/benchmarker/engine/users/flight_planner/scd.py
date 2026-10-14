@@ -18,11 +18,7 @@ from monitoring.benchmarker.configurations.user.astm.scd import (
     OpIntentRefCreationStrategy,
     SubscriptionStrategy,
 )
-from monitoring.benchmarker.engine.coordination import (
-    CoordinationGroupID,
-    CoordinationMessage,
-    CoordinationSubscriber,
-)
+from monitoring.benchmarker.engine.coordination import CoordinationGroupID
 from monitoring.benchmarker.engine.users.flight_planner.framework import (
     CompletedFlightAction,
     Flight,
@@ -40,11 +36,10 @@ from monitoring.uss_qualifier.resources.astm.f3548.v21.dss import (
 )
 from monitoring.uss_qualifier.resources.definitions import ResourceID
 
-COORDINATION_SUBJECT_ADD_OVN = "enging.users.flight_planner.scd.add_ovn"
-COORDINATION_SUBJECT_REMOVE_OVN = "enging.users.flight_planner.scd.remove_ovn"
+OVN_KEY_SET_NAME = "engine.users.flight_planner.scd.ovn_key"
 
 
-class SCDHandler(CoordinationSubscriber):
+class SCDHandler:
     user: VirtualUser
 
     dss_instances: list[DSSInstance]
@@ -65,11 +60,11 @@ class SCDHandler(CoordinationSubscriber):
 
     op_intent_refs: dict[FlightID, api.OperationalIntentReference]
 
-    key: list[api.EntityOVN]
-    """OVNs currently known by this user."""
+    key: set[api.EntityOVN]
+    """OVNs currently known by this user; shared with the other members of its OVN coordination group, if any."""
 
     key_lock: Lock
-    """Guards `key` access, coordinating between all the different users communicating OVNs."""
+    """Guards `op_intent_refs` access."""
 
     def __init__(
         self,
@@ -79,7 +74,7 @@ class SCDHandler(CoordinationSubscriber):
     ):
         self.user = user
 
-        self.key = []
+        self.key = set()
         self.key_lock = Lock()
 
         self.dss_instances = []
@@ -167,25 +162,10 @@ class SCDHandler(CoordinationSubscriber):
             "ovn_coordination_group" in self.op_intent_ref_creation_strategy
             and self.op_intent_ref_creation_strategy.ovn_coordination_group
         ):
-            self.user.coordinator.subscribe(
-                self, self.op_intent_ref_creation_strategy.ovn_coordination_group
+            self.key = self.user.coordinator.shared_set(
+                self.op_intent_ref_creation_strategy.ovn_coordination_group,
+                OVN_KEY_SET_NAME,
             )
-
-    def receive_coordination_message(self, msg: CoordinationMessage) -> None:
-        if msg.subject == COORDINATION_SUBJECT_ADD_OVN:
-            if not isinstance(msg.content, api.EntityOVN):
-                raise RuntimeError(
-                    f"Expected an EntityOVN content in a CoordinationMessage with subject {msg.subject} but instead found a {type(msg.content).__name__}"
-                )
-            with self.key_lock:
-                self.key.append(msg.content)
-        elif msg.subject == COORDINATION_SUBJECT_REMOVE_OVN:
-            if not isinstance(msg.content, api.EntityOVN):
-                raise RuntimeError(
-                    f"Expected an EntityOVN content in a CoordinationMessage with subject {msg.subject} but instead found a {type(msg.content).__name__}"
-                )
-            with self.key_lock:
-                self.key.remove(msg.content)
 
     def select_dss_instance(self) -> DSSInstance:
         if self.dss_selection_strategy == ASTMDSSSelectionStrategy.First:
@@ -317,11 +297,7 @@ class SCDHandler(CoordinationSubscriber):
                 ovn_suffix = str(uuid6.uuid7())
                 requested_ovn = api.EntityOVN(f"{op_intent_id}_{ovn_suffix}")
                 if coordination_group:
-                    self.user.coordinator.publish(
-                        coordination_group,
-                        COORDINATION_SUBJECT_ADD_OVN,
-                        requested_ovn,
-                    )
+                    self.key.add(requested_ovn)
 
             with self.key_lock:
                 key = list(self.key)
@@ -365,12 +341,8 @@ class SCDHandler(CoordinationSubscriber):
                     )
                 )
                 t0 = datetime.now(UTC)
-                if requested_ovn and coordination_group:
-                    self.user.coordinator.publish(
-                        coordination_group,
-                        COORDINATION_SUBJECT_REMOVE_OVN,
-                        requested_ovn,
-                    )
+                if requested_ovn:
+                    self.key.discard(requested_ovn)
 
         if success:
             flight.extend_achieved_start_time(datetime.now(UTC))
@@ -396,46 +368,16 @@ class SCDHandler(CoordinationSubscriber):
         )
         self.op_intent_refs[flight.id] = op_intent_ref
 
-        # Notify other coordinating users
-        if coordination_group:
-            if op_intent_ref.ovn != old_ovn and op_intent_ref.ovn != requested_ovn:
-                self.user.coordinator.publish(
-                    coordination_group,
-                    COORDINATION_SUBJECT_ADD_OVN,
-                    op_intent_ref.ovn,
-                )
-            if old_ovn and op_intent_ref.ovn != old_ovn:
-                self.user.coordinator.publish(
-                    coordination_group,
-                    COORDINATION_SUBJECT_REMOVE_OVN,
-                    old_ovn,
-                )
-            if requested_ovn and op_intent_ref.ovn != requested_ovn:
-                logger.debug(
-                    f"Requested OVN {requested_ovn} was not accepted; returned {op_intent_ref.ovn} instead for user {self.user.user_id}"
-                )
-                self.user.coordinator.publish(
-                    coordination_group,
-                    COORDINATION_SUBJECT_REMOVE_OVN,
-                    requested_ovn,
-                )
-        else:
-            if old_ovn and op_intent_ref.ovn != old_ovn:
-                self.receive_coordination_message(
-                    CoordinationMessage(
-                        group_id=None,
-                        subject=COORDINATION_SUBJECT_REMOVE_OVN,
-                        content=op_intent_ref.ovn,
-                    )
-                )
-            if old_ovn is None or op_intent_ref.ovn != old_ovn:
-                self.receive_coordination_message(
-                    CoordinationMessage(
-                        group_id=None,
-                        subject=COORDINATION_SUBJECT_ADD_OVN,
-                        content=op_intent_ref.ovn,
-                    )
-                )
+        # Update the key (shared with the coordination group, if any)
+        if op_intent_ref.ovn != old_ovn:
+            self.key.add(op_intent_ref.ovn)
+            if old_ovn:
+                self.key.discard(old_ovn)
+        if requested_ovn and op_intent_ref.ovn != requested_ovn:
+            logger.debug(
+                f"Requested OVN {requested_ovn} was not accepted; returned {op_intent_ref.ovn} instead for user {self.user.user_id}"
+            )
+            self.key.discard(requested_ovn)
 
         if (
             state == api.OperationalIntentState.Accepted
@@ -548,23 +490,7 @@ class SCDHandler(CoordinationSubscriber):
             )
 
             if success:
-                if (
-                    "ovn_coordination_group" in self.op_intent_ref_creation_strategy
-                    and self.op_intent_ref_creation_strategy.ovn_coordination_group
-                ):
-                    self.user.coordinator.publish(
-                        self.op_intent_ref_creation_strategy.ovn_coordination_group,
-                        COORDINATION_SUBJECT_REMOVE_OVN,
-                        op_intent_ref.ovn,
-                    )
-                else:
-                    self.receive_coordination_message(
-                        CoordinationMessage(
-                            group_id=None,
-                            subject=COORDINATION_SUBJECT_REMOVE_OVN,
-                            content=op_intent_ref.ovn,
-                        )
-                    )
+                self.key.discard(op_intent_ref.ovn)
             else:
                 with self.key_lock:
                     self.op_intent_refs[flight.id] = op_intent_ref
@@ -589,12 +515,14 @@ class SCDHandler(CoordinationSubscriber):
                 )
                 self.user.record_query(query, True)
                 n_deleted += 1
+                self.key.discard(op_intent_ref.ovn)
             except QueryError as e:
                 success = e.queries[0].status_code == 404
                 for query in e.queries:
                     self.user.record_query(query, success)
                 if success:
                     n_already_gone += 1
+                    self.key.discard(op_intent_ref.ovn)
                 else:
                     logger.warning(
                         f"{self.user.user_id}'s SCDHandler was unable to clean up op intent {op_intent_ref.id} for flight {flight_id} from {dss_instance.participant_id}'s DSS; HTTP code {e.queries[0].status_code}"

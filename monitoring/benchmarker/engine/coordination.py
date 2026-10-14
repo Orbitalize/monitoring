@@ -29,11 +29,13 @@ class CoordinationGroup:
     lock: Lock
     subscribers: set[CoordinationSubscriber]
     messages: list[CoordinationMessage]
+    shared_sets: dict[str, set[Any]]
 
     def __init__(self):
         self.lock = Lock()
         self.subscribers = set()
         self.messages = []
+        self.shared_sets = {}
 
 
 class Coordinator:
@@ -68,3 +70,13 @@ class Coordinator:
             group.subscribers.add(subscriber)
             for msg in group.messages:
                 subscriber.receive_coordination_message(msg)
+
+    def shared_set(self, group_id: CoordinationGroupID, name: str) -> set[Any]:
+        """Retrieve the named set shared by all members of a coordination group, creating it if needed.
+
+        Unlike messages, a shared set does not grow with the number of members.  It is not locked, so only
+        modify it from the event loop.
+        """
+        group = self._groups[group_id]
+        with group.lock:
+            return group.shared_sets.setdefault(name, set())
