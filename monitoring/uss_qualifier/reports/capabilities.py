@@ -235,8 +235,7 @@ def evaluate_capability_verified_condition(
 ) -> ParticipantCapabilityConditionEvaluationReport:
     path = (
         condition.capability_location
-        if "capability_location" in condition
-        and condition.capability_location is not None
+        if condition.capability_location is not None
         else "$"
     )
     matching_reports = bc_jsonpath_ng_ext_parse(path).find(report)

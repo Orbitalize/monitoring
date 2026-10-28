@@ -110,7 +110,7 @@ class SCDHandler(CoordinationSubscriber):
             )
 
         if len(self.dss_instances) > 1:
-            if "dss_selection_strategy" in behavior and behavior.dss_selection_strategy:
+            if behavior.dss_selection_strategy:
                 self.dss_selection_strategy = behavior.dss_selection_strategy
             else:
                 raise ValueError(
@@ -135,14 +135,8 @@ class SCDHandler(CoordinationSubscriber):
         if "implicit_subscription" not in self.subscription_strategy:
             self.subscription_strategy.implicit_subscription = None
 
-        has_single = (
-            "single_subscription" in self.subscription_strategy
-            and self.subscription_strategy.single_subscription is not None
-        )
-        has_implicit = (
-            "implicit_subscription" in self.subscription_strategy
-            and self.subscription_strategy.implicit_subscription is not None
-        )
+        has_single = self.subscription_strategy.single_subscription is not None
+        has_implicit = self.subscription_strategy.implicit_subscription is not None
         if not (has_single ^ has_implicit):
             raise ValueError(
                 f"Exactly one of single_subscription or implicit_subscription must be specified in scd_behavior.subscription_strategy for user `{user.user_id}`"
@@ -151,10 +145,7 @@ class SCDHandler(CoordinationSubscriber):
         strategy = behavior.op_intent_ref_creation_strategy
         self.op_intent_ref_creation_strategy = strategy
         self.timely_clearance_expected = (
-            True
-            if "expect_timely_clearance" in strategy
-            and strategy.expect_timely_clearance
-            else False
+            True if strategy.expect_timely_clearance else False
         )
 
         self.op_intent_ref_cleanup_strategy = behavior.op_intent_ref_cleanup_strategy
@@ -163,10 +154,7 @@ class SCDHandler(CoordinationSubscriber):
 
         self.op_intent_refs = {}
 
-        if (
-            "ovn_coordination_group" in self.op_intent_ref_creation_strategy
-            and self.op_intent_ref_creation_strategy.ovn_coordination_group
-        ):
+        if self.op_intent_ref_creation_strategy.ovn_coordination_group:
             self.user.coordinator.subscribe(
                 self, self.op_intent_ref_creation_strategy.ovn_coordination_group
             )
@@ -203,10 +191,7 @@ class SCDHandler(CoordinationSubscriber):
     def get_create_actions(self, flight: Flight) -> Iterable[FlightAction]:
         op_intent_id = api.EntityID(uuid.uuid4())
 
-        if (
-            "accept_before_flight_start" in self.op_intent_ref_creation_strategy
-            and self.op_intent_ref_creation_strategy.accept_before_flight_start
-        ):
+        if self.op_intent_ref_creation_strategy.accept_before_flight_start:
             yield FlightAction(
                 timestamp=flight.start_time
                 - self.op_intent_ref_creation_strategy.accept_before_flight_start.timedelta,
@@ -223,10 +208,7 @@ class SCDHandler(CoordinationSubscriber):
     def get_activate_actions(
         self, flight: Flight, op_intent_id: api.EntityID
     ) -> Iterable[FlightAction]:
-        if (
-            "activate_before_flight_start" in self.op_intent_ref_creation_strategy
-            and self.op_intent_ref_creation_strategy.activate_before_flight_start
-        ):
+        if self.op_intent_ref_creation_strategy.activate_before_flight_start:
             yield FlightAction(
                 timestamp=flight.start_time
                 - self.op_intent_ref_creation_strategy.activate_before_flight_start.timedelta,
@@ -273,23 +255,16 @@ class SCDHandler(CoordinationSubscriber):
         uss_base_url = make_fake_url()
         coordination_group = (
             self.op_intent_ref_creation_strategy.ovn_coordination_group
-            if "ovn_coordination_group" in self.op_intent_ref_creation_strategy
-            and self.op_intent_ref_creation_strategy.ovn_coordination_group
+            if self.op_intent_ref_creation_strategy.ovn_coordination_group
             else None
         )
 
         kwargs = {}
-        if (
-            "single_subscription" in self.subscription_strategy
-            and self.subscription_strategy.single_subscription is not None
-        ):
+        if self.subscription_strategy.single_subscription is not None:
             kwargs["subscription_id"] = (
                 self.subscription_strategy.single_subscription.subscription_id
             )
-        elif (
-            "implicit_subscription" in self.subscription_strategy
-            and self.subscription_strategy.implicit_subscription is not None
-        ):
+        elif self.subscription_strategy.implicit_subscription is not None:
             pass
         else:
             raise ValueError(
@@ -303,17 +278,11 @@ class SCDHandler(CoordinationSubscriber):
         query = None
 
         attempts = 1
-        if (
-            "retries" in self.op_intent_ref_creation_strategy
-            and self.op_intent_ref_creation_strategy.retries
-        ):
+        if self.op_intent_ref_creation_strategy.retries:
             attempts += self.op_intent_ref_creation_strategy.retries
         success = False
         for attempt in range(attempts):
-            if (
-                "coordinate_requested_ovns" in self.op_intent_ref_creation_strategy
-                and self.op_intent_ref_creation_strategy.coordinate_requested_ovns
-            ):
+            if self.op_intent_ref_creation_strategy.coordinate_requested_ovns:
                 ovn_suffix = str(uuid6.uuid7())
                 requested_ovn = api.EntityOVN(f"{op_intent_id}_{ovn_suffix}")
                 if coordination_group:
@@ -439,7 +408,6 @@ class SCDHandler(CoordinationSubscriber):
 
         if (
             state == api.OperationalIntentState.Accepted
-            and "activate_before_flight_start" in self.op_intent_ref_creation_strategy
             and self.op_intent_ref_creation_strategy.activate_before_flight_start
         ):
             dt_s = (datetime.now(UTC) - flight.start_time).total_seconds()
@@ -489,18 +457,12 @@ class SCDHandler(CoordinationSubscriber):
         if delete_now:
             deletion_time = datetime.now(UTC)
         else:
-            if (
-                "after_actual_flight_end" in self.op_intent_ref_cleanup_strategy
-                and self.op_intent_ref_cleanup_strategy.after_actual_flight_end
-            ):
+            if self.op_intent_ref_cleanup_strategy.after_actual_flight_end:
                 deletion_time = (
                     flight.actual_end_time
                     + self.op_intent_ref_cleanup_strategy.after_actual_flight_end.timedelta
                 )
-            if (
-                "after_planned_flight_end" in self.op_intent_ref_cleanup_strategy
-                and self.op_intent_ref_cleanup_strategy.after_planned_flight_end
-            ):
+            if self.op_intent_ref_cleanup_strategy.after_planned_flight_end:
                 new_time = (
                     flight.volumes.time_end_not_none.datetime
                     + self.op_intent_ref_cleanup_strategy.after_planned_flight_end.timedelta
@@ -525,10 +487,7 @@ class SCDHandler(CoordinationSubscriber):
         if ovn is None:
             return
 
-        if (
-            "ovn_coordination_group" in self.op_intent_ref_creation_strategy
-            and self.op_intent_ref_creation_strategy.ovn_coordination_group
-        ):
+        if self.op_intent_ref_creation_strategy.ovn_coordination_group:
             self.user.coordinator.publish(
                 self.op_intent_ref_creation_strategy.ovn_coordination_group,
                 COORDINATION_SUBJECT_REMOVE_OVN,
@@ -627,10 +586,7 @@ class SCDHandler(CoordinationSubscriber):
                 msg += f"; {len(undeleted_ids)} could not be deleted"
             logger.debug(msg)
 
-        if (
-            "ovn_coordination_group" in self.op_intent_ref_creation_strategy
-            and self.op_intent_ref_creation_strategy.ovn_coordination_group
-        ):
+        if self.op_intent_ref_creation_strategy.ovn_coordination_group:
             self.user.coordinator.unsubscribe(
                 self, self.op_intent_ref_creation_strategy.ovn_coordination_group
             )
@@ -639,8 +595,5 @@ class SCDHandler(CoordinationSubscriber):
     def enumerate_coordination_groups(
         behavior: BehaviorSpecification,
     ) -> Iterable[CoordinationGroupID]:
-        if (
-            "ovn_coordination_group" in behavior.op_intent_ref_creation_strategy
-            and behavior.op_intent_ref_creation_strategy.ovn_coordination_group
-        ):
+        if behavior.op_intent_ref_creation_strategy.ovn_coordination_group:
             yield behavior.op_intent_ref_creation_strategy.ovn_coordination_group
